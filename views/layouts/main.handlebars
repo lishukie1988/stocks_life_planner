@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Online Electronics DBMS</title>
+    <title>Portfolio App</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href=overall_style.css>
+    <link rel="stylesheet" href="static/overall_style.css">
     <link rel="stylesheet" href={{style}}>
     <link rel="shortcut icon" href="#" />
 
@@ -18,41 +18,30 @@
     {{/each}}
   </head>
   <body>
-    <div style="">
+    <div id="main_div">
       <div class="jumbotron text-center" style="margin-bottom:0">
-        <h1>Online Electronics - Admin Database Management System</h1>
-      </div>
-
-      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <h1>Placeholder Portfolio App</h1>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
           <ul class="navbar-nav" style="margin:auto;">
             <li class="nav-item">
-              <a class="nav-link" href="/">Welcome</a>
+              <a class="nav-link" href="/">basic placeholder navbar</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/Users" style="">Registered User Profiles</a>
+              <a class="nav-link" href="/calendar" style="">to-do calendar</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/Items" style="">Items Catalog</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/Orders" style="color:yellow;">Order Requests</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/Order_Item_Pairs" style="color:yellow;">Order Contents</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/Returns" style="color:orange;">Return Requests</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/Return_Item_Pairs" style="color:orange;">Return Contents</a>
+              <a class="nav-link" href="#" style="">financial interface</a>
             </li>
           </ul>
         </div>
       </nav>
+      </div>
+
+      
       {{{body}}}
     </div>
   </body>

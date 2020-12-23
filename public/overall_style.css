@@ -1,0 +1,29 @@
+#main_container {
+
+    width: 100%;
+    margin:auto;
+    padding:2%;
+}
+
+#main_div {
+
+    width:85%;
+}
+
+* {
+
+    padding: 2px;
+    border-radius: 5px;
+    margin: auto;
+    overflow: auto;
+    opacity: 98%;
+    font-family: arial;
+
+}
+
+body {
+
+    /* background-color: grey; */
+    background-image: url('/static/pictures/forest.jpg');
+    background-attachment: fixed;
+}
