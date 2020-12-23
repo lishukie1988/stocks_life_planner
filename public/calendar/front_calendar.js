@@ -1,11 +1,13 @@
 let calendar_width = "100";
-let calendar_height = "900";
+let calendar_height = "700";
 let month_year_width = "100";
 let month_year_height = "90";
+let day_view_width = "100";
+let day_view_height = "700";
 let date = new Date();
 let current_year = date.getFullYear();
 let current_month = date.getMonth() + 1;
-
+let current_date = date.getDate();
 $(document).ready(function(){
 
 
@@ -25,6 +27,14 @@ $(document).ready(function(){
     $("#main_container").append(years_div);
 
 
+    let day_div = $("<div></div>");
+    day_div.css({"width": "0%", "height": "0px"});
+    day_div.attr("id", "day_div");
+    let day_view = createDayView(current_date, current_month, current_year);
+    day_div.append(day_view);
+    $("#main_container").append(day_div);
+
+
     let calendar_div = $("<div></div");
     calendar_div.css({"width": `${calendar_width}` + "%", "height": `${calendar_height}` + "px"})
     calendar_div.attr("id", "calendar_div");
@@ -36,6 +46,67 @@ $(document).ready(function(){
   });
 
 
+function createTopRightButtonDiv(unicode) {
+
+    let exit_div = $("<div></div");
+    exit_div.css({"width": "100%", "height": "30px"});
+
+    let button_div = $("<div></div");
+    button_div.css({"float": "right", "font-size": "18px", "width": "30px",
+                    "height": "98%", "background": "rgba(109,189,181,0.95)",
+                    "text-align": "center", "line-height": "140%"
+                    });
+    let test_sym = '\u00D7';
+    button_div.text(test_sym);
+    exit_div.append(button_div);
+
+
+    addHover(button_div, {"background": "rgba(214, 192, 133, 0.95)"}, {"background": button_div.css("background")});
+    button_div.click(function() {
+
+        //current_date = $(this).data("date");
+            //console.log($(this).data("date"));
+            //$("#calendar_div").html(createCalendar($(this).data("month"), $("#year_div").data("year")));
+            //$("#month_div").data("month", $(this).data("month"));
+            //$("#month_div").text(months_string_long[month]);
+            //$("#day_div").html(createDayView(current_date, current_month, current_year));
+
+            $("#calendar_div").animate(
+                {width: `${calendar_width}` + "%", height: `${calendar_height}` + "px"},
+                100
+            )
+            $("#month_year_div").animate(
+                {width: `${month_year_width}` + "%", height: `${month_year_height}` + "%"},
+                100
+            )
+            $("#day_div").animate(
+                {width: "0%", height: "0px"},
+                100
+            )
+
+    })
+
+    return exit_div;
+
+}
+
+
+function createDayView(date, month, year) {
+
+    console.log(date, month, year);
+    let day_view = $("<div></div>");
+    day_view.css({"font-size": "50px", "background": "rgba(109,189,181,0.5)", "width": "100%", "height": "100%"
+                });
+
+    let exit_div = createTopRightButtonDiv('\u00D7');
+    day_view.append(exit_div);
+    day_view.append("Date: " + date + " Month: " + month + " Year: " + year);
+    day_view.append("\nTown, City \n 15c \n Company 1: \n Company 2: \n Todo 1: \n Todo 2: ");
+    return day_view;
+
+}
+
+
 function createYears(year) {
     let years_div = $("<div></div>");
     years_div.css({"font-size": "50px", "background": "rgba(109,189,181,0.5)", "width": "0%", "height": "0px",
@@ -43,6 +114,10 @@ function createYears(year) {
                 });
     years_div.attr("id", "years_div");
     let input_year = $("<input/>").attr({type: "number", id: "year_input", name: "year_input", value: `${year}`, required : "true"});
+    input_year.css({"background": "rgba(109,189,181,0.5)", "border": "0px",
+                    "text-align": "center", "margin-left": "25%", "margin-top": "50px",
+                    "width": "50%", "height": "100px"                
+                    })
     input_year.on("keypress", function(key) {
         if (key.which === 13 && $(this).val() != "") {
             console.log("enter pressed");
@@ -67,7 +142,7 @@ function createYears(year) {
 
         }
     })
-    years_div.text("123testing");
+    //years_div.text("123testing");
     years_div.append(input_year);
     return years_div;
 }
@@ -238,7 +313,7 @@ function createCalendar(month, year) {
     calendar.css("height", calendar_height*0.99 + "px"); 
     //calendar_div.css("background", "yellow");
     
-    let weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    let weekdays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
     let header = createWeekHeader();
     for (let day = 0; day < 7; day++) {
@@ -267,6 +342,7 @@ function createCalendar(month, year) {
                 let left = (day < 6) ? 0 : 1;
                 current_day = createDay(left);
                 current_day.text(date_index);
+                current_day.data("date", date_index);
 
                 date_index++;
             }
@@ -331,6 +407,32 @@ function createDay(empty) {
 
     if (empty >= 0) {
         addHover(day_x, {"background": "rgba(214, 192, 133)"}, {"background": "rgba(109,189,181,0.95)"});
+        day_x.click(function() {
+            current_date = $(this).data("date");
+            console.log($(this).data("date"));
+            //$("#calendar_div").html(createCalendar($(this).data("month"), $("#year_div").data("year")));
+            //$("#month_div").data("month", $(this).data("month"));
+            //$("#month_div").text(months_string_long[month]);
+            $("#day_div").html(createDayView(current_date, current_month, current_year));
+
+            $("#calendar_div").animate(
+                {width: "0%", height: "0px"},
+                100
+            )
+            $("#month_year_div").animate(
+                {width: "0%", height: "0px"},
+                100
+            )
+            $("#day_div").animate(
+                {width: `${day_view_width}` + "%", height: `${day_view_height}` + "px"},
+                100
+            )
+        })
+        
+
+
+
+
     }
 
     return day_x;
