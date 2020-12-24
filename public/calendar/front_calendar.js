@@ -10,6 +10,18 @@ let current_month = date.getMonth() + 1;
 let current_date = date.getDate();
 $(document).ready(function(){
 
+    let date_string = "12252020"
+    console.log(parseInt(date_string.slice(4,8), 10));
+
+    /*
+    $.ajax({
+        //url: "https://api.weatherbit.io/v2.0/current?key=54ca63d4a7474c57a1879b3c4f71291b&postal_code=94501&country=US", 
+        url: "https://api.weatherbit.io/v2.0/forecast/daily?key=54ca63d4a7474c57a1879b3c4f71291b&postal_code=94501&country=US",
+        success: function(result){
+            console.log(result);
+      }});
+      */
+
 
     let month_year_div = $("<div></div>");
     month_year_div.css({"width": `${month_year_width}`+ "%", "height": `${month_year_height}`+ "px"})
@@ -93,7 +105,7 @@ function createTopRightButtonDiv(unicode) {
 
 function createDayView(date, month, year) {
 
-    console.log(date, month, year);
+    //console.log(date, month, year);
     let day_view = $("<div></div>");
     day_view.css({"font-size": "50px", "background": "rgba(109,189,181,0.5)", "width": "100%", "height": "100%"
                 });
@@ -118,8 +130,10 @@ function createYears(year) {
                     "text-align": "center", "margin-left": "25%", "margin-top": "50px",
                     "width": "50%", "height": "100px"                
                     })
-    input_year.on("keypress", function(key) {
-        if (key.which === 13 && $(this).val() != "") {
+    input_year.attr("id", "input_year");
+
+    input_year.on("keyup", function(key) {
+        if ((key.which === 13 || key.which === 27) && $(this).val() != "") {
             console.log("enter pressed");
             current_year = $(this).val();
             $("#calendar_div").html(createCalendar(current_month, $(this).val()));
@@ -137,9 +151,6 @@ function createYears(year) {
                 {width: month_year_width + "%", height: month_year_height + "px"},
                 100
             )
-
-
-
         }
     })
     //years_div.text("123testing");
@@ -409,7 +420,7 @@ function createDay(empty) {
         addHover(day_x, {"background": "rgba(214, 192, 133)"}, {"background": "rgba(109,189,181,0.95)"});
         day_x.click(function() {
             current_date = $(this).data("date");
-            console.log($(this).data("date"));
+            //console.log($(this).data("date"));
             //$("#calendar_div").html(createCalendar($(this).data("month"), $("#year_div").data("year")));
             //$("#month_div").data("month", $(this).data("month"));
             //$("#month_div").text(months_string_long[month]);
