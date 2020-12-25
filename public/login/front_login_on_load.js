@@ -1,5 +1,9 @@
 $(document).ready(function(){
 
+    let test_char = "san diego";
+    let splitted = test_char.split(",");
+    console.log(splitted[0]);
+
     $.ajax({
         url: "https://api.teleport.org/api/cities/?search=san",
         async: true,
@@ -45,7 +49,29 @@ function createLogin() {
     let input_username = $("<input/>").attr({type: "text", id: "input_username", name: "input_username", placeholder: "enter username", required : "true"});
     
     input_username.autocomplete({
-        source: [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ]
+        source: function(request, response) {
+            /*
+            $.ajax({
+                url: "https://api.teleport.org/api/cities/?search=" + request.term,
+                //url: "https://api.teleport.org/api/cities/?search=" + request.term,
+                success: function( data ) {
+                  response( data["_embedded"]["city:search-results"][0]["matching_alternate_names"]);
+                  console.log(data["_embedded"]["city:search-results"][0]["matching_alternate_names"]);
+                  //console.log(data);
+                }
+            });
+            */
+           $.ajax({
+            url: "http://gd.geobytes.com/AutoCompleteCity",
+            dataType: "jsonp",
+            data: {
+              q: request.term
+            },
+            success: function( data ) {
+              response( data );
+            }
+          });
+        }
     });
 
 
