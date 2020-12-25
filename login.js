@@ -8,6 +8,7 @@ module.exports = function(){
     router.get('/', function(req, res){
         console.log("redirected to login page");
         var context = {};
+        context.jsscripts = ["login/front_login_on_load.js"];
         res.render('login', context);
     });
 

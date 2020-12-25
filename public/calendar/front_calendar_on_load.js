@@ -81,7 +81,7 @@ $(document).ready(function(){
     let calendar_div = $("<div></div");
     calendar_div.css({"width": `${calendar_width}` + "%", "height": `${calendar_height}` + "px"})
     calendar_div.attr("id", "calendar_div");
-    let current_calendar = createCalendar(12, 2020);
+    let current_calendar = createCalendar(current_month, current_year);
     calendar_div.html(current_calendar);
     $("#main_container").append(calendar_div);
 
