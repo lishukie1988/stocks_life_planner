@@ -22,7 +22,7 @@ app.use('/calendar', require('./calendar.js'));
 //app.use('/Order_Item_Pairs', require('./Order_Item_Pairs.js'));
 //app.use('/Returns', require('./Returns.js'));
 //app.use('/Return_Item_Pairs', require('./Return_Item_Pairs.js'));
-//app.use('/', express.static('public'));
+
 
 app.use('/', function(req, res){
   res.status(200);

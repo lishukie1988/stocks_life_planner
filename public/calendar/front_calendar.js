@@ -1,67 +1,9 @@
-let calendar_width = "100";
-let calendar_height = "700";
-let month_year_width = "100";
-let month_year_height = "90";
-let day_view_width = "100";
-let day_view_height = "700";
-let date = new Date();
-let current_year = date.getFullYear();
-let current_month = date.getMonth() + 1;
-let current_date = date.getDate();
-$(document).ready(function(){
-
-    let date_string = "12252020"
-    console.log(parseInt(date_string.slice(4,8), 10));
-
-    /*
-    $.ajax({
-        //url: "https://api.weatherbit.io/v2.0/current?key=54ca63d4a7474c57a1879b3c4f71291b&postal_code=94501&country=US", 
-        url: "https://api.weatherbit.io/v2.0/forecast/daily?key=54ca63d4a7474c57a1879b3c4f71291b&postal_code=94501&country=US",
-        success: function(result){
-            console.log(result);
-      }});
-      */
-
-
-    let month_year_div = $("<div></div>");
-    month_year_div.css({"width": `${month_year_width}`+ "%", "height": `${month_year_height}`+ "px"})
-    month_year_div.attr("id", "month_year_div");
-    let month_div = createMonth(current_month);
-    month_year_div.append(month_div);
-    let year_div = createYear(current_year);
-    month_year_div.append(year_div);
-    $("#main_container").append(month_year_div);
-
-
-    let months_div = createMonths();
-    $("#main_container").append(months_div);
-    let years_div = createYears(current_year);
-    $("#main_container").append(years_div);
-
-
-    let day_div = $("<div></div>");
-    day_div.css({"width": "0%", "height": "0px"});
-    day_div.attr("id", "day_div");
-    let day_view = createDayView(current_date, current_month, current_year);
-    day_div.append(day_view);
-    $("#main_container").append(day_div);
-
-
-    let calendar_div = $("<div></div");
-    calendar_div.css({"width": `${calendar_width}` + "%", "height": `${calendar_height}` + "px"})
-    calendar_div.attr("id", "calendar_div");
-    let current_calendar = createCalendar(12, 2020);
-    calendar_div.html(current_calendar);
-    $("#main_container").append(calendar_div);
-
-  
-  });
 
 
 function createTopRightButtonDiv(unicode) {
 
     let exit_div = $("<div></div");
-    exit_div.css({"width": "100%", "height": "30px"});
+    exit_div.css({"width": "100%", "height": "30px", "float": "right"});
 
     let button_div = $("<div></div");
     button_div.css({"float": "right", "font-size": "18px", "width": "30px",
@@ -99,22 +41,6 @@ function createTopRightButtonDiv(unicode) {
     })
 
     return exit_div;
-
-}
-
-
-function createDayView(date, month, year) {
-
-    //console.log(date, month, year);
-    let day_view = $("<div></div>");
-    day_view.css({"font-size": "50px", "background": "rgba(109,189,181,0.5)", "width": "100%", "height": "100%"
-                });
-
-    let exit_div = createTopRightButtonDiv('\u00D7');
-    day_view.append(exit_div);
-    day_view.append("Date: " + date + " Month: " + month + " Year: " + year);
-    day_view.append("\nTown, City \n 15c \n Company 1: \n Company 2: \n Todo 1: \n Todo 2: ");
-    return day_view;
 
 }
 
@@ -343,7 +269,7 @@ function createCalendar(month, year) {
             let current_day;
             if ( (week == 0 && date_object[date_index] > day) || (date_index > Object.keys(date_object).length)) {
                 
-                current_day = createDay(-1);
+                current_day = createDay(-1, 0);
                 if (date_object[date_index] == day + 1) {
                     current_day.css("border-right", "groove");
                 }
@@ -351,9 +277,7 @@ function createCalendar(month, year) {
             }
             else {
                 let left = (day < 6) ? 0 : 1;
-                current_day = createDay(left);
-                current_day.text(date_index);
-                current_day.data("date", date_index);
+                current_day = createDay(left, date_index);
 
                 date_index++;
             }
@@ -401,53 +325,7 @@ function createHeaderDay() {
 
 }
 
-function createDay(empty) {
 
-
-    let day_x = $("<div></div>");
-    day_x.css("width", "14.25%");
-    day_x.css("height", "95%");
-    day_x.css("float", "left");   
-    day_x.css("background", "rgba(109,189,181,0.95)"); 
-    //day_x.css("border": )
-    if (empty == 0) {
-        day_x.css("border-right", "groove");
-    } 
-    //day_x.css("border-color", "rgba(0,0,0,0)");
-
-
-    if (empty >= 0) {
-        addHover(day_x, {"background": "rgba(214, 192, 133)"}, {"background": "rgba(109,189,181,0.95)"});
-        day_x.click(function() {
-            current_date = $(this).data("date");
-            //console.log($(this).data("date"));
-            //$("#calendar_div").html(createCalendar($(this).data("month"), $("#year_div").data("year")));
-            //$("#month_div").data("month", $(this).data("month"));
-            //$("#month_div").text(months_string_long[month]);
-            $("#day_div").html(createDayView(current_date, current_month, current_year));
-
-            $("#calendar_div").animate(
-                {width: "0%", height: "0px"},
-                100
-            )
-            $("#month_year_div").animate(
-                {width: "0%", height: "0px"},
-                100
-            )
-            $("#day_div").animate(
-                {width: `${day_view_width}` + "%", height: `${day_view_height}` + "px"},
-                100
-            )
-        })
-        
-
-
-
-
-    }
-
-    return day_x;
-}
 
 function addHover(element, on_css, off_css) {
 
