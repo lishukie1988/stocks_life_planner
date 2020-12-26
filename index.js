@@ -67,6 +67,7 @@ app.all('*', function(req, res, next){
 });
 
 app.use('/calendar', require('./calendar.js'));
+app.use('/todo', require('./todo.js'));
 //app.use('/Users', require('./Users.js'));
 //app.use('/Items', require('./Items.js'));
 //app.use('/Orders', require('./Orders.js'));

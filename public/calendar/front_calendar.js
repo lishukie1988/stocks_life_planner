@@ -1,3 +1,19 @@
+function convertToQuery(input_string) {
+    console.log(input_string);
+    let split_array = input_string.split(" ");
+    console.log(split_array);
+    let output = "";
+    for (let x = 0; x < split_array.length; x++) {
+        output += split_array[x];
+        if (x < split_array.length - 1) {
+            output += "%20";
+        } 
+    }
+
+    console.log(output);
+    return output;
+
+}
 
 
 function createTopRightButtonDiv(unicode) {

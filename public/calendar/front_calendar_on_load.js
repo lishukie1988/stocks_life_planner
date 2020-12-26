@@ -12,15 +12,49 @@ let forecast = {};
 let historic = {};
 let temp_unit = '\u2103';
 let hist_start = "2020-11-25"; 
-let hist_end = "2020-12-20"
+let hist_end = "2020-12-20";
+let user_id;
+let user_unit = 0;
+let user_country;
+let user_city; 
 
 let background_blue = "rgba(52, 195, 235,0.95)";
 let background_day = "rgba(109,189,181,0.95)";
 let background_teal = "rgba(214, 192, 133)";
 $(document).ready(function(){
 
-    //let date_string = "12252020"
-    //console.log(parseInt(date_string.slice(4,8), 10));
+
+
+    user_id = $(".main_container").data("userid");
+    user_unit = $(".main_container").data("tempunit");
+    user_country = $(".main_container").data("country");
+    user_city = $(".main_container").data("city");
+    
+
+    // test fetch todo for a specific day
+    $.ajax({
+        url: "/todo",
+        async: true,
+        type: 'POST', 
+        data: {userID: "userid1", year: 2020, month: 12, date: 25},
+        success: function(result){
+            console.log("CALLBACK of POST TODO AJAX")
+            console.log(result);
+            /*
+            if (result === "creation_error") {
+                console.log(" *********************************error: username taken");
+                window.location.href="login?status=-2";
+
+            }
+            else {
+                window.location.href="/calendar";
+            }
+            */
+        }
+            
+    });
+
+
 
     // free trial only allows 1 day
     /*
@@ -39,8 +73,12 @@ $(document).ready(function(){
       console.log(historic);
       */
     
+    //user_id = $(".main_container").data("userid");
+    
+
     $.ajax({
-        url: "https://api.weatherbit.io/v2.0/forecast/daily?key=54ca63d4a7474c57a1879b3c4f71291b&postal_code=94501&country=US",
+        //url: "https://api.weatherbit.io/v2.0/forecast/daily?key=54ca63d4a7474c57a1879b3c4f71291b&city=San%20Diego&country=United%20States",
+        url: "https://api.weatherbit.io/v2.0/forecast/daily?key=54ca63d4a7474c57a1879b3c4f71291b&city=" + convertToQuery(user_city) + "&country=" + convertToQuery(user_country),
         async: false,
         success: function(result){
             //console.log(result);
@@ -50,9 +88,17 @@ $(document).ready(function(){
                 //console.log(result["data"][day]);
             }
       }});
+    
+
+    // - TODO: 
+    //   - assign user values in main container data values to global vars
+    //   - change references to country, city, temp_unit in ajax calls to weather API to global vars containing user's values
+
+
 
     console.log(forecast);
     
+    //$(".main_container").append(userID);
 
     let month_year_div = $("<div></div>");
     month_year_div.css({"width": `${month_year_width}`+ "%", "height": `${month_year_height}`+ "px"})

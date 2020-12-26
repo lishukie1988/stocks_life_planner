@@ -41,7 +41,7 @@ module.exports = function(){
             //context.jsscripts = ["calendar/front_calendar_day.js", "calendar/front_calendar.js", "calendar/front_calendar_on_load.js"];
             
             var mysql = req.app.get('mysql');
-            createAccount(res, [userID, postalCode, password, email, country, city], mysql, context, complete);
+            createAccount(res, [userID, postalCode, password, email, city, country], mysql, context, complete);
             function complete(){
                 callbackCount++;
                 if(callbackCount >= 1){
@@ -49,7 +49,8 @@ module.exports = function(){
                     // *** TODO: figure out what to retrieve from results
                    req.session.userID = userID;
                    req.session.save();
-                   //console.log(req.session);
+                   console.log("created new account");
+                   console.log(req.session);
                    res.write("creation_success");
                    res.end();
 

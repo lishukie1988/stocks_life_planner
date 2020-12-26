@@ -59,10 +59,27 @@ function createDay(empty, date) {
             weather_icon.attr("src", 'static/pictures/weather_icons/' + forecast[date_string]["weather"]["icon"] + ".png");
             day_x.append(weather_div);
         }
-        //day_x.append(weather_div);
-        //day_x.data("date_string", date_string);
-    
-        //console.log("date string: " + getDateString(current_year,current_month,date));
+
+
+        // ***TODO:
+        // - send AJAX to server to get TODO ITEMS for this day
+        // - populate thumbnail for this day with retrieved items (if any)
+
+        /*
+        $.ajax({
+            url: "/todo",
+            async: true,
+            type: 'POST', 
+            data: {userID: user_id, year: current_year, month: current_month, date: date},
+            success: function(result){
+                console.log("CALLBACK of POST TODO AJAX")
+                console.log(result);
+
+            }
+                
+        });
+        */
+
 
         addHover(day_x, {"background": "rgba(214, 192, 133)"}, {"background": "rgba(109,189,181,0.95)"});
         day_x.click(function() {
