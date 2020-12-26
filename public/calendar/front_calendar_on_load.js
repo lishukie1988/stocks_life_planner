@@ -61,13 +61,13 @@ $(document).ready(function(){
     month_year_div.append(month_div);
     let year_div = createYear(current_year);
     month_year_div.append(year_div);
-    $("#main_container").append(month_year_div);
+    $(".main_container").append(month_year_div);
 
 
     let months_div = createMonths();
-    $("#main_container").append(months_div);
+    $(".main_container").append(months_div);
     let years_div = createYears(current_year);
-    $("#main_container").append(years_div);
+    $(".main_container").append(years_div);
 
 
     let day_div = $("<div></div>");
@@ -75,7 +75,7 @@ $(document).ready(function(){
     day_div.attr("id", "day_div");
     let day_view = createDayView(current_date, current_month, current_year);
     day_div.append(day_view);
-    $("#main_container").append(day_div);
+    $(".main_container").append(day_div);
 
 
     let calendar_div = $("<div></div");
@@ -83,7 +83,7 @@ $(document).ready(function(){
     calendar_div.attr("id", "calendar_div");
     let current_calendar = createCalendar(current_month, current_year);
     calendar_div.html(current_calendar);
-    $("#main_container").append(calendar_div);
+    $(".main_container").append(calendar_div);
 
   
   });

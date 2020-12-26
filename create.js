@@ -2,26 +2,85 @@ module.exports = function(){
     var express = require('express');
     var router = express.Router();
 
-    // - render front end login page
-    //   - front-end:
-    //     - sends front-end ajax post request to "/login" (below) with entered userid_x & password_x 
-    router.get('/', function(req, res){
+    /*
+    - post request to add new entry to Users 
+    - res.send(result)
+    - res.end()
+    - front end:
+     - if add succeeds, redirect to calendar
+     - else, redirect back to login with username taken error msg
+    - back end:
+     - if user is logged in currently & accesses this route:
+      - redirect back to /calendar
+     - else:
+      - res.send(result)
+      - res.end()
+    */
+    router.post('/', function(req, res){
 
-        console.log(req.query);
+        console.log("reached post create");
+        console.log(req.body);
 
         if (req.session.userID) {
             res.redirect("/calendar");
         }
         else {
+
             //if (req.query.status == 0) {
+            //var context = {};
+            //context.status = req.query.status;
+            //context.jsscripts = ["login/front_login_on_load.js"];
+            //res.render('login', context);
+            var {userID, postalCode, password, email, country, city} = req.body;
+            console.log(userID);
+            console.log(postalCode);
+
+
+            var callbackCount = 0;
             var context = {};
-            context.status = req.query.status;
-            context.jsscripts = ["login/front_login_on_load.js"];
-            res.render('login', context);
-        
+            //context.jsscripts = ["calendar/front_calendar_day.js", "calendar/front_calendar.js", "calendar/front_calendar_on_load.js"];
+            
+            var mysql = req.app.get('mysql');
+            createAccount(res, [userID, postalCode, password, email, country, city], mysql, context, complete);
+            function complete(){
+                callbackCount++;
+                if(callbackCount >= 1){
+
+                    // *** TODO: figure out what to retrieve from results
+                   req.session.userID = userID;
+                   req.session.save();
+                   //console.log(req.session);
+                   res.write("creation_success");
+                   res.end();
+
+                }
+            }
+
         }
     
     });
+
+
+    function createAccount(res, params, mysql, context, complete){
+        var sql_string = 'INSERT INTO `Users` (`userID`, `email`, `password`, `balance`, `postalCode`, `city`, `country`, `tempUnit`) VALUES (?,?,?,10000,?,?,?,1)';
+        mysql.pool.query(sql_string, params, function(error, results, fields){
+            if(error){
+                console.log("before res.end(): creation error: taken username");
+                //res.write(JSON.stringify(error));
+                res.write("creation_error");
+                res.end();
+                return;
+            }
+            //console.log("after res.end() due to error");
+            context.users = results;
+            console.log(context);
+            //console.log(results);
+            //console.log("reached compelte()");
+            complete();
+            
+        });
+    }
+
 
     /*
     - validate that userid_x exists in the database & password_x matches password for userid_x stored in the database
@@ -107,27 +166,6 @@ module.exports = function(){
             
         });
     }
-
-    router.post('/todos', function(req, res){
-        var params = [req.body.year, req.body.month, req.body.date];
-        var callbackCount = 0;
-        //var context = {};
-        //context.jsscripts = ["calendar/front_calendar_day.js", "calendar/front_calendar.js", "calendar/front_calendar_on_load.js"];
-        
-        var mysql = req.app.get('mysql');
-        getTodos(res, params, mysql, context, complete);
-        function complete(){
-            callbackCount++;
-            if(callbackCount >= 1){
-                //console.log(context);
-                res.send(context);
-            }
-
-        }
-        
-       res.render('calendar', context);
-    });
-
 
     
     return router;
