@@ -1,3 +1,6 @@
+let box_width = "80%";
+let box_height = "80vh";
+
 $(document).ready(function(){
 
     /*
@@ -24,7 +27,7 @@ $(document).ready(function(){
 
     //console.log("reached load");
     let login_div = createLogin();
-    login_div.toggle();
+    //create_account_div.toggle();
     let create_account_div = createNewAccount();
     $(".main_container").append(login_div);
     $(".main_container").append(create_account_div);
@@ -35,7 +38,7 @@ $(document).ready(function(){
 function createNewAccount() {
  
     let create_div = $("<div></div>");
-    create_div.css({"font-size": "25%", "background": "rgba(109,189,181,0.5)", "width": "80%", "height": "80vh",
+    create_div.css({"font-size": "25%", "background": "rgba(109,189,181,0.5)", "width": "0%", "height": "0vh",
                     "position": "absolute", "top": "10vh", "bottom": "10vh"
                 });
     create_div.attr("id", "create_div");
@@ -126,9 +129,22 @@ function createNewAccount() {
     let buttons_div = createButtonsDiv();
     //let login = createButton("LOGIN", "right");
     //buttons_div.append(login);
-    let create = createButton("CREATE ACCOUNT", "left");
-    create.css({"margin-left": "auto", "float": "", "width": "30%", "text-align": "center"});
+    let back = createButton("BACK", "left");
+    buttons_div.append(back);
+    let create = createButton("CREATE ACCOUNT", "right");
     buttons_div.append(create);
+
+    back.click(function() {
+
+        $("#login_div").animate(
+            {width: box_width, height: box_height},
+            100
+        )
+        $("#create_div").animate(
+            {width: "0%", height: "0vh"},
+            100
+        )
+    })
     
     create.click(function() {
 
@@ -178,9 +194,9 @@ function createNewAccount() {
 function createInputDiv () {
 
     let input = $("<input/>");
-    input.css({"background": "rgba(109,189,181,0.75)", "border": "0px",
+    input.css({"background": "rgba(109,189,181,0.75)", "border": "0p%",
     "text-align": "center", "margin-left": "25%", "margin-top": "0.5%", "margin-bottom": "0.5%",
-    "width": "50%", "height": "auto"         
+    "width": "50%", "height": "auto", "border": "none"         
     });
 
     return input; 
@@ -259,27 +275,6 @@ function createLogin() {
     let input_username = createInputDiv();
     input_username.attr({type: "text", id: "input_username", name: "input_username", placeholder: "enter username", required : "true"});
     
-    input_username.autocomplete({
-        source: function(request, response) {
-            
-            /*
-            $.ajax({
-                url: "https://api.teleport.org/api/cities/?search=" + request.term,
-                //url: "https://api.teleport.org/api/cities/?search=" + request.term,
-                success: function( data ) {
-                  response( data["_embedded"]["city:search-results"][0]["matching_alternate_names"][0]);
-                }
-            });
-            */
-            
-        }
-    });
-    /*
-    $( ".selector" ).autocomplete({
-        source: [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ]
-      });
-
-    */
     
     form_div.append(input_username);
     let input_password = createInputDiv();
@@ -292,6 +287,18 @@ function createLogin() {
     let create = createButton("CREATE ACCOUNT", "left");
     buttons_div.append(create);
     
+    create.click(function() {
+
+        $("#login_div").animate(
+            {width: "0%", height: "0vh"},
+            100
+        )
+        $("#create_div").animate(
+            {width: box_width, height: box_height},
+            100
+        )
+    })
+
     login.click(function() {
 
         console.log("clicked");

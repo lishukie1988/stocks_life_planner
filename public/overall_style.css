@@ -1,13 +1,14 @@
-.main_container {
+.main_container { /* div for all non nav bar content*/
 
-    width: 100%;
-    margin:auto;
-    padding:2%;
+    width: 100%; 
+    height: 90%;
+    margin: "auto";
 }
 
-#main_div {
+#main_div { /* div for entire screen */
 
     width:85%;
+    height:98vh;
 }
 
 * {

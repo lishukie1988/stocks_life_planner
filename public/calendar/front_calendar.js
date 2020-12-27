@@ -19,12 +19,12 @@ function convertToQuery(input_string) {
 function createTopRightButtonDiv(unicode) {
 
     let exit_div = $("<div></div");
-    exit_div.css({"width": "100%", "height": "30px", "float": "right"});
+    exit_div.css({"width": "100%", "height": "3%", "float": "right"});
 
     let button_div = $("<div></div");
-    button_div.css({"float": "right", "font-size": "18px", "width": "30px",
-                    "height": "98%", "background": "rgba(109,189,181,0.95)",
-                    "text-align": "center", "line-height": "140%"
+    button_div.css({"float": "right", "font-size": "100%", "width": "5%",
+                    "height": "100%", "background": "rgba(109,189,181,0.95)",
+                    "text-align": "center", "line-height": "100%"
                     });
     let test_sym = '\u00D7';
     button_div.text(test_sym);
@@ -42,7 +42,7 @@ function createTopRightButtonDiv(unicode) {
             //$("#day_div").html(createDayView(current_date, current_month, current_year));
 
             $("#calendar_div").animate(
-                {width: `${calendar_width}` + "%", height: `${calendar_height}` + "px"},
+                {width: `${calendar_width}` + "%", height: `${calendar_height}` + "%"},
                 100
             )
             $("#month_year_div").animate(
@@ -50,7 +50,7 @@ function createTopRightButtonDiv(unicode) {
                 100
             )
             $("#day_div").animate(
-                {width: "0%", height: "0px"},
+                {width: "0%", height: "0%"},
                 100
             )
 
@@ -63,12 +63,12 @@ function createTopRightButtonDiv(unicode) {
 
 function createYears(year) {
     let years_div = $("<div></div>");
-    years_div.css({"font-size": "50px", "background": "rgba(109,189,181,0.5)", "width": "0%", "height": "0px",
+    years_div.css({"font-size": "50px", "background": "rgba(109,189,181,0.5)", "width": "0%", "height": "0%",
                     "margin-right": "auto" 
                 });
     years_div.attr("id", "years_div");
     let input_year = $("<input/>").attr({type: "number", id: "year_input", name: "year_input", value: `${year}`, required : "true"});
-    input_year.css({"background": "rgba(109,189,181,0.5)", "border": "0px",
+    input_year.css({"background": "rgba(109,189,181,0.5)", "border": "0%",
                     "text-align": "center", "margin-left": "25%", "margin-top": "50px",
                     "width": "50%", "height": "100px"                
                     })
@@ -82,15 +82,15 @@ function createYears(year) {
             $("#year_div").data("year", $(this).val());
             $("#year_div").text($(this).val());
             $("#calendar_div").animate(
-                {width: calendar_width + "%", height: calendar_height + "px"},
+                {width: calendar_width + "%", height: calendar_height + "%"},
                 100
             )
             $("#years_div").animate(
-                {width: "0%", height: "0px"},
+                {width: "0%", height: "0%"},
                 100
             )
             $("#month_year_div").animate(
-                {width: month_year_width + "%", height: month_year_height + "px"},
+                {width: month_year_width + "%", height: month_year_height + "%"},
                 100
             )
         }
@@ -104,7 +104,7 @@ function createYears(year) {
 function createMonths(month) {
 
     let months_div = $("<div></div>");
-    months_div.css({"font-size": "50px", "background": "rgba(109,189,181,0.5)", "width": "0%", "height": "0px",
+    months_div.css({"font-size": "50px", "background": "rgba(109,189,181,0.5)", "width": "0%", "height": "0%",
                     "margin-right": "auto" 
                 });
 
@@ -142,25 +142,21 @@ function createMonthChoice(month) {
 
     addHover(div, {"background": "rgba(214, 192, 133, 0.5)"}, {"background": div.css("background")});
     div.click(function() {
-        //$("month_div").animate(
-        //    {width: "0px", height: "0px"},
-        //    400
-        //)
-        //console.log("month choice clicked");
+
         current_month = $(this).data("month");
         $("#calendar_div").html(createCalendar($(this).data("month"), $("#year_div").data("year")));
         $("#month_div").data("month", $(this).data("month"));
         $("#month_div").text(months_string_long[month]);
         $("#calendar_div").animate(
-            {width: calendar_width + "%", height: calendar_height + "px"},
+            {width: calendar_width + "%", height: calendar_height + "%"},
             100
         )
         $("#months_div").animate(
-            {width: "0%", height: "0px"},
+            {width: "0%", height: "0%"},
             100
         )
         $("#month_year_div").animate(
-            {width: month_year_width + "%", height: month_year_height + "px"},
+            {width: month_year_width + "%", height: month_year_height + "%"},
             100
         )
     })
@@ -178,8 +174,8 @@ function createYear(year) {
     let year_div = $("<div></div>");
     year_div.text(year);
     //year_div.attr("id", "year_div");
-    year_div.css({"font-size": "50px", "background": "rgba(109,189,181,0.5)", "width": "29%",
-                    "float": "right", "margin-right": "0.25%" 
+    year_div.css({"font-size": "300%", "background": "rgba(109,189,181,0.5)", "width": "29%",
+                    "float": "right", "margin-right": "0.25%" , "height": "100%"
                 });
     year_div.attr("id", "year_div");
     year_div.data("year", year);
@@ -187,7 +183,7 @@ function createYear(year) {
     addHover(year_div, {"background": "rgba(214, 192, 133, 0.5)"}, {"background": year_div.css("background")});
     year_div.click(function() {
         $("#calendar_div").animate(
-            {width: "0px", height: "0px"},
+            {width: "0%", height: "0%"},
             100
         )
         $("#years_div").animate(
@@ -195,7 +191,7 @@ function createYear(year) {
             100
         )
         $("#month_year_div").animate(
-            {width: "0%", height: "0px"},
+            {width: "0%", height: "0%"},
             100
         )
     })
@@ -217,15 +213,15 @@ function createMonth(month) {
     month_div.attr("id", "month_div");
     month_div.text(months_string[month]);
     month_div.data("month", month);
-    month_div.css({"font-size": "50px", "background": "rgba(109,189,181,0.5)", "width": "69%",
-                    "float": "left", "margin-left": "0.25%"
+    month_div.css({"font-size": "300%", "background": "rgba(109,189,181,0.5)", "width": "69%",
+                    "float": "left", "margin-left": "0.25%", "height": "100%"
                 });
 
     
     addHover(month_div, {"background": "rgba(214, 192, 133, 0.5)"}, {"background": month_div.css("background")});
     month_div.click(function() {
         $("#calendar_div").animate(
-            {width: "0px", height: "0px"},
+            {width: "0%", height: "0%"},
             100
         )
         $("#months_div").animate(
@@ -233,7 +229,7 @@ function createMonth(month) {
             100
         )
         $("#month_year_div").animate(
-            {width: "0%", height: "0px"},
+            {width: "0%", height: "0%"},
             100
         )
     })
@@ -263,10 +259,11 @@ function createCalendar(month, year) {
 
     //calendar_div.css("padding", "1%");
     calendar.css("width", calendar_width + "%");
-    calendar.css("height", calendar_height*0.99 + "px"); 
+    calendar.css("height", "100%"); 
     //calendar_div.css("background", "yellow");
     
     let weekdays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+    let weekdays_long = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
     let header = createWeekHeader();
     for (let day = 0; day < 7; day++) {
@@ -293,7 +290,7 @@ function createCalendar(month, year) {
             }
             else {
                 let left = (day < 6) ? 0 : 1;
-                current_day = createDay(left, date_index);
+                current_day = createDay(left, date_index, weekdays_long[day]);
 
                 date_index++;
             }
@@ -324,7 +321,7 @@ function createWeekHeader() {
 function createWeek() {
     let week_x = $("<div></div>");
         week_x.css("width", "100%");
-        week_x.css("height", "15%");
+        week_x.css("height", "15.6%");
         //week_x.css("background", "rgba(39, 71, 68,10)");
         //week_x.css("background", "");
     return week_x;

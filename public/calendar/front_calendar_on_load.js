@@ -1,13 +1,25 @@
 let calendar_width = "100";
-let calendar_height = "700";
+let calendar_height = "88";
 let month_year_width = "100";
-let month_year_height = "90";
+let month_year_height = "10";
 let day_view_width = "100";
-let day_view_height = "700";
+let day_view_height = "100";
 let date = new Date();
 let current_year = date.getFullYear();
 let current_month = date.getMonth() + 1;
 let current_date = date.getDate();
+
+let live_year = date.getFullYear();
+let live_month = date.getMonth() + 1;
+let live_date = date.getDate() - 1;
+
+
+/*
+let live_year = 2021;
+let live_month = 12;
+let live_date = 30;
+*/
+
 let forecast = {};
 let historic = {};
 let temp_unit = '\u2103';
@@ -21,6 +33,7 @@ let user_city;
 let background_blue = "rgba(52, 195, 235,0.95)";
 let background_day = "rgba(109,189,181,0.95)";
 let background_teal = "rgba(214, 192, 133)";
+let background_todo = "rgba(220, 232, 232, 0.95)"
 $(document).ready(function(){
 
 
@@ -30,31 +43,8 @@ $(document).ready(function(){
     user_country = $(".main_container").data("country");
     user_city = $(".main_container").data("city");
     
-
-    // test fetch todo for a specific day
-    $.ajax({
-        url: "/todo",
-        async: true,
-        type: 'POST', 
-        data: {userID: "userid1", year: 2020, month: 12, date: 25},
-        success: function(result){
-            console.log("CALLBACK of POST TODO AJAX")
-            console.log(result);
-            /*
-            if (result === "creation_error") {
-                console.log(" *********************************error: username taken");
-                window.location.href="login?status=-2";
-
-            }
-            else {
-                window.location.href="/calendar";
-            }
-            */
-        }
-            
-    });
-
-
+    console.log(live_month, live_date, live_year);
+    //console.log(pastOneMonth(11,30,2021));
 
     // free trial only allows 1 day
     /*
@@ -76,9 +66,26 @@ $(document).ready(function(){
     //user_id = $(".main_container").data("userid");
     
 
+    // test api
+    
+    console.log("test newsapi");
     $.ajax({
         //url: "https://api.weatherbit.io/v2.0/forecast/daily?key=54ca63d4a7474c57a1879b3c4f71291b&city=San%20Diego&country=United%20States",
-        url: "https://api.weatherbit.io/v2.0/forecast/daily?key=54ca63d4a7474c57a1879b3c4f71291b&city=" + convertToQuery(user_city) + "&country=" + convertToQuery(user_country),
+        url: "https://newsapi.org/v2/everything?q=bitcoin&apiKey=c059c3dae2b74394b71ec1136390998a",
+        async: true,
+        success: function(result){
+            //console.log("test news api");
+            console.log(result);
+            //forecast["data"] = result["data"];
+            
+      }});
+      
+
+      
+
+    $.ajax({
+        url: "https://api.weatherbit.io/v2.0/forecast/daily?key=54ca63d4a7474c57a1879b3c4f71291b&city=San%20Diego&country=United%20States",
+        //url: "https://newsapi.org/v2/everything?q=bitcoin&apiKey=c059c3dae2b74394b71ec1136390998a",
         async: false,
         success: function(result){
             //console.log(result);
@@ -101,7 +108,7 @@ $(document).ready(function(){
     //$(".main_container").append(userID);
 
     let month_year_div = $("<div></div>");
-    month_year_div.css({"width": `${month_year_width}`+ "%", "height": `${month_year_height}`+ "px"})
+    month_year_div.css({"width": `${month_year_width}`+ "%", "height": `${month_year_height}`+ "%"})
     month_year_div.attr("id", "month_year_div");
     let month_div = createMonth(current_month);
     month_year_div.append(month_div);
@@ -117,7 +124,7 @@ $(document).ready(function(){
 
 
     let day_div = $("<div></div>");
-    day_div.css({"width": "0%", "height": "0px"});
+    day_div.css({"width": "0%", "height": "0%"});
     day_div.attr("id", "day_div");
     let day_view = createDayView(current_date, current_month, current_year);
     day_div.append(day_view);
@@ -125,7 +132,7 @@ $(document).ready(function(){
 
 
     let calendar_div = $("<div></div");
-    calendar_div.css({"width": `${calendar_width}` + "%", "height": `${calendar_height}` + "px"})
+    calendar_div.css({"width": `${calendar_width}` + "%", "height": `${calendar_height}` + "%"})
     calendar_div.attr("id", "calendar_div");
     let current_calendar = createCalendar(current_month, current_year);
     calendar_div.html(current_calendar);
