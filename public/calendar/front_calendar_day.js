@@ -48,7 +48,7 @@ function createDay(empty, date, weekday) {
         let date_string = getDateString(current_year, current_month, date);
         if (forecast.hasOwnProperty(date_string)) {
             let weather_div = $("<div></div");
-            weather_div.css({"height": "20%", "width": "100%", "background": background_blue, "margin-bottom": "2%"});
+            weather_div.css({"height": "21%", "width": "100%", "background": background_blue, "margin-bottom": "2%"});
             let weather_num_div = $("<div></div");
             weather_num_div.css({"height": "100%", "width": "auto", "font-size": "1%", "float": "left"});
             weather_div.append(weather_num_div);
@@ -76,7 +76,7 @@ function createDay(empty, date, weekday) {
                 for (let item in list) {
                     //console.log(list[item]["content"]);
                     let todo = $("<div></div>");
-                    todo.css({"background": background_todo, "height": "20%", "width": "100%", "font-size": "10%", "margin-bottom": "2%"});
+                    todo.css({"background": background_todo, "height": "19%", "width": "100%", "font-size": "10%", "margin-bottom": "2%"});
                     todo.append(list[item]["content"]);
                     day_x.append(todo);
                 }
@@ -124,7 +124,7 @@ function createDayView(date, month, year, weekday) {
 
     //console.log(date, month, year);
     let day_view = $("<div></div>");
-    day_view.css({"font-size": "100%", "background": "rgba(109,189,181,0.8)", "width": "100%", "height": "100%"
+    day_view.css({"font-size": "100%", "background": "rgba(109,189,181,0.8)", "width": "100%", "height": "90%"
                 });
 
     let exit_div = createTopRightButtonDiv('\u00D7');
@@ -134,13 +134,13 @@ function createDayView(date, month, year, weekday) {
         weather_div.css({"height": "10%", "width": "100%", "font-size": "", "background": background_blue});
         
         let date_div = $("<div></div");
-        date_div.css({"height": "100%", "width": "33%", "float": "left", "font-size": "215%", "padding": "0%", "line-height": "180%", "margin": "0"});
+        date_div.css({"height": "100%", "width": "33%", "float": "left", "font-size": "215%", "padding": "0%", "line-height": "250%", "margin": "0"});
         let week_day = $("<div></div");
-        week_day.css({"background": "", "height": "50%", "width": "100%", "font-size": "70%", "padding": "0%", "line-height": "170%", "margin": "0%"});
+        week_day.css({"background": "", "height": "50%", "width": "100%", "font-size": "50%", "padding": "0%", "line-height": "200%", "margin": "0%"});
         week_day.append(weekday);
         date_div.append(week_day);
         let full_date = $("<div></div");
-        full_date.css({"height": "50%", "width": "100%", "font-size": "70%", "padding": "0%", "line-height": "110%"});
+        full_date.css({"height": "50%", "width": "100%", "font-size": "50%", "padding": "0%", "line-height": "110%"});
         full_date.append(month + "/" + date + "/" + year);
         date_div.append(full_date);
         weather_div.append(date_div);
@@ -167,7 +167,7 @@ function createDayView(date, month, year, weekday) {
         weather_div.append(weather_icon);
         weather_div.append(weather_num_div);
         let main_stat = $("<div></div>");
-        main_stat.css({"float": "left", "font-size": "215%", "width": "auto", "line-height": "160%" });
+        main_stat.css({"float": "left", "font-size": "155%", "width": "auto", "line-height": "160%" });
         main_stat.append(forecast[date_string]["temp"] + temp_unit);
         weather_num_div.append(main_stat);
         let small_stats = $("<div></div>");
@@ -190,24 +190,20 @@ function createDayView(date, month, year, weekday) {
     }
 
     let day_main_div = $("<div></div");
-    day_main_div.css({"width": "100%", "height": "90%", "background": ""});
+    day_main_div.css({"width": "100%", "height": "87%", "background": ""});
     day_view.append(day_main_div);
     let todo_section = $("<div></div");
     todo_section.attr("id", "todo_section");
-    todo_section.css({"width": "50%", "height": "100%", "float": "left", "background": ""});
+    todo_section.css({"width": "100%", "height": "50%", "float": "", "background": ""});
     todo_section.html(createTodoSection(date, month, year));
     day_main_div.append(todo_section);
 
     let news_section = $("<div></div");
     news_section.attr("id", "news_section");
-    news_section.css({"width": "50%", "height": "100%", "float": "right", "background": "orange"});
+    news_section.css({"width": "100%", "height": "50%", "float": "", "background": ""});
     news_section.html(createNewsSection(date, month, year));
     day_main_div.append(news_section);
 
-
-
-    day_view.append("Date: " + date + " Month: " + month + " Year: " + year);
-    day_view.append("\nTown, City \n 15c \n Company 1: \n Company 2: \n Todo 1: \n Todo 2: ");
     return day_view;
 
 }
@@ -216,45 +212,48 @@ function createDayView(date, month, year, weekday) {
 function createNewsSection(date, month, year) {
 
     let news_section = $("<div></div");
-    news_section.css({"width": "100%", "height": "100%","background": ""});
+    news_section.css({"width": "100%", "height": "100%","background": background_charcoal});
 
     let news_search = $("<div></div>");
-    news_search.css({"background": background_todo, "height": "4%", "width": "100%", "font-size": "1.5vh", "margin-top": "0.5%", "margin-bottom": "0.5%"});
+    news_search.css({"background": background_todo, "height": "8%", "width": "100%", "font-size": "1.5vh", "margin-top": "0.5%", "margin-bottom": "0.5%"});
     let search_button = $("<div></div>");
-    search_button.css({"width": "4%", "height": "90%", "background": "blue", "float": "left", "text-align": "center", "font-size": "65%", "line-height": "220%", "border-radius": "100%", "margin": "0.25%"});
-    search_button.append("<b>\u2795</b>"); 
+    search_button.css({"width": "4%", "height": "90%", "background": background_search_news, "float": "left", "text-align": "center", "font-size": "80%", "line-height": "140%", "border-radius": "", "margin": "0.25%"});
+    search_button.append("<b>\u27A4</b>"); 
+
+    addHover(search_button, {"background": background_search_news_hover}, {"background": background_search_news});
+
+    
+
     news_search.append(search_button);
-    let content_div = $("<textarea></textarea>");
+    let content_div = $("<input></input>");
     content_div.css({"width": "95%", "height": "100%", "background": "white", "float": "right", "border": "none"});
     news_search.append(content_div);
     news_section.append(news_search);
 
     let news_results = $("<div></div>");
-    news_results.css({"background": "", "height": "96%", "width": "100%", "font-size": "1.5vh", "margin-top": "0.5%", "margin-bottom": "0.5%"});
+    news_results.css({"background": "", "height": "90%", "width": "100%", "font-size": "1.5vh", "margin-top": "1%", "margin-bottom": "0.5%"});
     news_results.attr("id", "news_results");
     news_section.append(news_results);
 
+    /*
+    let url_results = $("<div></div>");
+    url_results.css({"background": "", "height": "100%", "width": "75%", "font-size": "1.5vh", "margin-top": "1%", "margin-bottom": "0.5%", "float": "left"});
+    url_results.attr("id", "url_results");
+    news_results.append(url_results);
+
+    */
+
     // populate result box with user-specified news results for this day
     // if this day is <30 days past current date, news for current date will be displayed instead
+
+    content_div.on("keypress", function(key) {
+        if ((key.which === 13) && $(this).val() != "") {
+            newsAjax(content_div.val(), news_results);
+        }
+    })
+
     search_button.click(function() {
-
-        console.log(content_div.val());
-
-        $.ajax({
-            url: "/todo/insert",
-            async: true,
-            type: 'POST', 
-            data: {userID: user_id, content: content_div.val(), month: month, date: date, year: year},
-            success: function(result){
-                console.log("CALLBACK of POST INSERT TODO AJAX")
-                console.log(result);
-
-                $("#todo_section").html(createTodoSection(date, month, year));
-                let updated_calendar = createCalendar(current_month, current_year);
-                $("#calendar_div").html(updated_calendar);
-            }
-                
-        });
+        newsAjax(content_div.val(), news_results);
     });
 
     // by default displays this day's news revolving around user's city of origin
@@ -269,42 +268,72 @@ function createNewsSection(date, month, year) {
     //console.log(news_month, news_date, news_year);
     let news_full_date = getDateString(news_year, news_month, news_date);
     console.log(news_full_date);
-    //console.log(user_country);
+
+    newsAjax(convertToQuery(user_city), news_results);
+
+    return news_section;
+
+}
+
+function newsAjax(query, element) {
+
+    //console.log(query);
+
     $.ajax({
-        url: "https://newsapi.org/v2/everything?q=+" + convertToQuery(user_city) +  "OR+" + convertToQuery(user_country) + "&language=en&apiKey=c059c3dae2b74394b71ec1136390998a&sortBy=popularity&from=" + news_full_date + "&to=" + news_full_date,
+        url: "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI?q=" + query + "&pageNumber=1&pageSize=20&autoCorrect=true&withThumbnails=true&fromPublishedDate=null&toPublishedDate=null",
+        method: "GET",
+        headers: {
+            "x-rapidapi-key": "9f8d618d05mshf500f0090b3d22bp1df82bjsnf64295ed4f46",
+            "x-rapidapi-host": "contextualwebsearch-websearch-v1.p.rapidapi.com"
+        },
         async: true,
         success: function(result){
-            for (let article in result["articles"]) {
-                //console.log(result["articles"][article]);
-                news_results.append(createArticle(result["articles"][article]));
+                element.html("");
+            for (let article in result["value"]) {
+                //console.log(result);
+                element.append(createArticle(result["value"][article]));
             }
-            //console.log(result["articles"]);
-            //forecast["data"] = result["data"];
-            //news_section.append(result["articles"][0]["description"]);
-            //news_section.append(result["articles"][0]["url"]);
       }});
-    return news_section;
+
 
 }
 
 function createArticle(article) {
     let article_div = $("<div></div");
-    article_div.css({"width": "100%", "margin": "1%", "background": "green"});
-    console.log(article);
+    article_div.css({"width": "100%", "margin-top": "0.5%", "margin-bottom": "0.5%", "background": background_todo});
+    //console.log(article);
+    let url_div = $("<div></div>");
+    url_div.css({"background": "", "height": "100%", "width": "100%", "font-size": "1.5vh", "margin-top": "1%", "margin-bottom": "0.5%", "float": ""});
+    url_div.attr("id", "url_results");
+
     let article_link = $("<a></a>");
     article_link.attr("href", article["url"]);
     article_link.append(article["description"]);
-    article_div.append(article_link);
+    url_div.append(article_link);
+    article_div.append(url_div);
+
+    let image_div = $("<div></div>");
+    image_div.css({"background": "", "height": "auto", "width": "100%", "font-size": "1.5vh", "margin-top": "1%", "margin-bottom": "0.5%", "float": ""});
+    let image = $("<img>");
+    image.attr("src", article["image"]["url"]);
+    image.css({"width": "100%", "height": "auto"});
+    article_div.append(image);
+
     return article_div;
 }
 
 function createTodoSection(date, month, year) {
 
     let todo_section = $("<div></div");
-    todo_section.css({"width": "100%", "height": "100%","background": ""});
+    todo_section.css({"width": "100%", "height": "100%","background": background_charcoal});
 
     let add_todo = createAddTodo(date, month, year);
     todo_section.append(add_todo);
+
+    let todo_results = $("<div></div>");
+    todo_results.css({"background": "", "height": "88%", "width": "100%", "font-size": "1.5vh", "margin-top": "1%", "margin-bottom": "0.5%"});
+    todo_results.attr("id", "todo_results");
+    todo_section.append(todo_results);
 
     $.ajax({
         url: "/todo",
@@ -319,7 +348,7 @@ function createTodoSection(date, month, year) {
             for (let item in list) {
                 //console.log(list[item]);
                 let todo = createTodoItem(list[item]["content"], list[item]["todoID"], date, month, year);
-                todo_section.append(todo);
+                todo_results.append(todo);
             }
 
         }
@@ -333,15 +362,36 @@ function createTodoSection(date, month, year) {
 function createAddTodo(date, month, year) {
 
     let todo = $("<div></div>");
-    todo.css({"background": background_todo, "height": "4%", "width": "100%", "font-size": "1.5vh", "margin-top": "0.5%", "margin-bottom": "0.5%"});
+    todo.css({"background": background_todo, "height": "8%", "width": "100%", "font-size": "1.5vh", "margin-top": "0.5%", "margin-bottom": "0.5%"});
     let add_button = $("<div></div>");
-    add_button.css({"width": "4%", "height": "90%", "background": "yellow", "float": "left", "text-align": "center", "font-size": "65%", "line-height": "220%", "border-radius": "100%", "margin": "0.25%"});
+    add_button.css({"width": "4%", "height": "90%", "background": background_add_todo, "float": "left", "text-align": "center", "font-size": "65%", "line-height": "170%", "border-radius": "", "margin": "0.25%"});
     add_button.append("<b>\u2795</b>"); 
+    addHover(add_button, {"background": background_add_todo_hover}, {"background": background_add_todo});
     todo.append(add_button);
-    let content_div = $("<textarea></textarea>");
+    let content_div = $("<input></input>");
     content_div.css({"width": "95%", "height": "100%", "background": "white", "float": "right", "border": "none"});
     todo.append(content_div);
 
+
+    content_div.on("keypress", function(key) {
+        if ((key.which === 13) && $(this).val() != "") {
+            $.ajax({
+                url: "/todo/insert",
+                async: true,
+                type: 'POST', 
+                data: {userID: user_id, content: content_div.val(), month: month, date: date, year: year},
+                success: function(result){
+                    console.log("CALLBACK of POST INSERT TODO AJAX")
+                    console.log(result);
+    
+                    $("#todo_section").html(createTodoSection(date, month, year));
+                    let updated_calendar = createCalendar(current_month, current_year);
+                    $("#calendar_div").html(updated_calendar);
+                }
+                    
+            });
+        }
+    })
 
     add_button.click(function() {
 
@@ -377,20 +427,27 @@ function createAddTodo(date, month, year) {
 function createTodoItem(content, todo_id, date, month, year) {
 
     let todo = $("<div></div>");
-    todo.css({"background": background_todo, "height": "4%", "width": "100%", "font-size": "1.5vh", "margin-top": "0.5%", "margin-bottom": "0.5%"});
+    todo.css({"background": background_todo, "height": "10%", "width": "100%", "font-size": "1.5vh", "margin-top": "0.5%", "margin-bottom": "0.5%"});
     let delete_button = $("<div></div>");
-    delete_button.css({"width": "4%", "height": "90%", "background": "red", "float": "left", "text-align": "center", "font-size": "100%", "line-height": "", "border-radius": "100%", "margin": "0.25%"});
+    delete_button.css({"width": "4%", "height": "90%", "background": background_delete_todo, "float": "left", "text-align": "center", "font-size": "100%", "line-height": "", "border-radius": "", "margin": "0.25%"});
     delete_button.append("<b>\u2717</b>");
+
+    addHover(delete_button, {"background": background_delete_todo_hover}, {"background": background_delete_todo});
+    
+
     let update_button = $("<div></div>");
-    update_button.css({"width": "4%", "height": "90%", "background": "green", "float": "left", "text-align": "center", "font-size": "100%", "line-height": "", "border-radius": "100%", "margin": "0.25%"});
+    update_button.css({"width": "4%", "height": "90%", "background": background_update_todo, "float": "left", "text-align": "center", "font-size": "100%", "line-height": "", "border-radius": "", "margin": "0.25%"});
     update_button.append("<b>\u2713</1>");
+
+    addHover(update_button, {"background": background_update_todo_hover}, {"background": background_update_todo});
+
     todo.append(delete_button); 
     todo.append(update_button);
-    let content_div = $("<textarea></textarea>");
+    let content_div = $("<input></input>");
     content_div.css({"width": "90%", "height": "100%", "background": "white", "float": "right", "border": "none"});
     //let actual_content = $("<textarea></textarea");
     //actual_content.css({"width": "auto%", "height": "100%", "background": "white", "float": "right", "border": "none"});
-    content_div.append(content);
+    content_div.attr("value", content);
     todo.append(content_div);
 
 
@@ -417,6 +474,28 @@ function createTodoItem(content, todo_id, date, month, year) {
 
 
     });
+
+
+    content_div.on("keypress", function(key) {
+        if ((key.which === 13) && $(this).val() != "") {
+            $.ajax({
+                url: "/todo/update",
+                async: true,
+                type: 'POST', 
+                data: {content: content_div.val(), todoID: todo_id},
+                success: function(result){
+                    console.log("CALLBACK of POST UPDATE TODO AJAX")
+                    console.log(result);
+                    $("#todo_section").html(createTodoSection(date, month, year));
+                    let updated_calendar = createCalendar(current_month, current_year);
+                    $("#calendar_div").html(updated_calendar);
+                }
+                    
+            });    
+        }
+    })
+
+
     update_button.click(function() {
 
         console.log(content_div.val());

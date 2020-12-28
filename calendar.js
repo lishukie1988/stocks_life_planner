@@ -9,7 +9,7 @@ module.exports = function(){
         //console.log("@ calendar get");
         //console.log(req.session.userID);
         context.userID = req.session.userID;
-        context.jsscripts = ["calendar/front_calendar_day.js", "calendar/front_calendar.js", "calendar/front_calendar_on_load.js"];
+        context.jsscripts = ["nav/front_nav.js", "calendar/front_calendar_day.js", "calendar/front_calendar.js", "calendar/front_calendar_on_load.js"];
         
         var mysql = req.app.get('mysql');
         getUserData(res, req.session.userID, mysql, context, complete);

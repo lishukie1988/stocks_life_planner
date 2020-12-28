@@ -1,7 +1,22 @@
 let box_width = "80%";
 let box_height = "80vh";
+let status_string;
 
 $(document).ready(function(){
+
+    // debug
+    if ($(".main_container").data("status") == 0) {
+        //status_message = "normal login";
+    }
+    if ($(".main_container").data("status") == -1) {
+        status_string = "Invalid username or password.";
+    }
+    if ($(".main_container").data("status") == -2) {
+        status_string = "Username has already been taken.";
+    }
+    if ($(".main_container").data("status") == -3) {
+        status_string = "You have logged out successfully.";
+    }
 
     /*
     let test_char = "san diego";
@@ -31,6 +46,7 @@ $(document).ready(function(){
     let create_account_div = createNewAccount();
     $(".main_container").append(login_div);
     $(".main_container").append(create_account_div);
+
 
 
 });
@@ -70,7 +86,7 @@ function createNewAccount() {
     form_div.append(input_email);
 
     let input_password = createInputDiv();
-    input_password.attr({type: "text", id: "new_password", name: "new_password", placeholder: "password", required : "true"});
+    input_password.attr({type: "password", id: "new_password", name: "new_password", placeholder: "password", required : "true"});
     form_div.append(input_password);
 
     let input_city = createInputDiv();
@@ -244,16 +260,7 @@ function createLogin() {
                     "position": "absolute", "top": "10vh", "bottom": "10vh"
                 });
     login_div.attr("id", "login_div");
-    // debug
-    if ($(".main_container").data("status") == 0) {
-        login_div.append("normal login");
-    }
-    if ($(".main_container").data("status") == -1) {
-        login_div.append("wrong credentials");
-    }
-    if ($(".main_container").data("status") == 1) {
-        login_div.append("new account just created");
-    }
+
 
     center_div = createCenterDiv();
 
@@ -271,6 +278,10 @@ function createLogin() {
     title_div.append(title_name);
     title_div.append(slogan);
 
+    let status_message = $("<div></div>");
+    status_message.css({"background": "", "width": "100%", "height": "auto", "font-size": "300%", "margin-top": "0%", "margin-bottom": "0%", "text-align": "center"});
+    status_message.append(status_string);
+
     let form_div = createFormDiv();
     let input_username = createInputDiv();
     input_username.attr({type: "text", id: "input_username", name: "input_username", placeholder: "enter username", required : "true"});
@@ -278,7 +289,7 @@ function createLogin() {
     
     form_div.append(input_username);
     let input_password = createInputDiv();
-    input_password.attr({type: "text", id: "input_password", name: "input_password", placeholder: "enter password", required : "true"});
+    input_password.attr({type: "password", id: "input_password", name: "input_password", placeholder: "enter password", required : "true"});
     form_div.append(input_password);
     
     let buttons_div = createButtonsDiv();
@@ -339,6 +350,7 @@ function createLogin() {
     })
 
     center_div.append(title_div);
+    center_div.append(status_message);
     center_div.append(form_div);
     center_div.append(buttons_div);
     login_div.append(center_div);

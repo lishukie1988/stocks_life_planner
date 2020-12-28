@@ -40,11 +40,30 @@ app.post('/login',function(req,res,next){
 
 */
 
+
+var global_test = 0;
+
+// test indefinte fct
+function intervalFunc() {
+  console.log("REPEAT", global_test);
+  global_test++;
+}
+
+
+// test sleep fct
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
 app.use('/login', require('./login.js'));
 
 app.use('/create', require('./create.js'));
 
 app.all('*', function(req, res, next){
+    //setInterval(intervalFunc,100000);
+    //console.log("before sleep");
+    //sleep(5000).then(() => { console.log("After sleeping for 5 seconds"); });
     console.log("passed through getall route");
     console.log(req.session);
     //next();
@@ -61,13 +80,14 @@ app.all('*', function(req, res, next){
     }
     else {
         console.log("trickle down to target route");
-        console.log(req.session.userID);
+        //console.log(req.session.userID);
         next();
     }
 });
 
 app.use('/calendar', require('./calendar.js'));
 app.use('/todo', require('./todo.js'));
+app.use('/logout', require('./logout.js'));
 //app.use('/Users', require('./Users.js'));
 //app.use('/Items', require('./Items.js'));
 //app.use('/Orders', require('./Orders.js'));

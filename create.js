@@ -18,8 +18,8 @@ module.exports = function(){
     */
     router.post('/', function(req, res){
 
-        console.log("reached post create");
-        console.log(req.body);
+        //console.log("reached post create");
+        //console.log(req.body);
 
         if (req.session.userID) {
             res.redirect("/calendar");
@@ -32,8 +32,8 @@ module.exports = function(){
             //context.jsscripts = ["login/front_login_on_load.js"];
             //res.render('login', context);
             var {userID, postalCode, password, email, country, city} = req.body;
-            console.log(userID);
-            console.log(postalCode);
+            //console.log(userID);
+            //console.log(postalCode);
 
 
             var callbackCount = 0;
@@ -49,8 +49,8 @@ module.exports = function(){
                     // *** TODO: figure out what to retrieve from results
                    req.session.userID = userID;
                    req.session.save();
-                   console.log("created new account");
-                   console.log(req.session);
+                   //console.log("created new account");
+                   //console.log(req.session);
                    res.write("creation_success");
                    res.end();
 
@@ -74,7 +74,7 @@ module.exports = function(){
             }
             //console.log("after res.end() due to error");
             context.users = results;
-            console.log(context);
+            //console.log(context);
             //console.log(results);
             //console.log("reached compelte()");
             complete();
@@ -119,7 +119,7 @@ module.exports = function(){
     
     router.post('/', function(req, res){
         var body_params = [req.body.username, req.body.password];
-        console.log(body_params);
+        //console.log(body_params);
 
         var callbackCount = 0;
         var context = {};
@@ -132,7 +132,7 @@ module.exports = function(){
             if(callbackCount >= 1){
 
                 if (context.users.length == 0) {
-                    console.log("invalid username &/ password");
+                    //console.log("invalid username &/ password");
                     //res.redirect("/login");
                     res.write("invalid");
                 }
@@ -140,7 +140,7 @@ module.exports = function(){
                     //console.log(context.users[0].userID);
                     req.session.userID = context.users[0].userID;
                     req.session.save();
-                    console.log(req.session);
+                    //console.log(req.session);
                     res.write("valid");
                     //console.log(context.users[0][userID]);
                 }

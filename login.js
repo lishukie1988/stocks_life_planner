@@ -7,7 +7,7 @@ module.exports = function(){
     //     - sends front-end ajax post request to "/login" (below) with entered userid_x & password_x 
     router.get('/', function(req, res){
 
-        console.log(req.query);
+        //console.log(req.query);
 
         if (req.session.userID) {
             res.redirect("/calendar");
@@ -17,6 +17,7 @@ module.exports = function(){
             var context = {};
             context.status = req.query.status;
             context.jsscripts = ["login/front_login_on_load.js"];
+            //console.log("about to render login page");
             res.render('login', context);
         
         }
@@ -59,7 +60,7 @@ module.exports = function(){
     
     router.post('/', function(req, res){
         var body_params = [req.body.username, req.body.password];
-        console.log(body_params);
+        //console.log(body_params);
 
         var callbackCount = 0;
         var context = {};

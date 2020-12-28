@@ -7,7 +7,7 @@ module.exports = function(){
     // ****TODO: copied from login.js, modify for user info retrieval
     router.post('/', function(req, res){
         var body_params = [req.body.username, req.body.password];
-        console.log(body_params);
+        //console.log(body_params);
 
         var callbackCount = 0;
         var context = {};

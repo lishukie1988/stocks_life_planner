@@ -1,3 +1,78 @@
+let months_string_long = {1: "January", 2: "February", 3: "March", 4: "April",
+    5: "May", 6: "June", 7: "July", 8: "August",
+    9: "September", 10: "October", 11: "November", 12: "December"
+}
+
+function createScroll(float) {
+
+    let scroll_button = $("<div></div");
+    scroll_button.css({"width": "25%", "height": "100%", "background": background_teal_clear, "float": float,
+                        "text-align": "center", "line-height": "100%"
+                    })
+    //scroll_button.attr("id", "scroll_div");
+    let arrow = (float == "right") ? '\u27F9' : '\u27F8';
+    scroll_button.append(arrow);
+
+    let increment = (float == "left") ? -1 : 1;
+
+    addHover(scroll_button, {"background": background_teal}, {"background": scroll_button.css("background")});
+
+    scroll_button.click(function() {
+
+        console.log("scroll clicked");
+        console.log(current_month, increment);
+        if (current_month == 1 && float == "left") {
+            current_year = parseInt(current_year) - 1;
+            $("#year_div").text(current_year);
+            $("#year_div").data("year", current_year);
+        }
+        if (current_month == 12 && float == "right") {
+            console.log("before addition: ", current_year);
+            current_year = parseInt(current_year) + 1;
+            console.log("line 25 current year: ", current_year);
+            $("#year_div").text(current_year);
+            $("#year_div").data("year", current_year);
+        }
+
+        current_month = (current_month + increment) % 12;
+        current_month = (current_month == 0) ? 12 : current_month;
+        
+
+        //console.log("current month after: ", current_month);
+
+        $("#calendar_div").animate(
+            {width: "0%", height: "0%"},
+            100
+        )
+
+        $("#calendar_div").html("");
+
+        
+        $("#month_year_div").animate(
+            {width: "0%", height: "0%"},
+            100
+        )
+        $("#month_div").text(months_string_long[current_month]);
+        $("#month_div").data("month", current_month);
+
+        $("#calendar_div").html(createCalendar(current_month, current_year));
+
+        $("#calendar_div").animate(
+            {width: `${calendar_width}` + "%", height: `${calendar_height}` + "%"},
+            100
+        )
+        $("#month_year_div").animate(
+            {width: `${month_year_width}` + "%", height: `${month_year_height}` + "%"},
+            100
+        )
+
+
+    })
+
+    return scroll_button;
+}
+
+
 function convertToQuery(input_string) {
     console.log(input_string);
     let split_array = input_string.split(" ");
@@ -125,10 +200,6 @@ function createMonthChoice(month) {
     let months_string = {1: "JAN", 2: "FEB", 3: "MAR", 4: "APR",
     5: "MAY", 6: "JUN", 7: "JUL", 8: "AUG",
     9: "SEP", 10: "OCT", 11: "NOV", 12: "DEC"}
-    let months_string_long = {1: "January", 2: "February", 3: "March", 4: "April",
-    5: "May", 6: "June", 7: "July", 8: "August",
-    9: "September", 10: "October", 11: "November", 12: "December"
-}
 
     let div = $("<div></div>");
     div.css({"font-size": "25px", "background": "rgba(109,189,181,0.4)", "width": "25%", "height": "33%",
@@ -174,7 +245,7 @@ function createYear(year) {
     let year_div = $("<div></div>");
     year_div.text(year);
     //year_div.attr("id", "year_div");
-    year_div.css({"font-size": "300%", "background": "rgba(109,189,181,0.5)", "width": "29%",
+    year_div.css({"font-size": "250%", "background": "rgba(109,189,181,0.5)", "width": "29%",
                     "float": "right", "margin-right": "0.25%" , "height": "100%"
                 });
     year_div.attr("id", "year_div");
@@ -213,7 +284,7 @@ function createMonth(month) {
     month_div.attr("id", "month_div");
     month_div.text(months_string[month]);
     month_div.data("month", month);
-    month_div.css({"font-size": "300%", "background": "rgba(109,189,181,0.5)", "width": "69%",
+    month_div.css({"font-size": "250%", "background": "rgba(109,189,181,0.5)", "width": "69%",
                     "float": "left", "margin-left": "0.25%", "height": "100%"
                 });
 
