@@ -16,7 +16,7 @@ module.exports = function(){
             //if (req.query.status == 0) {
             var context = {};
             context.status = req.query.status;
-            context.jsscripts = ["login/front_login_on_load.js"];
+            context.jsscripts = ["helper", "login/front_login_on_load.js"];
             //console.log("about to render login page");
             res.render('login', context);
         
