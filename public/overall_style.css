@@ -12,6 +12,10 @@
     margin: "auto";
 }
 
+.one_percent_margin {
+    margin: 1%;
+}
+
 #main_div { /* div for entire screen */
 
     width:85%;

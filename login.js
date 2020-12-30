@@ -16,7 +16,7 @@ module.exports = function(){
             //if (req.query.status == 0) {
             var context = {};
             context.status = req.query.status;
-            context.jsscripts = ["helper", "login/front_login_on_load.js"];
+            context.jsscripts = ["./helper.js", "login/front_login_on_load.js"];
             //console.log("about to render login page");
             res.render('login', context);
         
@@ -67,6 +67,7 @@ module.exports = function(){
         //context.jsscripts = ["calendar/front_calendar_day.js", "calendar/front_calendar.js", "calendar/front_calendar_on_load.js"];
         
         var mysql = req.app.get('mysql');
+        
         validate(res, body_params, mysql, context, complete);
         function complete(){
             callbackCount++;

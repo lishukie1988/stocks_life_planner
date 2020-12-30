@@ -4,21 +4,20 @@ module.exports = function(){
 
 
     router.get('/', function(req, res){
+        console.log("@ stock lookup get");
         var callbackCount = 0;
         var context = {};
         //console.log("@ calendar get");
         //console.log(req.session.userID);
         context.userID = req.session.userID;
-        context.jsscripts = ["./helper.js", "nav/front_nav.js", "calendar/front_calendar_day.js", "calendar/front_calendar.js", "calendar/front_calendar_on_load.js"];
+        context.jsscripts = ["./helper.js", "nav/front_nav.js", "stock_lookup/front_stock_lookup_helper.js", "stock_lookup/front_stock_lookup.js", "stock_lookup/front_stock_lookup_on_load.js"];
         
         var mysql = req.app.get('mysql');
         getUserData(res, req.session.userID, mysql, context, complete);
         function complete(){
             callbackCount++;
             if(callbackCount >= 1){
-                console.log("context for calender view render");
-                console.log(context);
-                res.render('calendar', context);
+                res.render('stock_lookup', context);
             }
 
         }

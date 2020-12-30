@@ -4,7 +4,7 @@ function createNav() {
     nav_div.css({"width": "100%", "height": "100%", "float": "", "background": background_charcoal});
 
     let logout_button = $("<div></div");
-    logout_button.css({"float": "right", "font-size": "65%", "width": "auto",
+    logout_button.css({"float": "right", "font-size": "65%", "width": "15%",
                     "height": "100%", "background": background_day_clear,
                     "text-align": "center", "line-height": "140%"
                     });
@@ -12,6 +12,16 @@ function createNav() {
     logout_button.html(cross_sym);
     addHover(logout_button, {"background": background_teal_clear}, {"background": background_day_clear});
     nav_div.append(logout_button);
+    
+    let stock_lookup_button = createDiv("15%", "100%", "right", "stock_lookup");
+    stock_lookup_button.css({"float": "right", "font-size": "65%", "width": "15%",
+                    "height": "100%", "background": background_day_clear,
+                    "text-align": "center", "line-height": "140%"
+                    });
+    stock_lookup_button.html("<b>STOCK LOOKUP</b>");
+    addHover(stock_lookup_button, {"background": background_teal_clear}, {"background": background_day_clear});
+    nav_div.append(stock_lookup_button);
+    
     
 
     logout_button.click(function() {
