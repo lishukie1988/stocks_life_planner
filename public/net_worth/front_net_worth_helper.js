@@ -69,7 +69,7 @@ function createDay(empty, date, weekday) {
             type: 'POST', 
             data: {userID: user_id, year: current_year, month: current_month, date: date},
             success: function(result){
-                console.log("CALLBACK of POST todo AJAX")
+                console.log("CALLBACK of POST TODO AJAX")
                 let list = result["todos"];
                 //console.log(result["todos"]);
 

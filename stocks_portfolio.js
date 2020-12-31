@@ -4,20 +4,20 @@ module.exports = function(){
 
 
     router.get('/', function(req, res){
-        console.log("@ stock lookup get");
+        console.log("@ get stocks portfolio");
         var callbackCount = 0;
         var context = {};
         //console.log("@ calendar get");
         //console.log(req.session.userID);
         context.userID = req.session.userID;
-        context.jsscripts = ["./helper.js", "nav/front_nav.js", "stock_lookup/front_stock_lookup_helper.js", "stock_lookup/front_stock_lookup.js", "stock_lookup/front_stock_lookup_on_load.js"];
+        context.jsscripts = ["./helper.js", "nav/front_nav.js", "stocks_portfolio/front_stocks_portfolio_helper.js", "stocks_portfolio/front_stocks_portfolio.js", "stocks_portfolio/front_stocks_portfolio_on_load.js"];
         
         var mysql = req.app.get('mysql');
         getUserData(res, req.session.userID, mysql, context, complete);
         function complete(){
             callbackCount++;
             if(callbackCount >= 1){
-                res.render('stock_lookup', context);
+                res.render('stocks_portfolio', context);
             }
 
         }
@@ -45,6 +45,37 @@ module.exports = function(){
         });
     }
     
+
+
+    router.post('/stocks_list', function(req, res){
+        var callbackCount = 0;
+        var context = {}; 
+        var mysql = req.app.get('mysql');
+        var userID = req.body.userID;
+        console.log("@ post stocks_portfolio/stocks_list");
+        sql = "SELECT * FROM (SELECT SUM(quantity) as sharesOwned, Stocks.symbol, Stocks.longName, Stocks.summary, Stocks.currentPrice, Stocks.highPrice, Stocks.lowPrice, Stocks.priceChange FROM Stock_bundles JOIN Stocks ON Stock_bundles.symbol = Stocks.symbol WHERE userid=? GROUP BY Stocks.symbol) AS X WHERE X.sharesOwned != 0";
+        mysql.pool.query(sql, [userID], function(error, results, fields){
+            if(error){
+                res.write(JSON.stringify(error));
+                res.end();
+                return;
+            }
+            else {
+
+                //console.log(results);
+                //console.log("@ post stocks_portfolio/stocks_list: aboutto send results to front end ");
+                res.send(results);
+                return;
+            }
+        });
+        
+        //validateUserBalance(res, context, mysql, params, updateStocksEntry);
+    });
+
+
+
+
+    // ========================================================================
 
     /* POST: stock_lookup/buy
     - validates that userID has enough balance in database for quantity*currentPrice

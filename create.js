@@ -31,7 +31,7 @@ module.exports = function(){
             //context.status = req.query.status;
             //context.jsscripts = ["login/front_login_on_load.js"];
             //res.render('login', context);
-            var {userID, postalCode, password, email, country, city} = req.body;
+            var {userID, email, password, postalCode, city, country} = req.body;
             //console.log(userID);
             //console.log(postalCode);
 
@@ -41,7 +41,7 @@ module.exports = function(){
             //context.jsscripts = ["calendar/front_calendar_day.js", "calendar/front_calendar.js", "calendar/front_calendar_on_load.js"];
             
             var mysql = req.app.get('mysql');
-            createAccount(res, [userID, postalCode, password, email, city, country], mysql, context, complete);
+            createAccount(res, [userID, email, password, postalCode, city, country], mysql, context, complete);
             function complete(){
                 callbackCount++;
                 if(callbackCount >= 1){
@@ -63,7 +63,8 @@ module.exports = function(){
 
 
     function createAccount(res, params, mysql, context, complete){
-        var sql_string = 'INSERT INTO `Users` (`userID`, `email`, `password`, `balance`, `postalCode`, `city`, `country`, `tempUnit`) VALUES (?,?,?,10000,?,?,?,1)';
+        console.log("@createAccount: ", params);
+        var sql_string = 'INSERT INTO `Users` (`userID`, `email`, `password`, `balance`, `postalCode`, `city`, `country`, `tempUnit`, `day`) VALUES (?,?,?,100000,?,?,?,1, 0)';
         mysql.pool.query(sql_string, params, function(error, results, fields){
             if(error){
                 console.log("before res.end(): creation error: taken username");

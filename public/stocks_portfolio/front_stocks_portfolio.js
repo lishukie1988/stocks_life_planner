@@ -1,3 +1,115 @@
+function createSortBar() {
+    let color = background_search_news;
+    let sort_bar = createDiv("100%", "100%", "", "");
+    sort_bar.css({"background": background_todo});
+    let shares_owned = createStockColumnDiv("SHARES OWNED", color);
+    let symbol = createStockColumnDiv("SYMBOL", color);
+    let long_name = createStockColumnDiv("NAME", color);
+    let current_price = createStockColumnDiv("PRICE", color);
+    //current_price.append(stock_object["currentPrice"]);
+    let high_price = createStockColumnDiv("DAY HIGH", color);
+    //high_price.append(stock_object["highPrice"]);
+    let low_price = createStockColumnDiv("DAY LOW", color);
+    //low_price.append(stock_object["lowPrice"]);
+    let price_change = createStockColumnDiv("DAY CHANGE", color);
+    //price_change.append(stock_object["priceChange"]);
+
+    sort_bar.append(shares_owned);
+    sort_bar.append(symbol);
+    sort_bar.append(long_name);
+    sort_bar.append(current_price);
+    sort_bar.append(high_price);
+    sort_bar.append(low_price);
+    sort_bar.append(price_change);
+
+    return sort_bar;
+}
+
+function createStocksList() {
+    let stocks_list = createDiv("100%", "100%", "", "");
+    stocks_list.css({"background": background_day});
+    //console.log("@ createStocksList");
+
+
+
+    $.ajax({
+        url: "/stocks_portfolio/stocks_list",
+        async: true,
+        type: 'POST', 
+        data: {userID: user_id},
+        success: function(result){
+            console.log("CALLBACK of POST STOCKS_PORTFOLIO AJAX")
+            console.log(result);
+            for (let index in result) {
+                stocks_list.append(createOwnedStocks(result[index]));
+            }
+            /*
+
+            let list = result["todos"];
+            //console.log(result["todos"]);
+
+            for (let item in list) {
+                //console.log(list[item]["content"]);
+                let todo = $("<div></div>");
+                todo.css({"background": background_todo, "height": "19%", "width": "100%", "font-size": "10%", "margin-bottom": "2%"});
+                todo.append(list[item]["content"]);
+                day_x.append(todo);
+            }
+
+            */
+
+        }
+            
+    });
+
+
+    return stocks_list;
+}
+
+
+function createOwnedStocks(stock_object) {
+
+    let color = (stock_object["priceChange"] >= 0) ? background_update_todo : background_delete_todo;
+
+    let owned_stock = createDiv("100%", "15%", "", "");
+    owned_stock.css({"background": background_todo});
+    let shares_owned = createStockColumnDiv(stock_object["sharesOwned"], color);
+    let symbol = createStockColumnDiv(stock_object["symbol"], color);
+    let long_name = createStockColumnDiv(stock_object["longName"], color);
+    let current_price = createStockColumnDiv(stock_object["currentPrice"], color);
+    //current_price.append(stock_object["currentPrice"]);
+    let high_price = createStockColumnDiv(stock_object["highPrice"], color);
+    //high_price.append(stock_object["highPrice"]);
+    let low_price = createStockColumnDiv(stock_object["lowPrice"], color);
+    //low_price.append(stock_object["lowPrice"]);
+    let price_change = createStockColumnDiv(stock_object["priceChange"], color);
+    //price_change.append(stock_object["priceChange"]);
+
+    owned_stock.append(shares_owned);
+    owned_stock.append(symbol);
+    owned_stock.append(long_name);
+    owned_stock.append(current_price);
+    owned_stock.append(high_price);
+    owned_stock.append(low_price);
+    owned_stock.append(price_change);
+
+    return owned_stock;
+}
+
+
+function createStockColumnDiv(content, color) {
+    let column_div = createDiv("13.285%", "100%", "left", "");
+    column_div.append(content);
+    column_div.css({"margin-left": "0.5%", "margin-right": "0.5%", "background": color,
+                    "text-align": "center", "font-style": "bold"
+                    });
+    return column_div;
+}
+
+
+
+// ==================================================================
+
 function createSearchBar() {
     let search_div = createDiv("100%", search_bar_height, "", "search_div");
     search_div.css({"background": background_day, "margin": "0%"});

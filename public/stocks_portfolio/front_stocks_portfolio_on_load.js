@@ -89,12 +89,19 @@ $(document).ready(function(){
 
     $(".nav_container").append(createNav());
 
+    /*
     let search_bar = createSearchBar();
     $(".main_container").append(search_bar);
     let stock_details = createStockDetails();
     $(".main_container").append(stock_details);
     let buy_div = createDiv("100%", "25%", "", "buy_div");
-    //buy_div.append(createBuyWindow());
     $(".main_container").append(buy_div);
-  
+    */
+    let sort_div = createDiv("100%", "10%", "", "sort_bar");
+    sort_div.append(createSortBar());
+    $(".main_container").append(sort_div);
+    let stocks_list_div = createDiv("100%", "90%", "", "stocks_list_div");
+    stocks_list_div.append(createStocksList());
+    $(".main_container").append(stocks_list_div);
+
   });

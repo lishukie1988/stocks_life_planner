@@ -30,7 +30,7 @@ cron.schedule('59,9,19,29,39,49 * * * * *', () => {
   var current_time = new Date;
   //console.log(current_time.getSeconds(), "10 seconds have passed");
 
-  //dailyStockUpdate.promisified_fetchSymbols(mysql);
+  //dailyStockUpdate.promisified_fetchSymbols();
 
 })
 
@@ -59,6 +59,8 @@ app.all('*', function(req, res, next){
 
 app.use('/calendar', require('./calendar.js'));
 app.use('/stock_lookup', require('./stock_lookup.js'));
+app.use('/stocks_portfolio', require('./stocks_portfolio.js'));
+app.use('/net_worth', require('./net_worth.js'));
 app.use('/todo', require('./todo.js'));
 app.use('/logout', require('./logout.js'));
 

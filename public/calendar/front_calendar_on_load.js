@@ -98,7 +98,7 @@ $(document).ready(function(){
       
 
     $.ajax({
-        url: "https://api.weatherbit.io/v2.0/forecast/daily?key=54ca63d4a7474c57a1879b3c4f71291b&city=San%20Diego&country=United%20States",
+        url: "https://api.weatherbit.io/v2.0/forecast/daily?key=54ca63d4a7474c57a1879b3c4f71291b&city=" + convertToQuery(user_city) + "&country=" + convertToQuery(user_country),
         //url: "https://newsapi.org/v2/everything?q=bitcoin&apiKey=c059c3dae2b74394b71ec1136390998a",
         async: false,
         success: function(result){

@@ -23,7 +23,7 @@ async function * asynchIterator(count , ms) {
   for (let i = 0; i < count; i++) yield delay(ms).then(() => i);
 }
 
-function fetchSymbols (mysql){
+function fetchSymbols (){
 
     //console.log(params);
     var sql_string = 'SELECT `symbol` FROM Stocks';
@@ -50,7 +50,7 @@ function fetchSymbols (mysql){
 }
 
 
-function promisified_fetchSymbols (mysql){
+function promisified_fetchSymbols (){
   
     //console.log(params);
     var sql_string = 'SELECT `symbol` FROM Stocks';
@@ -68,7 +68,7 @@ function promisified_fetchSymbols (mysql){
         (async function loop() {
           for await (let i of asynchIterator(results.length, 220)) {
             //console.log(symbol_list[i]);
-            promise_updateStocks(mysql, results[i]["symbol"]).then(
+            promise_updateStocks(results[i]["symbol"]).then(
               function(result) {
                 console.log(result);
               }
@@ -112,7 +112,7 @@ function promise_fetchStocksAPI (symbol) {
           var current_price = res.body["price"]["regularMarketPrice"]["raw"].toFixed(2);
           var high_price = res.body["price"]["regularMarketDayHigh"]["raw"].toFixed(2);
           var low_price = res.body["price"]["regularMarketDayLow"]["raw"].toFixed(2);
-          var change = res.body["price"]["regularMarketChange"]["raw"].toFixed(2);
+          var change = res.body["price"]["regularMarketChangePercent"]["raw"].toFixed(2);
   
           summary = res.body["summaryProfile"]["longBusinessSummary"];
           long_name = res.body["price"]["longName"];
@@ -131,7 +131,7 @@ function promise_fetchStocksAPI (symbol) {
   
   
   
-function fetchStocksAPI (mysql, symbol) {
+function fetchStocksAPI (symbol) {
   
     var req = unirest("GET", "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary");
   
@@ -163,18 +163,18 @@ function fetchStocksAPI (mysql, symbol) {
       summary = res.body["summaryProfile"]["longBusinessSummary"];
       long_name = res.body["price"]["longName"];
       
-      updateStocks(mysql, [long_name, summary, current_price, high_price, low_price, change, symbol]);
+      updateStocks([long_name, summary, current_price, high_price, low_price, change, symbol]);
     });
   
 }
   
   
-function promise_updateStocks (mysql, symbol){
+function promise_updateStocks (symbol){
   
     return new Promise(function(success, reject) {
       promise_fetchStocksAPI(symbol).then(function(params) {
   
-        console.log("@promise_updateStocks: ", params[2]);
+        //console.log("@promise_updateStocks: ", params[2]);
         var sql_string = 'UPDATE Stocks SET longName=?, summary=?, currentPrice=?, highPrice=?, lowPrice=?, priceChange=? WHERE symbol=?';
         mysql.pool.query(sql_string, params, function(error, results, fields){
             if(error){
@@ -197,7 +197,7 @@ function promise_updateStocks (mysql, symbol){
   
 }
   
-function updateStocks (mysql, params){
+function updateStocks (params){
   
     console.log(params);
     var sql_string = 'UPDATE Stocks SET longName=?, summary=?, currentPrice=?, highPrice=?, lowPrice=?, priceChange=? WHERE symbol=?';
