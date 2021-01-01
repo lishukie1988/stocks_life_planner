@@ -46,6 +46,34 @@ module.exports = function(){
     }
     
 
+    router.post('/', function(req, res){
+        var callbackCount = 0;
+        var context = {}; 
+        var mysql = req.app.get('mysql');
+        var userID = req.body.userID;
+        console.log("@ post net_worth");
+        sql = "SELECT * FROM Net_worths WHERE userID=? ORDER BY date ASC;";
+        mysql.pool.query(sql, [userID], function(error, results, fields){
+            if(error){
+                res.write(JSON.stringify(error));
+                res.end();
+                return;
+            }
+            else {
+
+                //console.log(results);
+                //console.log("@ post stocks_portfolio/stocks_list: aboutto send results to front end ");
+                res.send(results);
+                return;
+            }
+        });
+        
+        //validateUserBalance(res, context, mysql, params, updateStocksEntry);
+    });
+
+
+// ============================================================
+
 
     router.post('/stocks_list', function(req, res){
         var callbackCount = 0;

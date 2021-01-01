@@ -1,3 +1,129 @@
+function createMenuBar() {
+    let menu_bar = createDiv("100%", "100%", "", "");
+    let net_worth_button = createDiv("50%", "100%", "left", "");
+    net_worth_button.css({"text-align": "center", "background": background_teal_clear, "margin-bottom": "0%" });
+    net_worth_button.append("<b>NET WORTH</b>");
+    let growth_rate_button = createDiv("50%", "100%", "right", "");
+    growth_rate_button.css({"text-align": "center", "background": background_teal_clear, "margin-bottom": "0%" });
+    growth_rate_button.append("<b>GROWTH RATE</b>");
+    menu_bar.append(net_worth_button);
+    menu_bar.append(growth_rate_button);
+
+
+    net_worth_button.click(function() {
+        $("#growth_rate_div").hide();
+        $("#net_worth_div").show();
+        
+        //$("#net_worth_div").css({"height": "95%", "width": "100%"});
+        //$("#growth_rate_div").css({"height": "0%", "width": "0%"});
+
+    })
+    growth_rate_button.click(function() {
+        $("#net_worth_div").hide();
+        $("#growth_rate_div").show();
+
+    })
+    return menu_bar; 
+
+}
+
+
+function createGraph(canvas_id, x, y_1, y_2, label_1, label_2, title) {
+
+    var ctx = document.getElementById(canvas_id).getContext('2d');
+    //ctx.css({"height": "100%"});
+
+    var graph = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: x,
+            datasets: [{
+              label: label_1,
+              data: y_1,
+              lineTension: 0,
+              backgroundColor: background_update_todo
+            }, {
+              label: label_2,
+              data: y_2,
+              lineTension: 0,
+              backgroundColor: background_day_clear
+            }]
+          },
+        options: {
+          legend: {
+            display: true
+          },
+          title: {
+            display: true,
+            text: title,
+          },
+          scales: {
+            xAxes: [{
+              type: 'time',
+              time: {
+                unit: 'day',
+                tooltipFormat: 'lll',
+              }
+            }]
+          }
+        }
+    });
+    
+}
+
+function createTimeGraph(canvas_id, x, y_1, y_2, label1, label2) {
+
+    var ctx = document.getElementById(canvas_id).getContext('2d');
+
+    var graph = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["2000-12-12", "2000-12-13", "2000-12-14", "2001-01-15", "2001-02-15", "2001-03-15", "2001-04-15"],
+            datasets: [{
+              label: 'Actual',
+              data: [120, 30, 40, 80],
+              lineTension: 0,
+              backgroundColor: background_update_todo
+            }, {
+              label: 'with 3 month forecast',
+              data: [120, 30, 40, 80, 130, 140, 150],
+              lineTension: 0,
+              backgroundColor: background_day_clear
+            }]
+          },
+        options: {
+          legend: {
+            display: true
+          },
+          title: {
+            display: true,
+            text: "Correct Usage of Time Scale (Passing Labels as Integers/Dates/Moments)",
+          },
+          scales: {
+            xAxes: [{
+              type: 'time',
+              time: {
+                unit: 'day',
+                tooltipFormat: 'lll',
+              }
+            }]
+          }
+        }
+    });
+    
+}
+
+
+
+
+function clearGraphDiv(canvas_id) {
+    var fetched_canvas = document.getElementById(canvas_id);
+    fetched_canvas.width = 0;
+    fetched_canvas.height = 0;
+
+}
+
+
 function createSortBar() {
     let color = background_search_news;
     let sort_bar = createDiv("100%", "100%", "", "");

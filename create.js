@@ -64,7 +64,7 @@ module.exports = function(){
 
     function createAccount(res, params, mysql, context, complete){
         console.log("@createAccount: ", params);
-        var sql_string = 'INSERT INTO `Users` (`userID`, `email`, `password`, `balance`, `postalCode`, `city`, `country`, `tempUnit`, `day`) VALUES (?,?,?,100000,?,?,?,1, 0)';
+        var sql_string = 'INSERT INTO `Users` (`userID`, `email`, `password`, `balance`, `postalCode`, `city`, `country`, `tempUnit`) VALUES (?,?,?,100000,?,?,?,1)';
         mysql.pool.query(sql_string, params, function(error, results, fields){
             if(error){
                 console.log("before res.end(): creation error: taken username");
