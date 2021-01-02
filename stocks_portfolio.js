@@ -74,6 +74,126 @@ module.exports = function(){
 
 
 
+    /*
+    - validate that: user has a sum(quantity) Stock_bundles group by symbol entry WHERE symbol = req.body.symbol AND sum(quantity) >= req.body.quantity
+     - if not valid, res.send("not_enough_shares"), return
+     - if valid:
+      - derive total_value from fetched entry
+       - join Stocks on Stocks.symbol = Stock_bundles.symbol
+       - total_value = quantity*results[0]["currentPrice"]
+      - insert entry into Stock_bundles with userID, symbol, -quantity
+      - update Users.balance += total_value
+    */
+    router.post('/sell_to_source', function(req, res){
+        console.log("@ post stocks_portfolio/sell_to_source");
+        var params = req.body;
+        console.log(params);
+        var callbackCount = 0;
+        var context = {};
+        //console.log("@ calendar get");
+        //console.log(req.session.userID);
+        //context.userID = req.session.userID;
+        //context.jsscripts = ["./helper.js", "nav/front_nav.js", "stock_lookup/front_stock_lookup_helper.js", "stock_lookup/front_stock_lookup.js", "stock_lookup/front_stock_lookup_on_load.js"];
+        
+        var mysql = req.app.get('mysql');
+        validateUserStockBundle(res, context, mysql, params);
+        
+    });
+
+    function validateUserStockBundle(res, context, mysql, params) {
+        
+        var callbackCount = 0;
+        var sql = "SELECT * FROM (SELECT Users.balance, Stock_bundles.userID, Stock_bundles.symbol, SUM(Stock_bundles.quantity) AS quantity, Stocks.currentPrice FROM Stock_bundles JOIN Stocks ON Stock_bundles.symbol = Stocks.symbol JOIN Users ON Users.userID=Stock_bundles.userID GROUP BY Stock_bundles.userID, Stock_bundles.symbol) AS A WHERE A.userID=? AND A.symbol=? AND A.quantity>=?";
+
+        mysql.pool.query(sql, [params.userID, params.symbol, params.quantity], function(error, results, fields){
+            if(error){
+                console.log("@ validateUserStockBundle: mysql error")
+                console.log(error);
+                res.write(JSON.stringify(error));
+                res.end();
+                
+            }
+            else {
+                
+                //console.log("results length: ", results.length);
+                //console.log("results: ", results );
+                if (results.length == 0) {
+                    res.send("not_enough_shares");
+                    return;
+                }
+                else {
+                    
+                    console.log("params: ", params);
+                    var total_price = parseFloat(results[0]["currentPrice"].toFixed(2)) * parseFloat(params["quantity"]);
+                    console.log("total price: ",total_price);
+                    var old_balance = parseFloat(results[0]["balance"].toFixed(2));
+                    console.log("old_balance: ", old_balance);
+                    var new_balance = parseFloat( ( old_balance + total_price).toFixed(2) );
+                    console.log("new_balance: ", new_balance);
+
+                    var stock_bundle_params = {userID: params.userID, symbol: params.symbol, quantity: -1 * parseInt(params.quantity)};
+                    var balance_params = {balance: new_balance, userID: params.userID};
+
+                    insertStockBundlesEntry(res, context, mysql, stock_bundle_params, complete);
+                    updateUserBalance(res, context, mysql, balance_params, complete);
+                }
+            }
+
+            function complete(){
+                callbackCount++;
+                if(callbackCount >= 2){
+                    
+                    console.log("@ validateUserStockBundle: complete()");
+                    //console.log(context);
+                    res.send("purchase_success");
+                    //return;
+                }
+            }
+            //complete();
+        });
+
+    }
+
+    function insertStockBundlesEntry(res, context, mysql, params, complete) {
+        var sql = "INSERT INTO `Stock_bundles` (`userID`, `symbol`, `quantity`) VALUES (?, ?, ?)";
+        param_array = [params.userID, params.symbol, params.quantity];
+        mysql.pool.query(sql, param_array, function(error, results, fields){
+            if(error){
+                //res.write(JSON.stringify(error));
+                //res.end();
+                //return;
+                console.log("@ inserNewStock: mysql error");
+                console.log(error);
+            }
+            else {
+                console.log("@ insertNewStock: success");
+                complete();
+                //insertStockBundle(res, context, mysql, params, complete);
+            }
+        });
+    }
+
+    function updateUserBalance(res, context, mysql, params, complete) {
+        var sql = "UPDATE `Users` SET `balance`=? WHERE `userID`=?";
+        console.log("@ updateUserBalance: ");
+        console.log(params);
+        param_array = [params.balance, params.userID];
+        mysql.pool.query(sql, param_array, function(error, results, fields){
+            if(error){
+                res.write(JSON.stringify(error));
+                res.end();
+                console.log("@ updateUserBundle: mysql error");
+                console.log(error);
+                return;
+
+            }
+            else {
+                console.log("@updateUserBalance: success");
+                complete();
+            }
+        });
+    }
+
 
     // ========================================================================
 

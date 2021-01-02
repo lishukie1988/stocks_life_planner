@@ -78,11 +78,58 @@ module.exports = function(){
             //console.log(context);
             //console.log(results);
             //console.log("reached compelte()");
-            complete();
+            //complete();
+            insertNewNetWorth(res, params[0], mysql, context, complete);
             
         });
     }
 
+    function insertNewNetWorth(res, userID, mysql, context, complete) {
+            var date = new Date();
+            var live_year = date.getFullYear();
+            var live_month = date.getMonth() + 1;
+            var live_date = date.getDate() - 1;
+            var net_worth_date = getDateString(live_year, live_month, live_date);
+            console.log("@ insertNewNetWorth");
+            var params = [userID, net_worth_date];
+            console.log(params);
+            console.log(params[0]);
+            console.log(params[1]);
+            var sql_string = 'INSERT INTO `Net_worths` (`userID`, `date`, `worth`) VALUES (?,?,100000.00)';
+            mysql.pool.query(sql_string, params, function(error, results, fields){
+                if(error){
+                    console.log("@ insertNewNetWorth: ERROR");
+                    res.write(JSON.stringify(error));
+                    //res.write("creation_error");
+                    res.end();
+                    return;
+                } 
+                else {
+                    complete();
+                }
+            })
+    }
+
+    function getDateString(year, month, date) {
+        let return_string = year + "-";
+        let month_string;
+        let date_string;
+        if (month < 10) {
+            month_string = "0" + month + "-";
+        }
+        else {
+            month_string = month + "-";
+        }
+        if (date < 10) {
+            date_string = "0" + date;
+        }
+        else {
+            date_string = date;
+        }
+        return_string += month_string;
+        return_string += date_string;
+        return return_string;
+    }
 
     /*
     - validate that userid_x exists in the database & password_x matches password for userid_x stored in the database

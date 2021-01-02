@@ -68,3 +68,24 @@ function createCenterDiv() {
                 });
     return center_div;
 }
+
+function getDateString(year, month, date) {
+    let return_string = year + "-";
+    let month_string;
+    let date_string;
+    if (month < 10) {
+        month_string = "0" + month + "-";
+    }
+    else {
+        month_string = month + "-";
+    }
+    if (date < 10) {
+        date_string = "0" + date;
+    }
+    else {
+        date_string = date;
+    }
+    return_string += month_string;
+    return_string += date_string;
+    return return_string;
+}

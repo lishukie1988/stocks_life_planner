@@ -110,6 +110,10 @@ $(document).ready(function(){
     $(".main_container").append(menu_div);
     //let stocks_list_div = createDiv("100%", "90%", "", "stocks_list_div");
     //stocks_list_div.append(createStocksList());
+
+    let net_worth_summary_div = createDiv("100%", "95%", "", "net_worth_summary_div");
+    $(".main_container").append(net_worth_summary_div);
+
     let net_worth_div = $("<canvas></canvas>");
     net_worth_div.css({"width": "100%", "height": "95%", "background": background_todo});
     net_worth_div.attr({"id": "net_worth_div"});
@@ -119,7 +123,22 @@ $(document).ready(function(){
     growth_rate_div.attr({"id": "growth_rate_div"});
     $(".main_container").append(growth_rate_div);
     growth_rate_div.hide();
-    //net_worth_div.toggle();
+    net_worth_div.hide();
+
+
+    $.ajax({
+        url: "/net_worth/summary",
+        async: true,
+        type: 'POST', 
+        data: {userID: user_id},
+        success: function(result){
+            console.log("CALLBACK of POST NET_WORTH_SUMMARY AJAX");
+            console.log(result);
+            $("#net_worth_summary_div").append(createNetWorthSummary(result));
+        }
+            
+    });
+
 
     $.ajax({
         url: "/net_worth",
@@ -136,16 +155,16 @@ $(document).ready(function(){
             */
 
             actual_net_worths = result.map(mapActualNetWorths);
-            console.log("actual_net_worths: ", actual_net_worths);
+            //console.log("actual_net_worths: ", actual_net_worths);
             growth_rates = mapGrowthRates(actual_net_worths);
-            console.log("growth_rates: ", growth_rates);
+            //console.log("growth_rates: ", growth_rates);
             avg_growth_rate = getAverageGrowthRate(growth_rates);
-            console.log("avg_growth_rate: ", avg_growth_rate);
+            //console.log("avg_growth_rate: ", avg_growth_rate);
             forecast_net_worths = getForecastNetWorths(actual_net_worths, avg_growth_rate);
-            console.log("forecast_net_worths: ", forecast_net_worths);
+            //console.log("forecast_net_worths: ", forecast_net_worths);
 
             let net_worth_x = forecast_net_worths.map(function(point) { return point["date"]});
-            console.log(net_worth_x);
+            //console.log(net_worth_x);
             let net_worth_y_1 = actual_net_worths.map(function(point) { return point["net_worth"]});
             let net_worth_y_2 = forecast_net_worths.map(function(point) { return point["net_worth"]});
             let net_worth_l_1 = "Historical";
@@ -162,22 +181,6 @@ $(document).ready(function(){
         }
             
     });
-
-    let test_data = {
-        labels: ["2000-12-12", "2000-12-13", "2000-12-14", "2001-01-15", "2001-02-15", "2001-03-15", "2001-04-15"],
-        datasets: [{
-          label: 'Actual',
-          data: [120, 30, 40, 80],
-          lineTension: 0,
-          backgroundColor: background_update_todo
-        }, {
-          label: 'with 3 month forecast',
-          data: [120, 30, 40, 80, 130, 140, 150],
-          lineTension: 0,
-          backgroundColor: background_day_clear
-        }]
-      }
-
 
   });
 
@@ -230,7 +233,7 @@ function getAverageGrowthRate(growth_rates) {
     for (let x = 1; x < growth_rates.length; x++) {
         accum += parseFloat(growth_rates[x]["growth_rate"]);
         //console.log(growth_rates[x]["growth_rate"]);
-        console.log(accum);
+        //console.log(accum);
     }
     accum = (accum / sample_size).toFixed(2);
     return accum;
@@ -256,7 +259,7 @@ function getForecastNetWorths(actual_net_worths, avg_growth_rate) {
         new_net_worth_date["date"] = current_forecast_date;
         let float_avg_growth_rate = parseFloat(avg_growth_rate);
         let net_growth = Math.pow(1.00 + float_avg_growth_rate, 1 + x);
-        console.log("net_growth: ", net_growth);
+        //console.log("net_growth: ", net_growth);
         let current_forecast_net_worth = (latest_net_worth * net_growth).toFixed(2);
         new_net_worth_date["net_worth"] = parseFloat(current_forecast_net_worth);
         forecast_array.push(new_net_worth_date);

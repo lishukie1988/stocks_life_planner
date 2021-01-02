@@ -8,6 +8,9 @@ let scroll_height = "3";
 let scroll_width = "100";
 let search_bar_height = "15%";
 let stock_details_height = "80%";
+let sell_source_div_width = "100";
+let sell_source_div_height = "35";
+
 let date = new Date();
 let current_year = date.getFullYear();
 let current_month = date.getMonth() + 1;
@@ -103,5 +106,8 @@ $(document).ready(function(){
     let stocks_list_div = createDiv("100%", "90%", "", "stocks_list_div");
     stocks_list_div.append(createStocksList());
     $(".main_container").append(stocks_list_div);
+
+    let buy_div = createDiv("0%", "0%", "", "buy_div");
+    $(".main_container").append(buy_div);
 
   });

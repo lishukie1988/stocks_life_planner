@@ -1,7 +1,7 @@
 function createSortBar() {
     let color = background_search_news;
     let sort_bar = createDiv("100%", "100%", "", "");
-    sort_bar.css({"background": background_todo});
+    sort_bar.css({"background": background_todo, "font-weight": "bold"});
     let shares_owned = createStockColumnDiv("SHARES OWNED", color);
     let symbol = createStockColumnDiv("SYMBOL", color);
     let long_name = createStockColumnDiv("NAME", color);
@@ -73,7 +73,7 @@ function createOwnedStocks(stock_object) {
 
     let owned_stock = createDiv("100%", "15%", "", "");
     owned_stock.css({"background": background_todo});
-    let shares_owned = createStockColumnDiv(stock_object["sharesOwned"], color);
+    let shares_owned = createSharesOwnedDiv(stock_object["sharesOwned"], color, stock_object);
     let symbol = createStockColumnDiv(stock_object["symbol"], color);
     let long_name = createStockColumnDiv(stock_object["longName"], color);
     let current_price = createStockColumnDiv(stock_object["currentPrice"], color);
@@ -106,6 +106,132 @@ function createStockColumnDiv(content, color) {
     return column_div;
 }
 
+function createSharesOwnedDiv(content, color, stock_object) {
+    let column_div = createDiv("13.285%", "100%", "left", "");
+    let num_shares_div = createDiv("100%", "33%", "", "");
+    let sell_div = createDiv("100%", "67%", "", "");
+
+    let sell_to_source = createDiv("100%", "50%", "left", "");
+    sell_to_source.css({"text-align": "center", "font-size": "50%", "background": background_teal_clear, "margin-bottom": "1%"});
+    sell_to_source.append("<b>SELL TO SOURCE</b>");
+    let list_to_market_place = createDiv("100%", "50%", "right", "");
+    list_to_market_place.css({"text-align": "center", "font-size": "50%", "background": background_teal_clear});
+    list_to_market_place.append("<b>LIST TO MARKET PLACE</b>");
+    sell_div.append(sell_to_source);
+    sell_div.append(list_to_market_place);
+
+    num_shares_div.append(content);
+    num_shares_div.append(sell_div);
+    column_div.append(num_shares_div);
+    column_div.append(sell_div);
+    column_div.css({"margin-left": "0.5%", "margin-right": "0.5%", "background": color,
+                    "text-align": "center", "font-style": "bold"
+                    });
+
+    
+    sell_to_source.click(function() {
+
+        closeAnimate("#stock_details_div");
+        closeAnimate("#search_div");
+        console.log("clicked");
+        //console.log(stock_symbol);
+        openAnimate("#buy_div", sell_source_div_width, sell_source_div_height);
+        
+        $("#buy_div").html(createSellToSourceWindow(stock_object));
+        
+        //console.log(sell_to_source.parents("div").text());
+       //console.log(stock_object);
+       //$("#buy_div").html("testing");
+    });
+
+    return column_div;   
+}
+
+
+function createSellToSourceWindow(stock_object) {
+ 
+    console.log(stock_object);
+    //let buy_div = createDiv("100%", "25%", "left", "buy_div");
+    let window = createDiv("100%", "100%", "", "buy_window");
+    window.css({"background": background_day});
+    /*
+    buy_window.data({"stock_symbol": stock_stats.stock_symbol,
+                        "stock_name": stock_stats.stock_name,
+                        "stock_summary": stock_stats.stock_summary,
+                        "stock_price": stock_stats.stock_price,
+                        "stock_high": stock_stats.stock_high,
+                        "stock_low": stock_stats.stock_low,
+                        "stock_change": stock_stats.stock_change
+    })
+    */
+    
+    let form_div = createFormDiv();
+    form_div.css({"height": "35%", "font-size": "100%"});
+
+    let prompt = createDiv("100%", "25%", "left", "");
+    prompt.css({"text-align": "center"});
+    prompt.append("Please enter the number of shares you would like to sell:");
+
+    //let input_div = createDiv("75%", "100%", "left", "");
+    let input_quantity = createInputDiv();
+    input_quantity.attr({type: "number", id: "buy_quantity", name: "buy_quantity", placeholder: "shares owned: " + stock_object["sharesOwned"], required : "true"});
+    input_quantity.css({"height": "95%", "width": "50%", "font-size": "100%", "float": "left", "position": "relative"});
+    //input_div.append(input_quantity);
+    //form_div.append(input_div);
+    form_div.append(input_quantity);
+
+
+    let exit_div = createButtonsDiv();
+    exit_div.css({"width": "100%"});
+    let exit_button = createButton("\u00D7", "right");
+    exit_button.css({"width": "auto", "font-size": "25%"});
+    exit_div.append(exit_button);
+
+    let button_div = createDiv("50%", "25%", "", "");
+    button_div.css({"margin-left": "25%"});
+    let sell_button = createButton("SELL", "left" );
+    sell_button.css({"width": "100%", "text-align": "center"});
+    button_div.append(sell_button);
+
+    window.append(exit_div);
+    window.append(prompt);
+    window.append(form_div);
+    window.append(button_div);
+
+    sell_button.click(function() {
+
+        var data = {quantity: input_quantity.val(), userID: user_id, symbol: stock_object.symbol};
+
+        $.ajax({
+            url: "/stocks_portfolio/sell_to_source",
+            async: true,
+            type: 'POST', 
+            data: data,
+            success: function(result){
+                console.log("CALLBACK of POST LOGIN AJAX")
+                console.log(result);
+                if (result === "not_enough_shares") {
+                    // hide buy_div & show not enough balance div / server problem
+                    //window.location.href="login?status=-1";
+
+                }
+
+                else if (result === "sold_to_source_success") {
+                    // relocate to portfolio_page
+                    //window.location.href="/calendar";
+                }
+                else { // mysql error
+                    // hide buy_div & show not enough balance div / server problem
+                    //window.location.href="login?status=-1";
+                }
+            }
+                
+        });
+    })
+
+    return window;
+
+}
 
 
 // ==================================================================

@@ -72,6 +72,57 @@ module.exports = function(){
     });
 
 
+    /*
+    - sends back:
+     - [{balance: 1234.12}] if user has no stocks 
+     - [{balance: 1234.12, currentPrice: 123.12, symbol: ....} {...}]
+    */
+    router.post('/summary', function(req, res){
+        var callbackCount = 0;
+        var context = {}; 
+        var mysql = req.app.get('mysql');
+        var userID = req.body.userID;
+        console.log("@ post net_worth");
+        sql = "SELECT A.balance, (A.sharesOwned*A.currentPrice) as totalStockWorth, A.sharesOwned, A.currentPrice, A.symbol, A.longName, A.summary, A.highPrice, A.lowPrice, A.priceChange FROM (SELECT Users.balance, SUM(quantity) as sharesOwned, Stocks.symbol, Stocks.longName, Stocks.summary, Stocks.currentPrice, Stocks.highPrice, Stocks.lowPrice, Stocks.priceChange FROM Stock_bundles JOIN Stocks ON Stock_bundles.symbol = Stocks.symbol JOIN Users ON Users.userID = Stock_bundles.userID WHERE Users.userID=? GROUP BY Stocks.symbol) AS A WHERE A.sharesOwned!=0";
+        mysql.pool.query(sql, [userID], function(error, results, fields){
+            if(error){
+                res.write(JSON.stringify(error));
+                res.end();
+                return;
+            }
+            else {
+
+                if (results.length != 0) {
+                    //console.log(results);
+                    res.send(results);
+                    return;
+                }
+                else {
+
+                    fetchUserBalance(res, userID, mysql);
+                }
+            }
+        });
+        
+        //validateUserBalance(res, context, mysql, params, updateStocksEntry);
+    });
+
+    function fetchUserBalance(res, userID, mysql) {
+        sql = "SELECT balance FROM Users WHERE userID=?";
+        mysql.pool.query(sql, [userID], function(error, results, fields){
+            if(error){
+                res.write(JSON.stringify(error));
+                res.end();
+                return;
+            }
+            else {
+                res.send(results);
+                return;
+            }
+        });
+
+    }
+
 // ============================================================
 
 

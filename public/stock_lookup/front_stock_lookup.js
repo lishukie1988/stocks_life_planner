@@ -242,6 +242,7 @@ function createStockData(data_object) {
         closeAnimate("#search_div");
         console.log("clicked");
         //console.log(stock_symbol);
+        openAnimate("#buy_div", buy_div_width, buy_div_height);
         $("#buy_div").html(createBuyWindow({"stock_symbol": stock_symbol, 
                                             "stock_name": stock_name, 
                                             "stock_summary": stock_summary, 
