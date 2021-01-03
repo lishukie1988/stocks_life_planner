@@ -6,8 +6,8 @@ let day_view_width = "100";
 let day_view_height = "97";
 let scroll_height = "3";
 let scroll_width = "100";
-let search_bar_height = "15%";
-let stock_details_height = "80%";
+let search_bar_height = "5%";
+let stock_details_height = "90%";
 let buy_div_width = "100";
 let buy_div_height = "35";
 
@@ -97,6 +97,7 @@ $(document).ready(function(){
     $(".main_container").append(search_bar);
     let stock_details = createStockDetails();
     $(".main_container").append(stock_details);
+    stockAjax("GOOG", $("#stock_data"));
     let buy_div = createDiv("0%", "0%", "", "buy_div");
     //buy_div.append(createBuyWindow());
     $(".main_container").append(buy_div);

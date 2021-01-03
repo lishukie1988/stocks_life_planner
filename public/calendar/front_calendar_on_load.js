@@ -13,7 +13,7 @@ let current_date = date.getDate();
 
 let live_year = date.getFullYear();
 let live_month = date.getMonth() + 1;
-let live_date = date.getDate() - 1;
+let live_date = date.getDate();
 
 
 /*
@@ -24,7 +24,8 @@ let live_date = 30;
 
 let forecast = {};
 let historic = {};
-let temp_unit = '\u2103';
+//let temp_unit = '\u2103';
+let temp_unit = '\u2109';
 let hist_start = "2020-11-25"; 
 let hist_end = "2020-12-20";
 let user_id;
@@ -33,6 +34,7 @@ let user_country;
 let user_city; 
 
 let background_blue = "rgba(52, 195, 235,0.95)";
+let background_today = "rgba(168, 240, 233,0.95)";
 let background_day = "rgba(109,189,181,0.95)";
 let background_day_clear = "rgba(109,189,181,0.75)";
 let background_teal = "rgba(214, 192, 133)";
@@ -47,6 +49,14 @@ let background_add_todo_hover = "rgba(219, 237, 21, 0.95)";
 let background_delete_todo_hover = "rgba(207, 62, 62, 0.95)";
 let background_update_todo_hover = "rgba(20, 184, 113, 0.95)";
 let background_search_news_hover = "rgba(20, 92, 181, 0.95)";
+
+let news_key_load_odd = "c059c3dae2b74394b71ec1136390998a";
+let news_key_load_even = "45c8e29034b5412fb768a748a90990aa";
+let news_key_search_odd = "b8ce4062068d4316ab3926de31458a32";
+let news_key_search_even = "ee68f4defc9a4e3091aa2da61903149b";
+
+
+
 $(document).ready(function(){
 
 
@@ -98,7 +108,7 @@ $(document).ready(function(){
       
 
     $.ajax({
-        url: "https://api.weatherbit.io/v2.0/forecast/daily?key=54ca63d4a7474c57a1879b3c4f71291b&city=" + convertToQuery(user_city) + "&country=" + convertToQuery(user_country),
+        url: "https://api.weatherbit.io/v2.0/forecast/daily?units=I&key=54ca63d4a7474c57a1879b3c4f71291b&city=" + convertToQuery(user_city) + "&country=" + convertToQuery(user_country),
         //url: "https://newsapi.org/v2/everything?q=bitcoin&apiKey=c059c3dae2b74394b71ec1136390998a",
         async: false,
         success: function(result){

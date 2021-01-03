@@ -23,23 +23,32 @@ function getDateString(year, month, date) {
 
 function createDay(empty, date, weekday) {
 
+    console.log("current: ", current_year, current_month, date);
+    console.log("live: ", live_year, live_month, live_date);
+
+    let is_live_day = (date == live_date && current_month == live_month && current_year == live_year) ? 1 : 0;
+    background = (is_live_day == 1) ? "white" : background_day;
+
 
     let day_x = $("<div></div>");
     day_x.css("width", "14.25%");
     day_x.css("height", "95%");
     day_x.css("float", "left");   
-    day_x.css("background", "rgba(109,189,181,0.95)"); 
+    day_x.css("background", background); 
     //day_x.css("border": )
     if (empty == 0) {
         day_x.css("border-right", "groove");
     } 
-    //day_x.css("border-color", "rgba(0,0,0,0)");
 
+    if (is_live_day) {
+
+        //day_x.css("border", "solid");
+    }
 
     if (empty >= 0) {
 
         let date_div = $("<div></div");
-        date_div.css({"height": "20%", "width": "100%", "font-size": "12%"});
+        date_div.css({"height": "20%", "width": "100%", "font-size": "15%", "font-weight": "bold"});
         date_div.text(date);
         day_x.append(date_div);
         day_x.data("date", date);
@@ -87,7 +96,7 @@ function createDay(empty, date, weekday) {
 
 
 
-        addHover(day_x, {"background": "rgba(214, 192, 133)"}, {"background": "rgba(109,189,181,0.95)"});
+        addHover(day_x, {"background": background_teal}, {"background": background});
         day_x.click(function() {
             //console.log(forecast);
             //let date_string = current_year + "-" + current_month + "-" + day_x.data("date");
@@ -111,6 +120,11 @@ function createDay(empty, date, weekday) {
                 {width: `${day_view_width}` + "%", height: `${day_view_height}` + "%"},
                 100
             )
+
+            $("#scroll_div").animate(
+                {width: "0%", height: "0%"},
+                100
+            )
         })
         
 
@@ -124,7 +138,7 @@ function createDayView(date, month, year, weekday) {
 
     //console.log(date, month, year);
     let day_view = $("<div></div>");
-    day_view.css({"font-size": "100%", "background": "rgba(109,189,181,0.8)", "width": "100%", "height": "90%"
+    day_view.css({"font-size": "100%", "background": "rgba(109,189,181,0.8)", "width": "100%", "height": "100%"
                 });
 
     let exit_div = createTopRightButtonDiv('\u00D7');
@@ -194,13 +208,13 @@ function createDayView(date, month, year, weekday) {
     day_view.append(day_main_div);
     let todo_section = $("<div></div");
     todo_section.attr("id", "todo_section");
-    todo_section.css({"width": "100%", "height": "50%", "float": "", "background": ""});
+    //todo_section.css({"width": "50%", "height": "100%", "float": "left", "background": ""});
     todo_section.html(createTodoSection(date, month, year));
     day_main_div.append(todo_section);
 
     let news_section = $("<div></div");
     news_section.attr("id", "news_section");
-    news_section.css({"width": "100%", "height": "50%", "float": "", "background": ""});
+    //news_section.css({"width": "50%", "height": "100%", "float": "left", "background": ""});
     news_section.html(createNewsSection(date, month, year));
     day_main_div.append(news_section);
 
@@ -210,6 +224,17 @@ function createDayView(date, month, year, weekday) {
 
 
 function createNewsSection(date, month, year) {
+
+
+    let out_of_range = pastOneMonth(month, date, year) == 1 || futureDate(month, date, year) == 1;
+    let news_month = (out_of_range) ? live_month : month;
+    let news_date = (out_of_range) ? live_date : date;
+    let news_year = (out_of_range) ? live_year : year;
+    let date_string = getDateString(year, month, date);
+
+    let content_placeholder = (out_of_range == true) ? "Search latest news" : ("Search news on " + date_string);
+
+
 
     let news_section = $("<div></div");
     news_section.css({"width": "100%", "height": "100%","background": background_charcoal});
@@ -222,10 +247,10 @@ function createNewsSection(date, month, year) {
 
     addHover(search_button, {"background": background_search_news_hover}, {"background": background_search_news});
 
-    
 
     news_search.append(search_button);
     let content_div = $("<input></input>");
+    content_div.attr({"placeholder": content_placeholder});
     content_div.css({"width": "95%", "height": "100%", "background": "white", "float": "right", "border": "none"});
     news_search.append(content_div);
     news_section.append(news_search);
@@ -252,33 +277,36 @@ function createNewsSection(date, month, year) {
         }
     })
 
-    search_button.click(function() {
-        newsAjax(content_div.val(), news_results);
-    });
 
     // by default displays this day's news revolving around user's city of origin
     // if this day is <30 days past current date or is a future date, news for current date will be displayed instead
-    let out_of_range = pastOneMonth(month, date, year) == 1 || futureDate(month, date, year) == 1;
-    let news_month = (out_of_range) ? live_month : month;
-    let news_date = (out_of_range) ? live_date : date;
-    let news_year = (out_of_range) ? live_year : year;
+    
 
-    console.log("past one month:" ,pastOneMonth(month, date, year));
+    let this_load_key = (date % 2 == 0) ? news_key_load_even : news_key_load_odd;
+    let this_search_key = (date % 2 == 0) ? news_key_search_even : news_key_search_odd;
+
+    console.log(this_load_key, this_search_key);
+    //console.log("past one month:" ,pastOneMonth(month, date, year));
 
     //console.log(news_month, news_date, news_year);
     let news_full_date = getDateString(news_year, news_month, news_date);
     console.log(news_full_date);
 
-    newsAjax(convertToQuery(user_city), news_results);
+    newsAjax(convertToQuery(user_city), news_results, news_full_date, this_load_key);
+
+    search_button.click(function() {
+        newsAjax(content_div.val(), news_results, news_full_date, this_search_key);
+    });
 
     return news_section;
 
 }
 
-function newsAjax(query, element) {
+function newsAjax(query, element, date, key) {
 
     //console.log(query);
 
+    /*
     $.ajax({
         url: "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI?q=" + query + "&pageNumber=1&pageSize=20&autoCorrect=true&withThumbnails=true&fromPublishedDate=null&toPublishedDate=null",
         method: "GET",
@@ -295,6 +323,21 @@ function newsAjax(query, element) {
             }
       }});
 
+    */
+
+      $.ajax({
+        //url: "https://api.weatherbit.io/v2.0/forecast/daily?key=54ca63d4a7474c57a1879b3c4f71291b&city=" + convertToQuery(user_city) + "&country=" + convertToQuery(user_country),
+        url: "https://newsapi.org/v2/everything?language=en&sortBy=popularity&from=" + date + "&to=" + date + "&q=" + "\"" + query + "\"" + "&apiKey=" + news_key_load_odd,
+        async: true,
+        success: function(result){
+            console.log(result);
+            element.html("");
+            for (let article in result["articles"]) {
+                //console.log(result);
+                element.append(createArticle(result["articles"][article]));
+            }
+        
+      }});
 
 }
 
@@ -315,7 +358,7 @@ function createArticle(article) {
     let image_div = $("<div></div>");
     image_div.css({"background": "", "height": "auto", "width": "100%", "font-size": "1.5vh", "margin-top": "1%", "margin-bottom": "0.5%", "float": ""});
     let image = $("<img>");
-    image.attr("src", article["image"]["url"]);
+    image.attr("src", article["urlToImage"]);
     image.css({"width": "100%", "height": "auto"});
     article_div.append(image);
 
@@ -361,6 +404,8 @@ function createTodoSection(date, month, year) {
 
 function createAddTodo(date, month, year) {
 
+    let date_string = getDateString(year, month, date);
+
     let todo = $("<div></div>");
     todo.css({"background": background_todo, "height": "8%", "width": "100%", "font-size": "1.5vh", "margin-top": "0.5%", "margin-bottom": "0.5%"});
     let add_button = $("<div></div>");
@@ -370,6 +415,7 @@ function createAddTodo(date, month, year) {
     todo.append(add_button);
     let content_div = $("<input></input>");
     content_div.css({"width": "95%", "height": "100%", "background": "white", "float": "right", "border": "none"});
+    content_div.attr({"placeholder": "Add new todo item for " + date_string});
     todo.append(content_div);
 
 
@@ -429,14 +475,14 @@ function createTodoItem(content, todo_id, date, month, year) {
     let todo = $("<div></div>");
     todo.css({"background": background_todo, "height": "10%", "width": "100%", "font-size": "1.5vh", "margin-top": "0.5%", "margin-bottom": "0.5%"});
     let delete_button = $("<div></div>");
-    delete_button.css({"width": "4%", "height": "90%", "background": background_delete_todo, "float": "left", "text-align": "center", "font-size": "100%", "line-height": "", "border-radius": "", "margin": "0.25%"});
+    delete_button.css({"width": "4%", "height": "90%", "background": background_delete_todo, "float": "left", "text-align": "center", "font-size": "100%", "line-height": "170%", "border-radius": "", "margin": "0.25%"});
     delete_button.append("<b>\u2717</b>");
 
     addHover(delete_button, {"background": background_delete_todo_hover}, {"background": background_delete_todo});
     
 
     let update_button = $("<div></div>");
-    update_button.css({"width": "4%", "height": "90%", "background": background_update_todo, "float": "left", "text-align": "center", "font-size": "100%", "line-height": "", "border-radius": "", "margin": "0.25%"});
+    update_button.css({"width": "4%", "height": "90%", "background": background_update_todo, "float": "left", "text-align": "center", "font-size": "100%", "line-height": "170%", "border-radius": "", "margin": "0.25%"});
     update_button.append("<b>\u2713</1>");
 
     addHover(update_button, {"background": background_update_todo_hover}, {"background": background_update_todo});

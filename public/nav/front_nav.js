@@ -1,7 +1,7 @@
 function createNav() {
 
     let nav_div = $("<div></div");
-    nav_div.css({"width": "100%", "height": "100%", "float": "", "background": background_charcoal});
+    nav_div.css({"width": "100%", "height": "100%", "float": "", "background": background_charcoal, "margin": "0%"});
 
     let logout_button = $("<div></div");
     logout_button.css({"float": "right", "font-size": "65%", "width": "15%",
@@ -53,7 +53,7 @@ function createNav() {
                     });
     messages_button.html("<b>MESSAGES</b>");
     addHover(messages_button, {"background": background_teal_clear}, {"background": background_day_clear});
-    nav_div.append(messages_button);
+    //nav_div.append(messages_button);
 
     logout_button.click(function() {
 

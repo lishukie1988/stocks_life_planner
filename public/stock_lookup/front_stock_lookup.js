@@ -1,13 +1,11 @@
 function createSearchBar() {
     let search_div = createDiv("100%", search_bar_height, "", "search_div");
-    search_div.css({"background": background_day, "margin": "0%"});
-    let search_caption = createDiv("100%", "48%", "", "");
-    search_caption.append("Please enter the symbol of the stock you are looking for.");
-    search_div.append(search_caption);
+    search_div.css({"background": background_day, "margin-bottom": "0.5%", "margin-left": "0%", "margin-right": "0%", "margin-top": "0%"});
+    //search_div.append(search_caption);
     let stock_search = $("<div></div>");
-    stock_search.css({"background": background_todo, "height": "50%", "width": "100%", "font-size": "1.5vh", "margin-top": "0.5%", "margin-bottom": "0.5%"});
+    stock_search.css({"background": background_todo, "height": "99%", "width": "100%", "font-size": "1.5vh", "margin-top": "0%", "margin-bottom": "0%"});
     let search_button = $("<div></div>");
-    search_button.css({"width": "9%", "height": "100%", "background": background_search_news, "float": "left", "text-align": "center", "font-size": "80%", "line-height": "140%", "border-radius": "", "margin": "0.25%"});
+    search_button.css({"width": "9%", "height": "100%", "background": background_search_news, "float": "left", "text-align": "center", "font-size": "80%", "line-height": "140%", "border-radius": "", "margin": "0%"});
     search_button.append("<b>\u27A4</b>"); 
 
     addHover(search_button, {"background": background_search_news_hover}, {"background": background_search_news});
@@ -15,10 +13,10 @@ function createSearchBar() {
     
     let content_div = $("<input></input>");
     content_div.css({"width": "90%", "height": "100%", "background": "white", "float": "right", "border": "none"});
+    content_div.attr({"placeholder": "Please type a company name for symbol suggestions." });
     stock_search.append(content_div);
     search_div.append(stock_search)
     stock_search.append(search_button);
-
 
     content_div.autocomplete({
         source: function(request, response) {
@@ -115,6 +113,7 @@ function stockAjax(query, element) {
 
 function createArticle(article) {
     console.log("@ createArticle");
+    //console.log(article);
     if (article["main_image"] != null) {
         console.log(article["main_image"]["original_url"]);
     }
@@ -127,7 +126,7 @@ function createArticle(article) {
 
     let article_link = $("<a></a>");
     article_link.attr("href", article["link"]);
-    article_link.append(article["summary"]);
+    article_link.append(article["title"]);
     url_div.append(article_link);
     article_div.append(url_div);
 
@@ -151,8 +150,14 @@ function createArticle(article) {
 function createStockDetails() {
     let stock_details_div = createDiv("100%", stock_details_height, "", "stock_details_div");
     stock_details_div.css({"background": background_day, "margin": "0%"});
-    let stock_data_div = createDiv("100%", "50%", "", "stock_data");
-    let stock_news_div = createDiv("100%", "50%", "", "stock_news");
+    //let stock_data_div = createDiv("100%", "50%", "", "stock_data");
+    //let stock_news_div = createDiv("100%", "50%", "", "stock_news");
+    let stock_data_div = $("<div></div");
+    stock_data_div.attr({"id": "stock_data"});
+    
+    let stock_news_div = $("<div></div");
+    stock_news_div.attr({"id": "stock_news"});
+
     stock_details_div.append(stock_data_div);
     stock_details_div.append(stock_news_div);
 
@@ -183,49 +188,62 @@ function createStockData(data_object) {
     let stock_name = data_object["price"]["longName"];
 
     let stock_data = createDiv("100%", "100%", "");
-    let symbol_price_div = createDiv("33%", "100%", "left", "symbol_price_div");
+    //let symbol_price_div = createDiv("33%", "100%", "left", "symbol_price_div");
+    let symbol_price_div = $("<div></div>");
+    symbol_price_div.attr({"id": "symbol_price_div"});
     symbol_price_div.css({"text-align": "left", "background": background_todo, "font-size": "100%"});
-    let summary_data_div = createDiv("67%", "100%", "right", "summary_data_div");
+    //let summary_data_div = createDiv("67%", "100%", "right", "summary_data_div");
+    let summary_data_div = $("<div></div>");
+    summary_data_div.attr({"id": "summary_data_div"});
     symbol_price_div.css({"text-align": "center", "background": background_search_news, "font-size": "500%"});
     summary_data_div.css({"text-align": "left", "background": background_charcoal, "font-size": "100%"});
     //console.log("in createStoc")
 
-    let symbol_div = createDiv("100%", "50%", "", "symbol_div");
-    symbol_div.css({"font-size": "70%"});
+    let symbol_div = createDiv("100%", "40%", "", "symbol_div");
+    symbol_div.css({"font-size": "30%", "font-weight": "bold"});
     symbol_div.append(data_object["symbol"]); 
     symbol_price_div.append(symbol_div);
-    let price_div = createDiv("100%", "25%", "", "price_div");
-    price_div.css({"font-size": "35%"});
+    let price_div = createDiv("50%", "35%", "", "price_div");
+    price_div.css({"font-size": "20%", "background": "", "margin-bottom": "1%", "font-weight": "bold"});
     symbol_price_div.append(price_div);
     //console.log(data_object["price"]["regularMarketPrice"]);
     //price_div.append("CURRENT PRICE:");
     price_div.append(data_object["price"]["regularMarketPrice"]["raw"]);
     let buy_source_div = createDiv("100%", "25%", "", "buy_source_div");
-    buy_source_div.css({"font-size": "35%", "background": background_update_todo});
-    buy_source_div.append("BUY FROM SOURCE");
+    buy_source_div.css({"font-size": "15%", "background": background_teal_clear, "font-weight": "bold", "margin-bottom": ""});
+    buy_source_div.append("BUY");
     symbol_price_div.append(buy_source_div);
 
 
-    let summary_div = createDiv("100%", "50%", "", "summary_div");
+    let summary_div = createDiv("100%", "69.5%", "", "summary_div");
     summary_div.css({"text-align": "left", "background": background_todo, "font-size": "100%"});
     summary_div.append(data_object["summaryProfile"]["longBusinessSummary"]);
     summary_data_div.append(summary_div);
     stock_data.append(symbol_price_div);
     stock_data.append(summary_data_div);
 
-    let data_div = createDiv("100%", "50%", "", "summary_div");
-    data_div.css({"text-align": "left", "background": background_todo, "font-size": "100%"});
-    let day_high = createDiv("30%", "100%", "left", "day_high");
-    day_high.css({"font-size": "120%", "font-style": "bold", "margin": "auto", "text-align": "center"});
-    let day_low = createDiv("30%", "100%", "left", "day_low");
-    day_low.css({"font-size": "120%", "font-style": "bold", "margin": "auto", "text-align": "center"});
-    let day_change = createDiv("30%", "100%", "left", "day_change");
-    day_change.css({"font-size": "120%", "font-style": "bold", "margin": "auto", "text-align": "center"});
-    day_high.append("DAY HIGH: ");
-    day_low.append("DAY LOW: ");
-    day_change.append("DAY CHANGE: ");
-    day_high.append(data_object["price"]["regularMarketDayHigh"]["raw"]);
-    day_low.append(data_object["price"]["regularMarketDayLow"]["raw"]);
+    let data_div = createDiv("100%", "29.5%", "", "data_div");
+    data_div.css({"text-align": "center", "background": background_todo, "font-size": "100%", "margin-top": "1%"});
+    let day_high = createDiv("33.33%", "100%", "left", "day_high");
+    day_high.css({"font-size": "120%", "font-style": "bold", "margin": "auto", "text-align": "center", "font-weight": "bold"});
+    let day_low = createDiv("33.33%", "100%", "left", "day_low");
+    day_low.css({"font-size": "120%", "font-style": "bold", "margin": "auto", "text-align": "center", "font-weight": "bold"});
+    let day_change = createDiv("33.33%", "100%", "left", "day_change");
+    day_change.css({"font-size": "120%", "font-style": "bold", "margin": "auto", "text-align": "center", "font-weight": "bold"});
+    let high_caption = createDiv("100%", "50%", "", "");
+    high_caption.css({"background": background_search_news, "font-weight": "bold", "text-align": "center"});
+    high_caption.append("HIGH:");
+    let low_caption = createDiv("100%", "50%", "", "");
+    low_caption.css({"background": background_search_news, "font-weight": "bold", "text-align": "center"});
+    low_caption.append("LOW:");
+    let change_caption = createDiv("100%", "50%", "", "");
+    change_caption.css({"background": background_search_news, "font-weight": "bold", "text-align": "center"});
+    change_caption.append("CHANGE:");
+    day_high.append(high_caption);
+    day_low.append(low_caption);
+    day_change.append(change_caption);
+    day_high.append(data_object["price"]["regularMarketDayHigh"]["raw"].toFixed(2));
+    day_low.append(data_object["price"]["regularMarketDayLow"]["raw"].toFixed(2));
     day_change.append(stock_change + "%");
     data_div.append(day_high);
     data_div.append(day_low);
@@ -235,6 +253,7 @@ function createStockData(data_object) {
     // - industry
     // - earnings q1-q4
 
+    addHover(buy_source_div, {"background": background_teal}, {"background": buy_source_div.css("background")});
 
     buy_source_div.click(function() {
 
@@ -276,16 +295,16 @@ function createBuyWindow(stock_stats) {
     */
     
     let form_div = createFormDiv();
-    form_div.css({"height": "35%", "font-size": "100%"});
+    form_div.css({"height": "15%", "font-size": "100%", "margin-top": "0%"});
 
-    let prompt = createDiv("100%", "25%", "left", "");
-    prompt.css({"text-align": "center"});
+    let prompt = createDiv("100%", "20%", "left", "");
+    prompt.css({"text-align": "center", "font-weight": "bold", "margin-top": "4%"});
     prompt.append("Please enter the number of shares you would like to buy:");
 
     //let input_div = createDiv("75%", "100%", "left", "");
     let input_quantity = createInputDiv();
     input_quantity.attr({type: "number", id: "buy_quantity", name: "buy_quantity", placeholder: "number of shares", required : "true"});
-    input_quantity.css({"height": "95%", "width": "50%", "font-size": "100%", "float": "left", "position": "relative"});
+    input_quantity.css({"height": "95%", "width": "50%", "font-size": "100%", "float": "left", "position": "relative", "background": background_todo});
     //input_div.append(input_quantity);
     //form_div.append(input_div);
     form_div.append(input_quantity);
@@ -307,6 +326,25 @@ function createBuyWindow(stock_stats) {
     buy_window.append(prompt);
     buy_window.append(form_div);
     buy_window.append(button_div);
+
+    exit_button.click(function() {
+
+        $("#buy_div").animate(
+            {width: "0%", height: "0%"},
+            100
+        )
+
+        $("#stock_details_div").animate(
+            {width: "100%", height: stock_details_height},
+            100
+        )
+
+        $("#search_div").animate(
+            {width: "100%", height: search_bar_height},
+            100
+        )
+
+    })
 
     buy_button.click(function() {
 

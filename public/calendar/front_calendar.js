@@ -128,6 +128,10 @@ function createTopRightButtonDiv(unicode) {
                 {width: "0%", height: "0%"},
                 100
             )
+            $("#scroll_div").animate(
+                {width: `${scroll_width}` + "%", height: `${scroll_height}` + "%"},
+                100
+            )
 
     })
 
