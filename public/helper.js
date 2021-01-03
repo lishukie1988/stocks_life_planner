@@ -1,3 +1,6 @@
+let background_dark_yellow = "rgba(196, 196, 61, 95)";
+
+
 function createDiv(width, height, float, id) {
 
     let div = $("<div></div");

@@ -145,7 +145,7 @@ module.exports = function(){
                     
                     console.log("@ validateUserStockBundle: complete()");
                     //console.log(context);
-                    res.send("purchase_success");
+                    res.send("sold_to_source_successfully");
                     //return;
                 }
             }

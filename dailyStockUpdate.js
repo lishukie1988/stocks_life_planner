@@ -39,7 +39,7 @@ function fetchSymbols (){
   
       
         (async function loop() {
-          for await (let i of asynchIterator(results.length, 220)) {
+          for await (let i of asynchIterator(results.length, 300)) {
             //console.log(symbol_list[i]);
             fetchStocksAPI(results[i]["symbol"]);
             //test_entry_id++;
@@ -66,7 +66,7 @@ function promisified_fetchSymbols (){
   
       
         (async function loop() {
-          for await (let i of asynchIterator(results.length, 220)) {
+          for await (let i of asynchIterator(results.length, 300)) {
             //console.log(symbol_list[i]);
             promise_updateStocks(results[i]["symbol"]).then(
               function(result) {

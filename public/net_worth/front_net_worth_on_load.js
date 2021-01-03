@@ -114,16 +114,21 @@ $(document).ready(function(){
     let net_worth_summary_div = createDiv("100%", "95%", "", "net_worth_summary_div");
     $(".main_container").append(net_worth_summary_div);
 
+    let net_worth_container = createDiv("100%", "94%", "", "net_worth_container");
+    let growth_rate_container = createDiv("100%", "94%", "", "growth_rate_container");
+
     let net_worth_div = $("<canvas></canvas>");
-    net_worth_div.css({"width": "100%", "height": "95%", "background": background_todo});
+    net_worth_div.css({"width": "100%", "height": "100%", "background": background_todo});
     net_worth_div.attr({"id": "net_worth_div"});
-    $(".main_container").append(net_worth_div);
+    net_worth_container.append(net_worth_div);
+    $(".main_container").append(net_worth_container);
     let growth_rate_div = $("<canvas></canvas>");
-    growth_rate_div.css({"width": "100%", "height": "0%", "background": background_todo});
+    growth_rate_div.css({"width": "100%", "height": "100%", "background": background_todo});
     growth_rate_div.attr({"id": "growth_rate_div"});
-    $(".main_container").append(growth_rate_div);
-    growth_rate_div.hide();
-    net_worth_div.hide();
+    growth_rate_container.append(growth_rate_div);
+    $(".main_container").append(growth_rate_container);
+    growth_rate_container.hide();
+    net_worth_container.hide();
 
 
     $.ajax({

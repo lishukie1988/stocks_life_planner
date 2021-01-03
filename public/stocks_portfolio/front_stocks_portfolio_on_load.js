@@ -100,14 +100,14 @@ $(document).ready(function(){
     let buy_div = createDiv("100%", "25%", "", "buy_div");
     $(".main_container").append(buy_div);
     */
-    let sort_div = createDiv("100%", "10%", "", "sort_bar");
+    let sort_div = createDiv("100%", "8%", "", "sort_bar");
     sort_div.append(createSortBar());
     $(".main_container").append(sort_div);
     let stocks_list_div = createDiv("100%", "90%", "", "stocks_list_div");
     stocks_list_div.append(createStocksList());
     $(".main_container").append(stocks_list_div);
 
-    let buy_div = createDiv("0%", "0%", "", "buy_div");
-    $(".main_container").append(buy_div);
+    let sell_div = createDiv("0%", "0%", "", "sell_div");
+    $(".main_container").append(sell_div);
 
   });

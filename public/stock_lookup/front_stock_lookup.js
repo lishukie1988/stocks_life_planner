@@ -300,6 +300,9 @@ function createBuyWindow(stock_stats) {
     let prompt = createDiv("100%", "20%", "left", "");
     prompt.css({"text-align": "center", "font-weight": "bold", "margin-top": "4%"});
     prompt.append("Please enter the number of shares you would like to buy:");
+    let not_enough_balance = createDiv("0%", "0%", "", "");
+    not_enough_balance.css({"text-align": "center", "font-size": "75%"});
+    not_enough_balance.append("You don't have enough balance.");
 
     //let input_div = createDiv("75%", "100%", "left", "");
     let input_quantity = createInputDiv();
@@ -324,6 +327,7 @@ function createBuyWindow(stock_stats) {
 
     buy_window.append(exit_div);
     buy_window.append(prompt);
+    buy_window.append(not_enough_balance);
     buy_window.append(form_div);
     buy_window.append(button_div);
 
@@ -364,12 +368,12 @@ function createBuyWindow(stock_stats) {
                 if (result === "not_enough_balance") {
                     // hide buy_div & show not enough balance div / server problem
                     //window.location.href="login?status=-1";
-
+                    not_enough_balance.css({"width": "100%", "height": "15%"});
                 }
 
                 else if (result === "purchase_success") {
                     // relocate to portfolio_page
-                    //window.location.href="/calendar";
+                    window.location.href="/stocks_portfolio";
                 }
                 else { // mysql error
                     // hide buy_div & show not enough balance div / server problem

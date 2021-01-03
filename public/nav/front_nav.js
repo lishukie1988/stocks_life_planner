@@ -8,12 +8,13 @@ function createNav() {
                     "height": "100%", "background": background_day_clear,
                     "text-align": "center", "line-height": "140%"
                     });
+    logout_button.attr("class", "nav_button");
     let cross_sym = "<b>LOGOUT</b>";
     logout_button.html(cross_sym);
     addHover(logout_button, {"background": background_teal_clear}, {"background": background_day_clear});
     nav_div.append(logout_button);
     
-    let calendar_button = createDiv("16.66%", "100%", "left", "calendar");
+    let calendar_button = createDiv("17.5%", "100%", "left", "calendar");
     calendar_button.css({"font-size": "65%", "background": background_day_clear,
                     "text-align": "center", "line-height": "140%"
                     });
@@ -21,7 +22,7 @@ function createNav() {
     addHover(calendar_button, {"background": background_teal_clear}, {"background": background_day_clear});
     nav_div.append(calendar_button);
 
-    let stock_lookup_button = createDiv("16.66%", "100%", "left", "stock_lookup");
+    let stock_lookup_button = createDiv("17.5%", "100%", "left", "stock_lookup");
     stock_lookup_button.css({"font-size": "65%", "width": "15%",
                     "height": "100%", "background": background_day_clear,
                     "text-align": "center", "line-height": "140%"
@@ -31,7 +32,7 @@ function createNav() {
     nav_div.append(stock_lookup_button);
     
 
-    let portfolio_button = createDiv("16.66%", "100%", "left", "portfolio");
+    let portfolio_button = createDiv("17.5%", "100%", "left", "portfolio");
     portfolio_button.css({"font-size": "65%", "background": background_day_clear,
                     "text-align": "center", "line-height": "140%"
                     });
@@ -39,7 +40,7 @@ function createNav() {
     addHover(portfolio_button, {"background": background_teal_clear}, {"background": background_day_clear});
     nav_div.append(portfolio_button);
 
-    let net_worth_button = createDiv("16.66%", "100%", "left", "net_worth");
+    let net_worth_button = createDiv("17.5%", "100%", "left", "net_worth");
     net_worth_button.css({"font-size": "65%", "background": background_day_clear,
                     "text-align": "center", "line-height": "140%"
                     });
@@ -47,13 +48,23 @@ function createNav() {
     addHover(net_worth_button, {"background": background_teal_clear}, {"background": background_day_clear});
     nav_div.append(net_worth_button);
 
-    let messages_button = createDiv("16.66%", "100%", "left", "messages");
+    let messages_button = createDiv("17.5%", "100%", "left", "messages");
     messages_button.css({ "font-size": "65%", "background": background_day_clear,
                     "text-align": "center", "line-height": "140%"
                     });
     messages_button.html("<b>MESSAGES</b>");
     addHover(messages_button, {"background": background_teal_clear}, {"background": background_day_clear});
     //nav_div.append(messages_button);
+
+    let user_balance = $(".main_container").data("balance").toFixed(2);
+    let balance = createDiv("17.5%", "100%", "left", "balance");
+    balance.css({ "font-size": "65%", "background": background_dark_yellow,
+                    "text-align": "center", "line-height": "140%", "font-weight": "bold"
+                    });
+                    balance.html("BAL: " + user_balance);
+    
+    nav_div.append(balance);
+
 
     logout_button.click(function() {
 

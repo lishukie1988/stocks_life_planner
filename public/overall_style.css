@@ -69,6 +69,19 @@ body {
         height: 75%;
     }
 
+    #stocks_list_div {
+        font-size: 65%;
+    }
+
+    .nav_container {
+        font-size: 50%;
+    }
+
+    #sort_bar {
+        font-size: 50%;
+    }
+
+
 }
 
 @media only screen and (min-width: 601px) {

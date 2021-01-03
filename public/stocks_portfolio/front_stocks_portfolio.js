@@ -1,17 +1,17 @@
 function createSortBar() {
     let color = background_search_news;
     let sort_bar = createDiv("100%", "100%", "", "");
-    sort_bar.css({"background": background_todo, "font-weight": "bold"});
-    let shares_owned = createStockColumnDiv("SHARES OWNED", color);
-    let symbol = createStockColumnDiv("SYMBOL", color);
-    let long_name = createStockColumnDiv("NAME", color);
-    let current_price = createStockColumnDiv("PRICE", color);
+    sort_bar.css({"background": background_blue, "font-weight": "bold"});
+    let shares_owned = createStockHeaderColumnDiv("SHARES OWNED", color);
+    let symbol = createStockHeaderColumnDiv("SYMBOL", color);
+    let long_name = createStockHeaderColumnDiv("NAME", color);
+    let current_price = createStockHeaderColumnDiv("PRICE", color);
     //current_price.append(stock_object["currentPrice"]);
-    let high_price = createStockColumnDiv("DAY HIGH", color);
+    let high_price = createStockHeaderColumnDiv("DAY HIGH", color);
     //high_price.append(stock_object["highPrice"]);
-    let low_price = createStockColumnDiv("DAY LOW", color);
+    let low_price = createStockHeaderColumnDiv("DAY LOW", color);
     //low_price.append(stock_object["lowPrice"]);
-    let price_change = createStockColumnDiv("DAY CHANGE", color);
+    let price_change = createStockHeaderColumnDiv("DAY CHANGE", color);
     //price_change.append(stock_object["priceChange"]);
 
     sort_bar.append(shares_owned);
@@ -69,7 +69,18 @@ function createStocksList() {
 
 function createOwnedStocks(stock_object) {
 
+    let change_direction = (parseFloat(stock_object["priceChange"]) >= 0) ? 1 : -1;
+
     let color = (stock_object["priceChange"] >= 0) ? background_update_todo : background_delete_todo;
+    //console.log(stock_object.symbol, change_direction);
+
+    let change_symbol;
+    if (parseFloat(stock_object["priceChange"]) == 0) {
+        change_symbol = '\uFF0D';
+    }
+    else {
+        change_symbol = (parseFloat(stock_object["priceChange"]) > 0) ? '\u25B2' : '\u25BC';
+    }
 
     let owned_stock = createDiv("100%", "15%", "", "");
     owned_stock.css({"background": background_todo});
@@ -82,7 +93,7 @@ function createOwnedStocks(stock_object) {
     //high_price.append(stock_object["highPrice"]);
     let low_price = createStockColumnDiv(stock_object["lowPrice"], color);
     //low_price.append(stock_object["lowPrice"]);
-    let price_change = createStockColumnDiv(stock_object["priceChange"], color);
+    let price_change = createStockColumnDiv(stock_object["priceChange"] + " " + change_symbol, color);
     //price_change.append(stock_object["priceChange"]);
 
     owned_stock.append(shares_owned);
@@ -97,47 +108,74 @@ function createOwnedStocks(stock_object) {
 }
 
 
-function createStockColumnDiv(content, color) {
-    let column_div = createDiv("13.285%", "100%", "left", "");
+function createStockColumnDiv(content, color, change) {
+    let change_char;
+    if (change == 1 || change == -1) {
+        change_char = (change == 1) ? '\u25B2' : '\u25BC';
+    }
+
+    let column_div = createDiv("14.285%", "100%", "left", "");
     column_div.append(content);
-    column_div.css({"margin-left": "0.5%", "margin-right": "0.5%", "background": color,
-                    "text-align": "center", "font-style": "bold"
+    column_div.css({"background": color,
+                    "text-align": "center", "font-style": "bold", "margin-left": "0%", "margin-right": "0%", "margin-bottom": "0%", "margin-top": "0%",
+                    "border-radius": "0px"
+                    });
+
+    
+    if (change == 1 || change == -1) {
+        change_char = (change == 1) ? '\u25B2' : '\u25BC';
+        let change_icon = createDiv("100", "25%", "", "");
+        change_icon.append(change_char);
+        column_div.append(change_icon);
+        
+    }
+    return column_div;
+}
+
+function createStockHeaderColumnDiv(content, color) {
+    let column_div = createDiv("13.785%", "100%", "left", "");
+    column_div.append(content);
+    column_div.css({"background": color,
+                    "text-align": "center", "font-style": "bold", "margin-left": "0.25%", "margin-right": "0.25%", "margin-bottom": "0%", "margin-top": "0%",
+                    "border-radius": "0px"
                     });
     return column_div;
 }
 
 function createSharesOwnedDiv(content, color, stock_object) {
-    let column_div = createDiv("13.285%", "100%", "left", "");
-    let num_shares_div = createDiv("100%", "33%", "", "");
-    let sell_div = createDiv("100%", "67%", "", "");
+    let column_div = createDiv("13.785%", "100%", "left", "");
+    let num_shares_div = createDiv("100%", "50%", "", "");
+    let sell_div = createDiv("100%", "50%", "", "");
 
-    let sell_to_source = createDiv("100%", "50%", "left", "");
-    sell_to_source.css({"text-align": "center", "font-size": "50%", "background": background_teal_clear, "margin-bottom": "1%"});
-    sell_to_source.append("<b>SELL TO SOURCE</b>");
+    let sell_to_source = createDiv("100%", "100%", "left", "");
+    sell_to_source.css({"text-align": "center", "font-size": "50%", "background": background_teal_clear, "margin-bottom": "1%", "line-height": "400%"});
+    sell_to_source.append("<b>SELL</b>");
     let list_to_market_place = createDiv("100%", "50%", "right", "");
     list_to_market_place.css({"text-align": "center", "font-size": "50%", "background": background_teal_clear});
     list_to_market_place.append("<b>LIST TO MARKET PLACE</b>");
     sell_div.append(sell_to_source);
-    sell_div.append(list_to_market_place);
+    //sell_div.append(list_to_market_place);
 
     num_shares_div.append(content);
     num_shares_div.append(sell_div);
     column_div.append(num_shares_div);
     column_div.append(sell_div);
-    column_div.css({"margin-left": "0.5%", "margin-right": "0.5%", "background": color,
-                    "text-align": "center", "font-style": "bold"
+    column_div.css({"margin-left": "0.25%", "margin-right": "0.25%", "background": color,
+                    "text-align": "center", "font-weight": "bold"
                     });
 
     
+    addHover(sell_to_source, {"background": "white"}, {"background": background_teal_clear});
+
     sell_to_source.click(function() {
 
-        closeAnimate("#stock_details_div");
-        closeAnimate("#search_div");
+        closeAnimate("#sort_bar");
+        closeAnimate("#stocks_list_div");
         console.log("clicked");
         //console.log(stock_symbol);
-        openAnimate("#buy_div", sell_source_div_width, sell_source_div_height);
+        openAnimate("#sell_div", sell_source_div_width, sell_source_div_height);
         
-        $("#buy_div").html(createSellToSourceWindow(stock_object));
+        $("#sell_div").html(createSellToSourceWindow(stock_object));
         
         //console.log(sell_to_source.parents("div").text());
        //console.log(stock_object);
@@ -169,8 +207,12 @@ function createSellToSourceWindow(stock_object) {
     form_div.css({"height": "35%", "font-size": "100%"});
 
     let prompt = createDiv("100%", "25%", "left", "");
-    prompt.css({"text-align": "center"});
+    prompt.css({"text-align": "center", "font-weight": "bold"});
     prompt.append("Please enter the number of shares you would like to sell:");
+
+    let not_enough_shares = createDiv("0%", "0%", "", "");
+    not_enough_shares.css({"text-align": "center", "font-size": "75%"});
+    not_enough_shares.append("You don't have enough shares!");
 
     //let input_div = createDiv("75%", "100%", "left", "");
     let input_quantity = createInputDiv();
@@ -195,8 +237,28 @@ function createSellToSourceWindow(stock_object) {
 
     window.append(exit_div);
     window.append(prompt);
+    window.append(not_enough_shares);
     window.append(form_div);
     window.append(button_div);
+
+    exit_button.click(function() {
+
+        $("#sell_div").animate(
+            {width: "0%", height: "0%"},
+            100
+        )
+
+        $("#stocks_list_div").animate(
+            {width: "100%", height: "90%"},
+            100
+        )
+
+        $("#sort_bar").animate(
+            {width: "100%", height: "8%"},
+            100
+        )
+
+    })
 
     sell_button.click(function() {
 
@@ -213,12 +275,13 @@ function createSellToSourceWindow(stock_object) {
                 if (result === "not_enough_shares") {
                     // hide buy_div & show not enough balance div / server problem
                     //window.location.href="login?status=-1";
+                    not_enough_shares.css({"width": "100%", "height": "10%"});
 
                 }
 
-                else if (result === "sold_to_source_success") {
+                else if (result === "sold_to_source_successfully") {
                     // relocate to portfolio_page
-                    //window.location.href="/calendar";
+                    location.reload();
                 }
                 else { // mysql error
                     // hide buy_div & show not enough balance div / server problem
