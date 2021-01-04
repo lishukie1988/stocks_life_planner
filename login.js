@@ -59,6 +59,7 @@ module.exports = function(){
 
     
     router.post('/', function(req, res){
+        console.log("@ post login");
         var body_params = [req.body.username, req.body.password];
         //console.log(body_params);
 
@@ -97,6 +98,7 @@ module.exports = function(){
     
 
     function validate(res, params, mysql, context, complete){
+        console.log("@ post validate");
         var sql_string = "SELECT * FROM Users WHERE userid=? AND password=?";
         mysql.pool.query(sql_string, params, function(error, results, fields){
             if(error){
