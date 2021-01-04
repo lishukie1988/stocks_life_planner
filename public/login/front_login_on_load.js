@@ -122,18 +122,29 @@ function createNewAccount() {
             
             
             $.ajax({
-                //url: "https://api.teleport.org/api/countries/?embed=" + request.term,
-                //url: "https://api.teleport.org/api/cities/?search=" + request.term,
-                //url: "https://api.first.org/data/v1/countries?q=" + request.term,
+        
                 url: "https://restcountries.eu/rest/v2/name/" + request.term,
                 success: function( data ) {
-                  //response( data["_embedded"]["city:search-results"][0]["matching_alternate_names"][0]);
-                  //response(data["_links"]["country:items"][0]);
-                  //console.log(data["_links"]["country:items"][0]);
-                  //console.log(Object.values(data["data"])[0]);
-                  console.log(data[0]);
-                  //console.log(data[0]);
-                  let list = [data[0]['alpha3Code']];
+                
+                  let name_array = data[0]['name'].split(' ');
+                  //console.log(name_array);
+                  let result_name = "";
+                  for (let x = 0; x < name_array.length; x++) {
+                        if (x === 2) {
+                            break;
+                        }
+                        //console.log(x);
+                        //console.log(name_array[x]);
+                        if (x != 0) {
+                            result_name = result_name.concat(" ");    
+                        }
+                        result_name = result_name.concat(name_array[x]);
+
+                        //console.log(result_name);
+                  }
+                  //console.log(result_name);
+                  let list = [result_name];
+                  //let list = [data[0]['name']];
                   response(list);
                 }
             });
@@ -266,14 +277,17 @@ function createLogin() {
     center_div = createCenterDiv();
 
     let title_div = $("<div></div>");
+    title_div.attr("id", "title_div");
     title_div.css({"width": "100%", "height": "auto", "height": "auto", 
                      "margin-left": "0%", "margin-bottom": "0%",
                     "text-align": "center"
                     });
     title_name = $("<div></div>");
-    title_name.css({"width": "100%", "height": "auto", "text-align": "center", "font-size": "1500%", "font-style": "italic", "font-family": "Arial"}); 
-    title_name.append("Plan your life");
+    title_name.attr("id", "title_name");
+    title_name.css({"width": "100%", "height": "auto", "text-align": "center", "font-size": "1000%", "font-style": "italic", "font-family": "Arial", "font-weight": "bold"}); 
+    title_name.append("Fantasy Stocks & Life Planner");
     slogan = $("<div></div>");
+    slogan.attr("id", "slogan");
     slogan.css({"width": "100%", "height": "auto", "text-align": "center", "font-size": "500%", "font-family": "Arial", "font-style": "italic"});
     slogan.append("Any time, any where");
     title_div.append(title_name);

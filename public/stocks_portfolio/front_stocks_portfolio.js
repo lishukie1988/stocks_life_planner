@@ -5,7 +5,7 @@ function createSortBar() {
     let shares_owned = createStockHeaderColumnDiv("SHARES OWNED", color);
     let symbol = createStockHeaderColumnDiv("SYMBOL", color);
     let long_name = createStockHeaderColumnDiv("NAME", color);
-    let current_price = createStockHeaderColumnDiv("PRICE", color);
+    let current_price = createStockHeaderColumnDiv("SHARE PRICE", color);
     //current_price.append(stock_object["currentPrice"]);
     let high_price = createStockHeaderColumnDiv("DAY HIGH", color);
     //high_price.append(stock_object["highPrice"]);

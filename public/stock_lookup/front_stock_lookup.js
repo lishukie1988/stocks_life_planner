@@ -5,8 +5,9 @@ function createSearchBar() {
     let stock_search = $("<div></div>");
     stock_search.css({"background": background_todo, "height": "99%", "width": "100%", "font-size": "1.5vh", "margin-top": "0%", "margin-bottom": "0%"});
     let search_button = $("<div></div>");
-    search_button.css({"width": "9%", "height": "100%", "background": background_search_news, "float": "left", "text-align": "center", "font-size": "80%", "line-height": "140%", "border-radius": "", "margin": "0%"});
+    search_button.css({"width": "9%", "height": "100%", "background": background_search_news, "float": "left", "text-align": "center", "font-size": "", "line-height": "", "border-radius": "", "margin": "0%"});
     search_button.append("<b>\u27A4</b>"); 
+    search_button.attr("class", "stock_search_button");
 
     addHover(search_button, {"background": background_search_news_hover}, {"background": background_search_news});
 

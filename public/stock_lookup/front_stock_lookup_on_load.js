@@ -91,7 +91,7 @@ $(document).ready(function(){
     //$(".main_container").append(userID);
 
 
-    $(".nav_container").append(createNav());
+    $(".nav_container").append(createNav("stock_lookup"));
 
     let search_bar = createSearchBar();
     $(".main_container").append(search_bar);

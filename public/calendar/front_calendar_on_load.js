@@ -132,7 +132,7 @@ $(document).ready(function(){
     //$(".main_container").append(userID);
 
 
-    $(".nav_container").append(createNav());
+    $(".nav_container").append(createNav("calendar"));
 
     let month_year_div = $("<div></div>");
     month_year_div.css({"width": `${month_year_width}`+ "%", "height": `${month_year_height}`+ "%"})

@@ -90,7 +90,7 @@ $(document).ready(function(){
     //$(".main_container").append(userID);
 
 
-    $(".nav_container").append(createNav());
+    $(".nav_container").append(createNav("portfolio"));
 
     /*
     let search_bar = createSearchBar();

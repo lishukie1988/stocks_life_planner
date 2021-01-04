@@ -255,7 +255,7 @@ function createYear(year) {
     year_div.attr("id", "year_div");
     year_div.data("year", year);
 
-    addHover(year_div, {"background": "rgba(214, 192, 133, 0.5)"}, {"background": year_div.css("background")});
+    addHover(year_div, {"background": background_teal_clear}, {"background": year_div.css("background")});
     year_div.click(function() {
         $("#calendar_div").animate(
             {width: "0%", height: "0%"},
@@ -293,7 +293,7 @@ function createMonth(month) {
                 });
 
     
-    addHover(month_div, {"background": "rgba(214, 192, 133, 0.5)"}, {"background": month_div.css("background")});
+    addHover(month_div, {"background": background_teal_clear}, {"background": month_div.css("background")});
     month_div.click(function() {
         $("#calendar_div").animate(
             {width: "0%", height: "0%"},

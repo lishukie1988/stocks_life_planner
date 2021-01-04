@@ -232,7 +232,7 @@ function createNewsSection(date, month, year) {
     let news_year = (out_of_range) ? live_year : year;
     let date_string = getDateString(year, month, date);
 
-    let content_placeholder = (out_of_range == true) ? "Search latest news" : ("Search news on " + date_string);
+    let content_placeholder = (out_of_range == true) ? ("Search latest news (displaying results for: \"" + user_city  + "\")") : ("Search news on " + date_string  + " (displaying results for: \"" + user_city  + "\")");
 
 
 
@@ -242,8 +242,9 @@ function createNewsSection(date, month, year) {
     let news_search = $("<div></div>");
     news_search.css({"background": background_todo, "height": "8%", "width": "100%", "font-size": "1.5vh", "margin-top": "0.5%", "margin-bottom": "0.5%"});
     let search_button = $("<div></div>");
-    search_button.css({"width": "4%", "height": "90%", "background": background_search_news, "float": "left", "text-align": "center", "font-size": "80%", "line-height": "140%", "border-radius": "", "margin": "0.25%"});
+    search_button.css({"width": "4%", "height": "90%", "background": background_search_news, "float": "left", "text-align": "center", "font-size": "", "line-height": "", "border-radius": "", "margin": "0.25%"});
     search_button.append("<b>\u27A4</b>"); 
+    search_button.attr("class", "day_button");
 
     addHover(search_button, {"background": background_search_news_hover}, {"background": background_search_news});
 
@@ -271,12 +272,6 @@ function createNewsSection(date, month, year) {
     // populate result box with user-specified news results for this day
     // if this day is <30 days past current date, news for current date will be displayed instead
 
-    content_div.on("keypress", function(key) {
-        if ((key.which === 13) && $(this).val() != "") {
-            newsAjax(content_div.val(), news_results);
-        }
-    })
-
 
     // by default displays this day's news revolving around user's city of origin
     // if this day is <30 days past current date or is a future date, news for current date will be displayed instead
@@ -295,8 +290,15 @@ function createNewsSection(date, month, year) {
     newsAjax(convertToQuery(user_city), news_results, news_full_date, this_load_key);
 
     search_button.click(function() {
+        console.log(this_search_key);
         newsAjax(content_div.val(), news_results, news_full_date, this_search_key);
     });
+
+    content_div.on("keypress", function(key) {
+        if ((key.which === 13) && $(this).val() != "") {
+            newsAjax(content_div.val(), news_results, news_full_date, this_search_key);
+        }
+    })
 
     return news_section;
 
@@ -304,7 +306,10 @@ function createNewsSection(date, month, year) {
 
 function newsAjax(query, element, date, key) {
 
-    //console.log(query);
+    //console.log(key);
+
+    console.log(query);
+    console.log(date);
 
     /*
     $.ajax({
@@ -327,13 +332,13 @@ function newsAjax(query, element, date, key) {
 
       $.ajax({
         //url: "https://api.weatherbit.io/v2.0/forecast/daily?key=54ca63d4a7474c57a1879b3c4f71291b&city=" + convertToQuery(user_city) + "&country=" + convertToQuery(user_country),
-        url: "https://newsapi.org/v2/everything?language=en&sortBy=popularity&from=" + date + "&to=" + date + "&q=" + "\"" + query + "\"" + "&apiKey=" + news_key_load_odd,
+        url: "https://newsapi.org/v2/everything?language=en&sortBy=popularity&from=" + date + "&to=" + date + "&q=" + "\"" + query + "\"" + "&apiKey=" + key,
         async: true,
         success: function(result){
             console.log(result);
             element.html("");
             for (let article in result["articles"]) {
-                //console.log(result);
+                console.log(result);
                 element.append(createArticle(result["articles"][article]));
             }
         
@@ -409,8 +414,9 @@ function createAddTodo(date, month, year) {
     let todo = $("<div></div>");
     todo.css({"background": background_todo, "height": "8%", "width": "100%", "font-size": "1.5vh", "margin-top": "0.5%", "margin-bottom": "0.5%"});
     let add_button = $("<div></div>");
-    add_button.css({"width": "4%", "height": "90%", "background": background_add_todo, "float": "left", "text-align": "center", "font-size": "65%", "line-height": "170%", "border-radius": "", "margin": "0.25%"});
+    add_button.css({"width": "4%", "height": "90%", "background": background_add_todo, "float": "left", "text-align": "center", "font-size": "", "line-height": "", "border-radius": "", "margin": "0.25%"});
     add_button.append("<b>\u2795</b>"); 
+    add_button.attr("class", "day_button");
     addHover(add_button, {"background": background_add_todo_hover}, {"background": background_add_todo});
     todo.append(add_button);
     let content_div = $("<input></input>");
@@ -475,15 +481,17 @@ function createTodoItem(content, todo_id, date, month, year) {
     let todo = $("<div></div>");
     todo.css({"background": background_todo, "height": "10%", "width": "100%", "font-size": "1.5vh", "margin-top": "0.5%", "margin-bottom": "0.5%"});
     let delete_button = $("<div></div>");
-    delete_button.css({"width": "4%", "height": "90%", "background": background_delete_todo, "float": "left", "text-align": "center", "font-size": "100%", "line-height": "170%", "border-radius": "", "margin": "0.25%"});
+    delete_button.css({"width": "4%", "height": "90%", "background": background_delete_todo, "float": "left", "text-align": "center", "font-size": "", "line-height": "", "border-radius": "", "margin": "0.25%"});
     delete_button.append("<b>\u2717</b>");
+    delete_button.attr("class", "day_button");
 
     addHover(delete_button, {"background": background_delete_todo_hover}, {"background": background_delete_todo});
     
 
     let update_button = $("<div></div>");
-    update_button.css({"width": "4%", "height": "90%", "background": background_update_todo, "float": "left", "text-align": "center", "font-size": "100%", "line-height": "170%", "border-radius": "", "margin": "0.25%"});
+    update_button.css({"width": "4%", "height": "90%", "background": background_update_todo, "float": "left", "text-align": "center", "font-size": "", "line-height": "", "border-radius": "", "margin": "0.25%"});
     update_button.append("<b>\u2713</1>");
+    update_button.attr("class", "day_button");
 
     addHover(update_button, {"background": background_update_todo_hover}, {"background": background_update_todo});
 

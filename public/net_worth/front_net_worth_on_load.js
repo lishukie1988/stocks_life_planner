@@ -92,7 +92,7 @@ $(document).ready(function(){
     //$(".main_container").append(userID);
 
 
-    $(".nav_container").append(createNav());
+    $(".nav_container").append(createNav("net_worth"));
 
     /*
     let search_bar = createSearchBar();
@@ -160,28 +160,28 @@ $(document).ready(function(){
             */
 
             actual_net_worths = result.map(mapActualNetWorths);
-            //console.log("actual_net_worths: ", actual_net_worths);
+            console.log("actual_net_worths: ", actual_net_worths);
             growth_rates = mapGrowthRates(actual_net_worths);
-            //console.log("growth_rates: ", growth_rates);
+            console.log("growth_rates: ", growth_rates);
             avg_growth_rate = getAverageGrowthRate(growth_rates);
-            //console.log("avg_growth_rate: ", avg_growth_rate);
+            console.log("avg_growth_rate: ", avg_growth_rate);
             forecast_net_worths = getForecastNetWorths(actual_net_worths, avg_growth_rate);
-            //console.log("forecast_net_worths: ", forecast_net_worths);
+            console.log("forecast_net_worths: ", forecast_net_worths);
 
             let net_worth_x = forecast_net_worths.map(function(point) { return point["date"]});
             //console.log(net_worth_x);
             let net_worth_y_1 = actual_net_worths.map(function(point) { return point["net_worth"]});
             let net_worth_y_2 = forecast_net_worths.map(function(point) { return point["net_worth"]});
             let net_worth_l_1 = "Historical";
-            let net_worth_l_2 = "7 day forecast based on average historical daily growth rates";
-            let net_worth_title = "Net worth";
+            let net_worth_l_2 = "7 day forecast based on average historical daily growth rate of " + avg_growth_rate.toString();
+            let net_worth_title = "Historical & Forecast Net Worth";
             createGraph("net_worth_div", net_worth_x, net_worth_y_1, net_worth_y_2, net_worth_l_1, net_worth_l_2, net_worth_title);
             let growth_x = growth_rates.map(function(point) { return point["date"]});
             let growth_y_1 = growth_rates.map(function(point) { return point["growth_rate"]});
             let growth_y_2 = growth_rates.map(function(point) { return avg_growth_rate});
             let growth_l_1 = "Historical";
             let growth_l_2 = "Average";
-            let growth_title = "Daily growth rates";
+            let growth_title = "Daily Growth Rates of Net Worth";
             createGraph("growth_rate_div", growth_x, growth_y_1, growth_y_2, growth_l_1, growth_l_2, growth_title);
         }
             
@@ -218,7 +218,7 @@ function mapGrowthRates(actual_net_worths) {
             let change = actual_net_worths[x]["net_worth"] - actual_net_worths[x-1]["net_worth"];
             //console.log("change: ", change);
             //console.log("actual net worth of prev day: ", actual_net_worths[x-1]["net_worth"] );
-            let growth_rate = (change / actual_net_worths[x-1]["net_worth"]).toFixed(2);
+            let growth_rate = (change / actual_net_worths[x-1]["net_worth"]).toFixed(5);
 
             current_growth_rate_entry["growth_rate"] = growth_rate;
         }
@@ -240,7 +240,7 @@ function getAverageGrowthRate(growth_rates) {
         //console.log(growth_rates[x]["growth_rate"]);
         //console.log(accum);
     }
-    accum = (accum / sample_size).toFixed(2);
+    accum = (accum / sample_size).toFixed(5);
     return accum;
 
 }

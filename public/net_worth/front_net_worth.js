@@ -4,7 +4,8 @@ function createNetWorthSummary(results) {
 
     let summary = createDiv("100%", "100%", "", "");
     let total_div = createDiv("100%", "7%", "", "");
-    total_div.css({"background": background_todo, "text-align": "center", "font-weight": "bold", "font-size": "200%", "margin-bottom": "1%"});
+    total_div.css({"background": background_todo, "text-align": "center", "font-weight": "bold", "font-size": "", "margin-bottom": "1%"});
+    total_div.attr({"class": "title_div"});
     let breakdown_div = createDiv("100%", "90%", "", "");
     breakdown_div.css({"background": background_day});
     //let caption_div = createDiv("100%", "100%", "", "");
@@ -44,7 +45,7 @@ function createNetWorthSummary(results) {
 
     let total = parseFloat((balance + stock_total).toFixed(2));
     console.log(total);
-    total_div.append("NET WORTH: " + total);
+    total_div.append("CURRENT NET WORTH: " + total);
 
 
     return summary;
@@ -95,7 +96,7 @@ function createStocksSumLegend() {
     let shares_owned = createStockHeaderColumnDiv("SHARES OWNED", color);
     let symbol = createStockHeaderColumnDiv("SYMBOL", color);
     //let long_name = createStockColumnDiv("NAME", color);
-    let current_price = createStockHeaderColumnDiv("PRICE", color);
+    let current_price = createStockHeaderColumnDiv("SHARE PRICE", color);
     //current_price.append(stock_object["currentPrice"]);
     let high_price = createStockHeaderColumnDiv("DAY HIGH", color);
     //high_price.append(stock_object["highPrice"]);
@@ -119,16 +120,19 @@ function createStocksSumLegend() {
 function createMenuBar() {
     let menu_bar = createDiv("100%", "100%", "", "");
 
-    let summary_button = createDiv("33.33%", "100%", "left", "");
-    summary_button.css({"text-align": "center", "background": background_teal_clear, "margin-bottom": "0%" });
-    summary_button.append("<b>SUMMARY</b>");
+    let summary_button = createDiv("32.666%", "100%", "left", "summary_button");
+    summary_button.css({"text-align": "center", "background": background_teal_clear, "margin-bottom": "0%", "margin-right": "1%" });
+    summary_button.append("<b>CURRENT NET WORTH</b>");
+    summary_button.attr({"class": "net_worth_button"});
 
-    let trend_forecast_button = createDiv("33.33%", "100%", "left", "");
-    trend_forecast_button.css({"text-align": "center", "background": background_teal_clear, "margin-bottom": "0%" });
-    trend_forecast_button.append("<b>TREND & FORECAST</b>");
-    let growth_trend_button = createDiv("33.33%", "100%", "right", "");
+    let trend_forecast_button = createDiv("32.666%", "100%", "left", "trend_forecast_button");
+    trend_forecast_button.css({"text-align": "center", "background": background_teal_clear, "margin-bottom": "0%", "margin-right": "1%" });
+    trend_forecast_button.append("<b>HISTORICAL & FORECAST</b>");
+    trend_forecast_button.attr({"class": "net_worth_button"});
+    let growth_trend_button = createDiv("32.666%", "100%", "right", "growth_trend_button");
     growth_trend_button.css({"text-align": "center", "background": background_teal_clear, "margin-bottom": "0%" });
-    growth_trend_button.append("<b>GROWTH RATE</b>");
+    growth_trend_button.append("<b>DAILY GROWTH RATES</b>");
+    growth_trend_button.attr({"class": "net_worth_button"});
     menu_bar.append(summary_button);
     menu_bar.append(trend_forecast_button);
     menu_bar.append(growth_trend_button);
@@ -137,6 +141,10 @@ function createMenuBar() {
         openAnimate("#net_worth_summary_div", "100", "95");
         $("#net_worth_container").hide();
         $("#growth_rate_container").hide();
+        summary_button.css("background", background_teal);
+        trend_forecast_button.css("background", background_teal_clear);
+        growth_trend_button.css("background", background_teal_clear);
+
         //closeAnimate("#net_worth_div");
         //closeAnimate("#growth_rate_div");
     })
@@ -150,18 +158,24 @@ function createMenuBar() {
         
         //$("#net_worth_div").css({"height": "95%", "width": "100%"});
         //$("#growth_rate_div").css({"height": "0%", "width": "0%"});
+        summary_button.css("background", background_teal_clear);
+        $("#trend_forecast_button").css("background", background_teal);
+        growth_trend_button.css("background", background_teal_clear);
 
     })
     growth_trend_button.click(function() {
         $("#net_worth_container").hide();
         $("#growth_rate_container").show();
         closeAnimate("#net_worth_summary_div");
+        summary_button.css("background", background_teal_clear);
+        trend_forecast_button.css("background", background_teal_clear);
+        growth_trend_button.css("background", background_teal);
 
     })
 
-    addHover(summary_button, {"background": background_teal}, {"background": background_teal_clear});
-    addHover(trend_forecast_button, {"background": background_teal}, {"background": background_teal_clear});
-    addHover(growth_trend_button, {"background": background_teal}, {"background": background_teal_clear});
+    addHover(summary_button, {"background": background_teal}, {"background": summary_button.css("background")});
+    addHover(trend_forecast_button, {"background": background_teal}, {"background": trend_forecast_button.css("background")});
+    addHover(growth_trend_button, {"background": background_teal}, {"background": growth_trend_button.css("background")});
 
     return menu_bar; 
 
@@ -274,7 +288,7 @@ function createSortBar() {
     let shares_owned = createStockHeaderColumnDiv("SHARES OWNED", color);
     let symbol = createStockColumnDiv("SYMBOL", color);
     let long_name = createStockHeaderColumnDiv("NAME", color);
-    let current_price = createStockHeaderColumnDiv("PRICE", color);
+    let current_price = createStockHeaderColumnDiv("SHARE PRICE", color);
     //current_price.append(stock_object["currentPrice"]);
     let high_price = createStockHeaderColumnDiv("DAY HIGH", color);
     //high_price.append(stock_object["highPrice"]);
