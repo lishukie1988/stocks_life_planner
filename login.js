@@ -103,7 +103,7 @@ module.exports = function(){
                 res.end();
             }
             context.users = results;
-            //console.log(results);
+            console.log(results);
             //console.log("reached compelte()");
             complete();
             
