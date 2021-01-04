@@ -85,7 +85,7 @@ function convertToQuery(input_string) {
         } 
     }
 
-    console.log(output);
+    //console.log(output);
     return output;
 
 }

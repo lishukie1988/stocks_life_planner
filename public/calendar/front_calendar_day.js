@@ -310,12 +310,15 @@ function newsAjax(query, element, date, key) {
 
     console.log(query);
     console.log(date);
-
-    /*
+    let querified = convertToQuery(query);
+    console.log(querified);
+    
     $.ajax({
-        url: "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI?q=" + query + "&pageNumber=1&pageSize=20&autoCorrect=true&withThumbnails=true&fromPublishedDate=null&toPublishedDate=null",
-        method: "GET",
-        headers: {
+        "async": true,
+	    "crossDomain": true,
+        "url": "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI?q=" + querified + "&pageNumber=1&pageSize=50&autoCorrect=true&fromPublishedDate=" + date + "T00%3A00%3A00&toPublishedDate=" + date + "T23%3A59%3A59&withThumbnails=true",
+        "method": "GET",
+        "headers": {
             "x-rapidapi-key": "9f8d618d05mshf500f0090b3d22bp1df82bjsnf64295ed4f46",
             "x-rapidapi-host": "contextualwebsearch-websearch-v1.p.rapidapi.com"
         },
@@ -328,7 +331,9 @@ function newsAjax(query, element, date, key) {
             }
       }});
 
-    */
+    
+
+    /*
 
       $.ajax({
         //url: "https://api.weatherbit.io/v2.0/forecast/daily?key=54ca63d4a7474c57a1879b3c4f71291b&city=" + convertToQuery(user_city) + "&country=" + convertToQuery(user_country),
@@ -343,10 +348,12 @@ function newsAjax(query, element, date, key) {
             }
         
       }});
+      */
 
 }
 
 function createArticle(article) {
+    console.log(article);
     let article_div = $("<div></div");
     article_div.css({"width": "100%", "margin-top": "0.5%", "margin-bottom": "0.5%", "background": background_todo});
     //console.log(article);
@@ -363,7 +370,7 @@ function createArticle(article) {
     let image_div = $("<div></div>");
     image_div.css({"background": "", "height": "auto", "width": "100%", "font-size": "1.5vh", "margin-top": "1%", "margin-bottom": "0.5%", "float": ""});
     let image = $("<img>");
-    image.attr("src", article["urlToImage"]);
+    image.attr("src", article["image"]["url"]);
     image.css({"width": "100%", "height": "auto"});
     article_div.append(image);
 
