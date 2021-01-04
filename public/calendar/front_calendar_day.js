@@ -232,7 +232,9 @@ function createNewsSection(date, month, year) {
     let news_year = (out_of_range) ? live_year : year;
     let date_string = getDateString(year, month, date);
 
-    let content_placeholder = (out_of_range == true) ? ("Search latest news (displaying results for: \"" + user_city  + "\")") : ("Search news on " + date_string  + " (displaying results for: \"" + user_city  + "\")");
+    // changed from "displaying results for user_city" due to little to no results
+    //let content_placeholder = (out_of_range == true) ? ("Search latest news (displaying results for: \"" + user_city  + "\")") : ("Search news on " + date_string  + " (displaying results for: \"" + user_city  + "\")");
+    let content_placeholder = (out_of_range == true) ? ("Search latest news") : ("Search news on " + date_string);
 
 
 
@@ -287,7 +289,10 @@ function createNewsSection(date, month, year) {
     let news_full_date = getDateString(news_year, news_month, news_date);
     console.log(news_full_date);
 
-    newsAjax(convertToQuery(user_city), news_results, news_full_date, this_load_key);
+    // changed from user_city due to little to no results
+    //newsAjax(convertToQuery(user_city), news_results, news_full_date, this_load_key);
+    newsAjax(convertToQuery("google"), news_results, news_full_date, this_load_key);
+
 
     search_button.click(function() {
         console.log(this_search_key);
@@ -306,17 +311,23 @@ function createNewsSection(date, month, year) {
 
 function newsAjax(query, element, date, key) {
 
-    //console.log(key);
-
-    console.log(query);
-    console.log(date);
     let querified = convertToQuery(query);
-    console.log(querified);
-    
+    //console.log(key);
+    let normal_url = "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI?q=" + querified + "&pageNumber=1&pageSize=50&autoCorrect=true&fromPublishedDate=" + date + "T00%3A00%3A00&toPublishedDate=" + date + "T23%3A59%3A59&withThumbnails=true";
+    let latest_url = "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI?q=" + querified + "&pageNumber=1&pageSize=50&autoCorrect=true&withThumbnails=true";
+
+    let live_date_string = getDateString(live_year, live_month, live_date);
+    let search_url = (date == live_date_string) ? latest_url : normal_url;
+    console.log(date);
+    console.log(live_date_string);
+    if (date == live_date_string) {
+        console.log("search latest news");
+    }
+
     $.ajax({
         "async": true,
 	    "crossDomain": true,
-        "url": "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI?q=" + querified + "&pageNumber=1&pageSize=50&autoCorrect=true&fromPublishedDate=" + date + "T00%3A00%3A00&toPublishedDate=" + date + "T23%3A59%3A59&withThumbnails=true",
+        "url": search_url,
         "method": "GET",
         "headers": {
             "x-rapidapi-key": "9f8d618d05mshf500f0090b3d22bp1df82bjsnf64295ed4f46",
