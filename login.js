@@ -72,8 +72,10 @@ module.exports = function(){
         function complete(){
             callbackCount++;
             if(callbackCount >= 1){
+                console.log("@ login post: context.users: ", context.users);
 
                 if (context.users.length == 0) {
+
                     console.log("invalid username &/ password");
                     //res.redirect("/login");
                     res.write("invalid");
@@ -101,9 +103,10 @@ module.exports = function(){
                 console.log("error");
                 res.write(JSON.stringify(error));
                 res.end();
+                return;
             }
             context.users = results;
-            console.log(results);
+            console.log("@ post login: validate: mysql result = ", results);
             //console.log("reached compelte()");
             complete();
             
