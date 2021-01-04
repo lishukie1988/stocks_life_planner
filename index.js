@@ -23,7 +23,8 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use('/static', express.static('public'));
 app.set('view engine', 'handlebars');
-app.set('port', process.argv[2]);
+app.set('port', 8865);
+//app.set('port', process.argv[2]);
 app.set('mysql', mysql);
 
 
