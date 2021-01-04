@@ -268,8 +268,8 @@ function createCenterDiv() {
 
 function createLogin() {
     let login_div = $("<div></div>");
-    login_div.css({"font-size": "25%", "background": "rgba(109,189,181,0.5)", "width": "80%", "height": "80vh",
-                    "position": "absolute", "top": "10vh", "bottom": "10vh"
+    login_div.css({"font-size": "25%", "background": "rgba(109,189,181,0.5)", "width": box_width, "height": box_height,
+                    "position": "absolute", "top": "10vh", "bottom": "10vh", "left": "10%", "right": "10%"
                 });
     login_div.attr("id", "login_div");
 
