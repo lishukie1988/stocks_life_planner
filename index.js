@@ -54,13 +54,50 @@ cron.schedule('0 59 23 * * *', () => {
 
 });
 
-cron.schedule('59 59 23 * * *', () => {
+cron.schedule('59 59,29 * * * *', () => {
   //var current_time = new Date;
   //console.log(current_time.getSeconds(), "10 seconds have passed");
 
   //dailyStockUpdate.promisified_fetchSymbols();
   dailyInsertNetWorths.insertNetWorths();
 
+}, {
+
+  scheduled: true,
+  timezone: "America/Los_Angeles"
+
+});
+
+// prevent idle
+cron.schedule('0,9,19,29,39,49,59 * * * * *', () => {
+
+  //fetch('/login').then(res => console.log(`response-ok: ${res.ok}, status: ${res.status}`));  
+
+  var req = unirest("GET", "/login");
+  
+  /*
+  req.query({
+    "symbol": symbol,
+    "region": "US"
+  });
+
+  req.headers({
+    "x-rapidapi-key": "9f8d618d05mshf500f0090b3d22bp1df82bjsnf64295ed4f46",
+    "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
+    "useQueryString": true
+  });
+
+  */
+
+  req.end(function (res) {
+
+    //console.log("@ RESPONSE CALLBACK of promise_fetchStocksAPI: ", res.body)
+    console.log("prevent idle");
+
+    
+    
+  });
+    
 }, {
 
   scheduled: true,
