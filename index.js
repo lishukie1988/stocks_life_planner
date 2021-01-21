@@ -73,25 +73,22 @@ cron.schedule('0,9,19,29,39,49,59 * * * * *', () => {
 
   //fetch('/login').then(res => console.log(`response-ok: ${res.ok}, status: ${res.status}`));  
 
-  var req = unirest("GET", "lishukie-portfolio-1.herokuapp.com/login?status=0");
+  var req = unirest("GET", "https://lishukie-portfolio-1.herokuapp.com/");
   
-  /*
+  
   req.query({
-    "symbol": symbol,
-    "region": "US"
+    "status": 0
   });
 
   req.headers({
-    "x-rapidapi-key": "9f8d618d05mshf500f0090b3d22bp1df82bjsnf64295ed4f46",
-    "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
     "useQueryString": true
   });
 
-  */
+  
 
   req.end(function (res) {
 
-    //console.log("@ RESPONSE CALLBACK of promise_fetchStocksAPI: ", res.body)
+    /console.log("@ RESPONSE CALLBACK of anti-idle: ", res.body)
     console.log("prevent idle");
 
     
