@@ -40,7 +40,7 @@ cron.schedule('59,9,19,29,39,49 * * * * *', () => {
 });
 
 
-cron.schedule('0 59 23 * * *', () => {
+cron.schedule('0 59 23,5,11,17 * * *', () => {
   //var current_time = new Date;
   //console.log(current_time.getSeconds(), "10 seconds have passed");
 
