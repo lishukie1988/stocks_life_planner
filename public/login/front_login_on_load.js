@@ -285,7 +285,7 @@ function createLogin() {
     title_name = $("<div></div>");
     title_name.attr("id", "title_name");
     title_name.css({"width": "100%", "height": "auto", "text-align": "center", "font-size": "1000%", "font-style": "italic", "font-family": "Arial", "font-weight": "bold"}); 
-    title_name.append("Fantasy Stocks & Life Planner");
+    title_name.append("Stocks & Life Planner");
     slogan = $("<div></div>");
     slogan.attr("id", "slogan");
     slogan.css({"width": "100%", "height": "auto", "text-align": "center", "font-size": "500%", "font-family": "Arial", "font-style": "italic"});
@@ -301,10 +301,62 @@ function createLogin() {
     let input_username = createInputDiv();
     input_username.attr({type: "text", id: "input_username", name: "input_username", placeholder: "enter username", required : "true"});
     
+    input_username.on("keyup", function(key) {
+        if ((key.which === 13 || key.which === 27) && $(this).val() != "") {
+            console.log("password enter pressed");
+            
+            $.ajax({
+                url: "/login",
+                async: true,
+                type: 'POST', 
+                data: {username: $(input_username).val(), password: $(input_password).val()},
+                success: function(result){
+                    console.log("CALLBACK of POST LOGIN AJAX")
+                    console.log(result);
+                    if (result === "invalid") {
+                        window.location.href="login?status=-1";
+    
+                    }
+                    else if (result === "valid") {
+                        window.location.href="/calendar";
+                    }
+                }
+                    
+            });
+
+        }
+    })
     
     form_div.append(input_username);
     let input_password = createInputDiv();
     input_password.attr({type: "password", id: "input_password", name: "input_password", placeholder: "enter password", required : "true"});
+
+    input_password.on("keyup", function(key) {
+        if ((key.which === 13 || key.which === 27) && $(this).val() != "") {
+            console.log("password enter pressed");
+            
+            $.ajax({
+                url: "/login",
+                async: true,
+                type: 'POST', 
+                data: {username: $(input_username).val(), password: $(input_password).val()},
+                success: function(result){
+                    console.log("CALLBACK of POST LOGIN AJAX")
+                    console.log(result);
+                    if (result === "invalid") {
+                        window.location.href="login?status=-1";
+    
+                    }
+                    else if (result === "valid") {
+                        window.location.href="/calendar";
+                    }
+                }
+                    
+            });
+
+        }
+    })
+
     form_div.append(input_password);
     
     let buttons_div = createButtonsDiv();

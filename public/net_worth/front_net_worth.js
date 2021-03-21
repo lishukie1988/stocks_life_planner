@@ -127,7 +127,7 @@ function createMenuBar() {
 
     let trend_forecast_button = createDiv("32.666%", "100%", "left", "trend_forecast_button");
     trend_forecast_button.css({"text-align": "center", "background": background_teal_clear, "margin-bottom": "0%", "margin-right": "1%" });
-    trend_forecast_button.append("<b>HISTORICAL & FORECAST</b>");
+    trend_forecast_button.append("<b>HISTORICAL NET WORTH</b>");
     trend_forecast_button.attr({"class": "net_worth_button"});
     let growth_trend_button = createDiv("32.666%", "100%", "right", "growth_trend_button");
     growth_trend_button.css({"text-align": "center", "background": background_teal_clear, "margin-bottom": "0%" });
