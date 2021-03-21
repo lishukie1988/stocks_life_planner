@@ -181,8 +181,48 @@ function createMenuBar() {
 
 }
 
+function createGraph_1(canvas_id, x, y_1, label_1, title) {
 
-function createGraph(canvas_id, x, y_1, y_2, label_1, label_2, title) {
+    var ctx = document.getElementById(canvas_id).getContext('2d');
+    //ctx.css({"height": "100%"});
+
+    var graph = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: x,
+            datasets: [{
+              label: label_1,
+              data: y_1,
+              lineTension: 0,
+              backgroundColor: background_update_todo
+            }]
+          },
+        options: {
+            maintainAspectRatio: false,
+            responsive: true,
+          legend: {
+            display: true
+          },
+          title: {
+            display: true,
+            text: title,
+          },
+          scales: {
+            xAxes: [{
+              type: 'time',
+              time: {
+                unit: 'day',
+                tooltipFormat: 'lll',
+              }
+            }]
+          }
+        }
+    });
+    
+}
+
+
+function createGraph_2(canvas_id, x, y_1, y_2, label_1, label_2, title) {
 
     var ctx = document.getElementById(canvas_id).getContext('2d');
     //ctx.css({"height": "100%"});

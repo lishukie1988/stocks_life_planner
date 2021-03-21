@@ -172,6 +172,10 @@ function createYears(year) {
                 {width: month_year_width + "%", height: month_year_height + "%"},
                 100
             )
+            $("#scroll_div").animate(
+                {width: scroll_width + "%", height: scroll_height + "%"},
+                100
+            )
         }
     })
     //years_div.text("123testing");
@@ -234,6 +238,10 @@ function createMonthChoice(month) {
             {width: month_year_width + "%", height: month_year_height + "%"},
             100
         )
+        $("#scroll_div").animate(
+            {width: scroll_width + "%", height: scroll_height + "%"},
+            100
+        )
     })
 
 
@@ -266,6 +274,10 @@ function createYear(year) {
             100
         )
         $("#month_year_div").animate(
+            {width: "0%", height: "0%"},
+            100
+        )
+        $("#scroll_div").animate(
             {width: "0%", height: "0%"},
             100
         )
@@ -304,6 +316,10 @@ function createMonth(month) {
             100
         )
         $("#month_year_div").animate(
+            {width: "0%", height: "0%"},
+            100
+        )
+        $("#scroll_div").animate(
             {width: "0%", height: "0%"},
             100
         )
