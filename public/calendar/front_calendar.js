@@ -225,7 +225,7 @@ function createMonthChoice(month) {
         current_month = $(this).data("month");
         $("#calendar_div").html(createCalendar($(this).data("month"), $("#year_div").data("year")));
         $("#month_div").data("month", $(this).data("month"));
-        $("#month_div").text(months_string_long[month]);
+        $("#month_div").text(months_string[month]);
         $("#calendar_div").animate(
             {width: calendar_width + "%", height: calendar_height + "%"},
             100
@@ -257,8 +257,8 @@ function createYear(year) {
     let year_div = $("<div></div>");
     year_div.text(year);
     //year_div.attr("id", "year_div");
-    year_div.css({"font-size": "250%", "background": "rgba(109,189,181,0.5)", "width": "29%",
-                    "float": "right", "margin-right": "0.25%" , "height": "100%"
+    year_div.css({"font-size": "250%", "background": "rgba(109,189,181,0.5)", "width": "25%",
+                    "float": "left", "margin-right": "0.0%" , "height": "100%", "text-align": "center"
                 });
     year_div.attr("id", "year_div");
     year_div.data("year", year);
@@ -284,24 +284,41 @@ function createYear(year) {
     })
 
 
-
     return year_div;
+
+}
+
+
+function createCity(city, country) {
+
+    let city_div = $("<div></div>");
+    city_div.text(city);
+    city_div.css({"font-size": "250%", "background": "rgba(109,189,181,0.5)", "width": "49%",
+                    "float": "right", "margin-right": "0.5%" , "height": "100%", "text-align": "center"
+                });
+    city_div.attr("id", "city_div");
+    city_div.data("city", city);
+    city_div.data("country", country);
+
+    //addHover(city_div, {"background": background_teal_clear}, {"background": city_div.css("background")});
+
+    return city_div;
 
 }
 
 function createMonth(month) {
 
-    let months_string = {1: "January", 2: "February", 3: "March", 4: "April",
-                            5: "May", 6: "June", 7: "July", 8: "August",
-                            9: "September", 10: "October", 11: "November", 12: "December"
+    let months_string = {1: "JAN", 2: "FEB", 3: "MAR", 4: "APR",
+                            5: "MAY", 6: "JUN", 7: "JUL", 8: "AUG",
+                            9: "SEP", 10: "OCT", 11: "NOV", 12: "DEC"
                         }
 
     let month_div = $("<div></div>");
     month_div.attr("id", "month_div");
     month_div.text(months_string[month]);
     month_div.data("month", month);
-    month_div.css({"font-size": "250%", "background": "rgba(109,189,181,0.5)", "width": "69%",
-                    "float": "left", "margin-left": "0.25%", "height": "100%"
+    month_div.css({"font-size": "250%", "background": "rgba(109,189,181,0.5)", "width": "25%",
+                    "float": "left", "margin-right": "0.25%", "height": "100%", "text-align": "center"
                 });
 
     

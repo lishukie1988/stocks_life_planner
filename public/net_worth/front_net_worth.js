@@ -476,7 +476,7 @@ function createSearchBar() {
                 "url": "https://apidojo-yahoo-finance-v1.p.rapidapi.com/auto-complete?q=" + content_div.val() + "&region=US",
 	            "method": "GET",
                 "headers": {
-                    "x-rapidapi-key": "9f8d618d05mshf500f0090b3d22bp1df82bjsnf64295ed4f46",
+                    "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
                     "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
                 },
                 success: function( data ) {
@@ -510,7 +510,7 @@ function stockAjax(query, element) {
 	    "url": "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary?symbol=" + query + "&region=US",
 	    "method": "GET",
 	    "headers": {
-		    "x-rapidapi-key": "9f8d618d05mshf500f0090b3d22bp1df82bjsnf64295ed4f46",
+		    "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
 		    "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
 	    },
         async: true,
@@ -537,7 +537,7 @@ function stockAjax(query, element) {
             "url": "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/get-news?category=" + query + "&region=US",
             "method": "GET",
             "headers": {
-                "x-rapidapi-key": "9f8d618d05mshf500f0090b3d22bp1df82bjsnf64295ed4f46",
+                "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
                 "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com" 
             },
             async: true,

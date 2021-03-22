@@ -330,7 +330,7 @@ function newsAjax(query, element, date, key) {
         "url": search_url,
         "method": "GET",
         "headers": {
-            "x-rapidapi-key": "9f8d618d05mshf500f0090b3d22bp1df82bjsnf64295ed4f46",
+            "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
             "x-rapidapi-host": "contextualwebsearch-websearch-v1.p.rapidapi.com"
         },
         async: true,

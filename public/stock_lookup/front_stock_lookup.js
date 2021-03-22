@@ -29,7 +29,7 @@ function createSearchBar() {
                 "url": "https://apidojo-yahoo-finance-v1.p.rapidapi.com/auto-complete?q=" + content_div.val() + "&region=US",
 	            "method": "GET",
                 "headers": {
-                    "x-rapidapi-key": "9f8d618d05mshf500f0090b3d22bp1df82bjsnf64295ed4f46",
+                    "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
                     "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
                 },
                 success: function( data ) {
@@ -63,7 +63,7 @@ function stockAjax(query, element) {
 	    "url": "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary?symbol=" + query + "&region=US",
 	    "method": "GET",
 	    "headers": {
-		    "x-rapidapi-key": "9f8d618d05mshf500f0090b3d22bp1df82bjsnf64295ed4f46",
+		    "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
 		    "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
 	    },
         async: true,
@@ -90,7 +90,7 @@ function stockAjax(query, element) {
             "url": "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/get-news?category=" + query + "&region=US",
             "method": "GET",
             "headers": {
-                "x-rapidapi-key": "9f8d618d05mshf500f0090b3d22bp1df82bjsnf64295ed4f46",
+                "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
                 "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com" 
             },
             async: true,
@@ -185,7 +185,7 @@ function createStockData(data_object) {
     let stock_high = data_object["price"]["regularMarketDayHigh"]["raw"];
     let stock_low = data_object["price"]["regularMarketDayLow"]["raw"];
     let stock_summary = data_object["summaryProfile"]["longBusinessSummary"];
-    let stock_change = data_object["price"]["regularMarketChangePercent"]["raw"].toFixed(2);
+    let stock_change = data_object["price"]["regularMarketChange"]["raw"].toFixed(2);
     let stock_name = data_object["price"]["longName"];
 
     let stock_data = createDiv("100%", "100%", "");
@@ -245,7 +245,7 @@ function createStockData(data_object) {
     day_change.append(change_caption);
     day_high.append(data_object["price"]["regularMarketDayHigh"]["raw"].toFixed(2));
     day_low.append(data_object["price"]["regularMarketDayLow"]["raw"].toFixed(2));
-    day_change.append(stock_change + "%");
+    day_change.append(stock_change + "");
     data_div.append(day_high);
     data_div.append(day_low);
     data_div.append(day_change);

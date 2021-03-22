@@ -137,6 +137,10 @@ $(document).ready(function(){
     let month_year_div = $("<div></div>");
     month_year_div.css({"width": `${month_year_width}`+ "%", "height": `${month_year_height}`+ "%"})
     month_year_div.attr("id", "month_year_div");
+
+    let city_div = createCity(user_city, user_country);
+    month_year_div.append(city_div);
+
     let month_div = createMonth(current_month);
     month_year_div.append(month_div);
     let year_div = createYear(current_year);

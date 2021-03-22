@@ -94,7 +94,7 @@ function promise_fetchStocksAPI (symbol) {
       });
   
       req.headers({
-        "x-rapidapi-key": "9f8d618d05mshf500f0090b3d22bp1df82bjsnf64295ed4f46",
+        "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
         "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
         "useQueryString": true
       });
@@ -112,7 +112,7 @@ function promise_fetchStocksAPI (symbol) {
           var current_price = res.body["price"]["regularMarketPrice"]["raw"].toFixed(2);
           var high_price = res.body["price"]["regularMarketDayHigh"]["raw"].toFixed(2);
           var low_price = res.body["price"]["regularMarketDayLow"]["raw"].toFixed(2);
-          var change = res.body["price"]["regularMarketChangePercent"]["raw"].toFixed(2);
+          var change = res.body["price"]["regularMarketChange"]["raw"].toFixed(2);
   
           summary = res.body["summaryProfile"]["longBusinessSummary"];
           long_name = res.body["price"]["longName"];
@@ -141,7 +141,7 @@ function fetchStocksAPI (symbol) {
     });
   
     req.headers({
-      "x-rapidapi-key": "9f8d618d05mshf500f0090b3d22bp1df82bjsnf64295ed4f46",
+      "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
       "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
       "useQueryString": true
     });
