@@ -1,4 +1,4 @@
-# portfolio_node_app
+# Stocks and Life Planner
 
 - Summary:
   - This is a personal stocks and life planner browser-based application.
