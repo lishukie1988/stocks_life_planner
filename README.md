@@ -4,7 +4,7 @@
 
   - This is a personal stocks and life planner browser-based application.
   - Users can create an account and access their account from any device.
-  - For demonstration purpose, an pre-configured account is provided with the following login credentials:
+  - For demonstration purpose, a pre-configured account is provided with the following login credentials:
     - username: userid1
     - password: password1
   - Please also feel free to create a new account if you prefer.
