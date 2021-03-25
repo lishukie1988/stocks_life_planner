@@ -3,7 +3,7 @@
 - Summary:
 
   - This is a personal stocks and life planner browser-based application.
-  - App URL: https://lishukie-portfolio-1.herokuapp.com/
+  - App URL: https://lishukie-portfolio-1.herokuapp.com/login?status=0
   - Users can create an account and access their account from any device.
   - For demonstration purpose, a pre-configured account is provided with the following login credentials:
     - username: userid1
