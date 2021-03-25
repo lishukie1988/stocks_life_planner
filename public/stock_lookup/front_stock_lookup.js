@@ -26,16 +26,20 @@ function createSearchBar() {
             $.ajax({
                 //url: "https://api.teleport.org/api/cities/?search=" + request.term,
                 //url: "https://api.teleport.org/api/cities/?search=" + request.term,
-                "url": "https://apidojo-yahoo-finance-v1.p.rapidapi.com/auto-complete?q=" + content_div.val() + "&region=US",
+                //"url": "https://apidojo-yahoo-finance-v1.p.rapidapi.com/auto-complete?q=" + content_div.val() + "&region=US",
+                "url": "https://yahoo-finance-low-latency.p.rapidapi.com/v6/finance/autocomplete?query=" + content_div.val() + "&lang=en&region=US",
 	            "method": "GET",
                 "headers": {
                     "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
-                    "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
+                    //"x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
+                    "x-rapidapi-host": "yahoo-finance-low-latency.p.rapidapi.com"
                 },
                 success: function( data ) {
                     //console.log(data);
-                    console.log(data["quotes"][0]["symbol"]);
-                    let auto_result = [data["quotes"][0]["symbol"]];
+                    //console.log(data["quotes"][0]["symbol"]);
+                    console.log(data["ResultSet"]["Result"][0]["symbol"]);
+                    //let auto_result = [data["quotes"][0]["symbol"]];
+                    let auto_result = [data["ResultSet"]["Result"][0]["symbol"]];
                     //let auto_array = data["quotes"].map(x => x["exchange"]);
                     //console.log(auto_array);
                     response(auto_result);
@@ -83,6 +87,32 @@ function stockAjax(query, element) {
         }
       });
 
+    // ********* LOW LATENCY API
+      $.ajax({
+        "async": true,
+	    "crossDomain": true,
+	    "url": "https://yahoo-finance-low-latency.p.rapidapi.com/v11/finance/quoteSummary/" + query + "?modules=defaultKeyStatistics%2CassetProfile&region=US&lang=en",
+	    "method": "GET",
+	    "headers": {
+		    "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
+		    "x-rapidapi-host": "yahoo-finance-low-latency.p.rapidapi.com"
+	    },
+        async: true,
+        success: function(result){
+                console.log(element.attr("id"));
+                console.log(result);
+                console.log(result["symbol"]);
+                element.html("");
+                element.append(createStockData(result));
+                //element.append(createArticle(result["value"][article]));
+                //$("#stock_details_div").append(result);
+                /*
+                for (let article in result["value"]) {
+                //console.log(result);
+                element.append(createArticle(result["value"][article]));
+                */
+        }
+      });
 
       $.ajax({
             "async": true,
@@ -180,6 +210,7 @@ function createStockNews(data_object) {
 
 function createStockData(data_object) {
 
+    console.log(data_object);
     let stock_symbol = data_object["symbol"];
     let stock_price = data_object["price"]["regularMarketPrice"]["raw"];
     let stock_high = data_object["price"]["regularMarketDayHigh"]["raw"];
