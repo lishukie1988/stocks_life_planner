@@ -52,7 +52,7 @@ module.exports = function(){
         var mysql = req.app.get('mysql');
         var userID = req.body.userID;
         console.log("@ post net_worth");
-        sql = "SELECT * FROM (SELECT * FROM Net_worths WHERE userID='userid1' ORDER BY date DESC LIMIT 60) as x ORDER BY date ASC;";
+        sql = "SELECT * FROM (SELECT * FROM Net_worths WHERE userID=? ORDER BY date DESC LIMIT 60) as x ORDER BY date ASC;";
         mysql.pool.query(sql, [userID], function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
