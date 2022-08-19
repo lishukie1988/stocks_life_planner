@@ -49,6 +49,7 @@ function createSearchBar() {
                 success: function( data ) {
                     //console.log(data);
                     //console.log(data["quotes"][0]["symbol"]);
+                    console.log(data)
                     console.log(data["ResultSet"]["Result"][0]["symbol"]);
                     //let auto_result = [data["quotes"][0]["symbol"]];
                     let auto_result = [data["ResultSet"]["Result"][0]["symbol"]];
