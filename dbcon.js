@@ -1,10 +1,10 @@
 var mysql = require('mysql');
 var pool = mysql.createPool({
    connectionLimit : 10,
-   host            : 'portfolio2.cbdwadacowh0.us-east-2.rds.amazonaws.com',
-   user            : 'liyuk',
-   password        : '5pammu5ub!',
-   database        : 'portfolio2',
-   port            : 3300
+   host            : 'portfolio.cagb1ij7v9gq.us-east-1.rds.amazonaws.com',
+   user            : 'shukie',
+   password        : 'Gummtw0rm5',
+   database        : 'stocks_life_planner',
+   port            : 3306
 });
 module.exports.pool = pool;
