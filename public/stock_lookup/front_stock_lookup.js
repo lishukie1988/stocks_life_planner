@@ -50,9 +50,11 @@ function createSearchBar() {
                     //console.log(data);
                     //console.log(data["quotes"][0]["symbol"]);
                     console.log(data)
-                    console.log(data["ResultSet"]["Result"][0]["symbol"]);
+                    //console.log(data["ResultSet"]["Result"][0]["symbol"]);
+                    console.log(data["data"]["symbol"]);
                     //let auto_result = [data["quotes"][0]["symbol"]];
-                    let auto_result = [data["ResultSet"]["Result"][0]["symbol"]];
+                    //let auto_result = [data["ResultSet"]["Result"][0]["symbol"]];
+                    let auto_result = [data["data"]["symbol"]];
                     //let auto_array = data["quotes"].map(x => x["exchange"]);
                     //console.log(auto_array);
                     response(auto_result);
