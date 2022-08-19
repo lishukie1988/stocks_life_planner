@@ -24,16 +24,28 @@ function createSearchBar() {
             
             
             $.ajax({
-                //url: "https://api.teleport.org/api/cities/?search=" + request.term,
-                //url: "https://api.teleport.org/api/cities/?search=" + request.term,
-                //"url": "https://apidojo-yahoo-finance-v1.p.rapidapi.com/auto-complete?q=" + content_div.val() + "&region=US",
-                "url": "https://yahoo-finance-low-latency.p.rapidapi.com/v6/finance/autocomplete?query=" + content_div.val() + "&lang=en&region=US",
-	            "method": "GET",
+              
+                // "url": "https://yahoo-finance-low-latency.p.rapidapi.com/v6/finance/autocomplete?query=" + content_div.val() + "&lang=en&region=US",
+	            // "method": "GET",
+                // "headers": {
+                //     "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
+                //     //"x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
+                //     "x-rapidapi-host": "yahoo-finance-low-latency.p.rapidapi.com"
+                // },
+
+                "async": true,
+                "crossDomain": true,
+                "url": "https://yahoo-finance97.p.rapidapi.com/stock-info",
+                "method": "POST",
                 "headers": {
-                    "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
-                    //"x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
-                    "x-rapidapi-host": "yahoo-finance-low-latency.p.rapidapi.com"
+                    "content-type": "application/x-www-form-urlencoded",
+                    "X-RapidAPI-Key": "4df937d51dmsh727e46affe67ce1p1e86dfjsnb0c5d32a4e94",
+                    "X-RapidAPI-Host": "yahoo-finance97.p.rapidapi.com"
                 },
+                "data": {
+                    "symbol": content_div.val()
+                },
+
                 success: function( data ) {
                     //console.log(data);
                     //console.log(data["quotes"][0]["symbol"]);
