@@ -263,7 +263,7 @@ function createStockData(data_object) {
     let stock_summary = data_object["longBusinessSummary"];
     // *** get raw change with regularMarketOpen & currentPrice
     //let stock_change = data_object["price"]["regularMarketChange"]["raw"].toFixed(2);
-    let stock_open = data_object["price"]["regularMarketOpen"];
+    let stock_open = data_object["data"]["regularMarketOpen"];
     let stock_change = (stock_price - stock_open).toFixed(2);
     let stock_name = data_object["data"]["longName"];
 
