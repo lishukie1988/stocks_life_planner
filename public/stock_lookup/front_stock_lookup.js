@@ -260,7 +260,7 @@ function createStockData(data_object) {
     let stock_price = data_object["data"]["currentPrice"];
     let stock_high = data_object["data"]["dayHigh"];
     let stock_low = data_object["data"]["dayLow"];
-    let stock_summary = data_object["longBusinessSummary"];
+    let stock_summary = data_object["data"]["longBusinessSummary"];
     // *** get raw change with regularMarketOpen & currentPrice
     //let stock_change = data_object["price"]["regularMarketChange"]["raw"].toFixed(2);
     let stock_open = data_object["data"]["regularMarketOpen"];
