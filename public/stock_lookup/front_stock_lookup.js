@@ -322,8 +322,8 @@ function createStockData(data_object) {
     day_high.append(high_caption);
     day_low.append(low_caption);
     day_change.append(change_caption);
-    day_high.append(data_object["price"]["regularMarketDayHigh"]["raw"].toFixed(2));
-    day_low.append(data_object["price"]["regularMarketDayLow"]["raw"].toFixed(2));
+    day_high.append(stock_high.toFixed(2));
+    day_low.append(stock_low.toFixed(2));
     day_change.append(stock_change + "");
     data_div.append(day_high);
     data_div.append(day_low);
