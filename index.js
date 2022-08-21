@@ -33,7 +33,7 @@ app.set('mysql', mysql);
 cron.schedule('59,9,19,29,39,49 * * * * *', () => {
 
   dailyStockUpdate.promisified_fetchSymbols();
-  //dailyInsertNetWorths.insertNetWorths();
+  dailyInsertNetWorths.insertNetWorths();
 
 });
 
