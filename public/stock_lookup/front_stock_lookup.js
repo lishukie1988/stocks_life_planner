@@ -24,37 +24,22 @@ function createSearchBar() {
             
             
             $.ajax({
-              
-                // "url": "https://yahoo-finance-low-latency.p.rapidapi.com/v6/finance/autocomplete?query=" + content_div.val() + "&lang=en&region=US",
-	            // "method": "GET",
-                // "headers": {
-                //     "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
-                //     //"x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
-                //     "x-rapidapi-host": "yahoo-finance-low-latency.p.rapidapi.com"
-                // },
-
-                "async": true,
-                "crossDomain": true,
-                "url": "https://yahoo-finance97.p.rapidapi.com/stock-info",
-                "method": "POST",
+                //url: "https://api.teleport.org/api/cities/?search=" + request.term,
+                //url: "https://api.teleport.org/api/cities/?search=" + request.term,
+                //"url": "https://apidojo-yahoo-finance-v1.p.rapidapi.com/auto-complete?q=" + content_div.val() + "&region=US",
+                "url": "https://yahoo-finance-low-latency.p.rapidapi.com/v6/finance/autocomplete?query=" + content_div.val() + "&lang=en&region=US",
+	            "method": "GET",
                 "headers": {
-                    "content-type": "application/x-www-form-urlencoded",
-                    "X-RapidAPI-Key": "4df937d51dmsh727e46affe67ce1p1e86dfjsnb0c5d32a4e94",
-                    "X-RapidAPI-Host": "yahoo-finance97.p.rapidapi.com"
+                    "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
+                    //"x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
+                    "x-rapidapi-host": "yahoo-finance-low-latency.p.rapidapi.com"
                 },
-                "data": {
-                    "symbol": content_div.val()
-                },
-
                 success: function( data ) {
                     //console.log(data);
                     //console.log(data["quotes"][0]["symbol"]);
-                    console.log(data)
-                    //console.log(data["ResultSet"]["Result"][0]["symbol"]);
-                    console.log(data["data"]["symbol"]);
+                    console.log(data["ResultSet"]["Result"][0]["symbol"]);
                     //let auto_result = [data["quotes"][0]["symbol"]];
-                    //let auto_result = [data["ResultSet"]["Result"][0]["symbol"]];
-                    let auto_result = [data["data"]["symbol"]];
+                    let auto_result = [data["ResultSet"]["Result"][0]["symbol"]];
                     //let auto_array = data["quotes"].map(x => x["exchange"]);
                     //console.log(auto_array);
                     response(auto_result);
@@ -76,61 +61,47 @@ function stockAjax(query, element) {
 
     //console.log(query);
 
-    // *** duplicate createStockData ajax (replaced by low latency one below)
-
-    // $.ajax({
-    //     "async": true,
-	//     "crossDomain": true,
-	//     "url": "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary?symbol=" + query + "&region=US",
-	//     "method": "GET",
-	//     "headers": {
-	// 	    "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
-	// 	    "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
-	//     },
-    //     async: true,
-    //     success: function(result){
-    //             console.log(element.attr("id"));
-    //             console.log(result);
-    //             console.log(result["symbol"]);
-    //             element.html("");
-    //             element.append(createStockData(result));
-    //             //element.append(createArticle(result["value"][article]));
-    //             //$("#stock_details_div").append(result);
-    //             /*
-    //             for (let article in result["value"]) {
-    //             //console.log(result);
-    //             element.append(createArticle(result["value"][article]));
-    //             */
-    //     }
-    //   });
-
-    // ********* LOW LATENCY API
-      $.ajax({
-        // "async": true,
-	    // "crossDomain": true,
-	    // "url": "https://yahoo-finance-low-latency.p.rapidapi.com/v11/finance/quoteSummary/" + query + "?modules=defaultKeyStatistics%2CassetProfile&region=US&lang=en",
-	    // "method": "GET",
-	    // "headers": {
-		//     "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
-		//     "x-rapidapi-host": "yahoo-finance-low-latency.p.rapidapi.com"
-	    // },
-        // async: true,
+    $.ajax({
         "async": true,
-        "crossDomain": true,
-        "url": "https://yahoo-finance97.p.rapidapi.com/stock-info",
-        "method": "POST",
-        "headers": {
-            "content-type": "application/x-www-form-urlencoded",
-            "X-RapidAPI-Key": "4df937d51dmsh727e46affe67ce1p1e86dfjsnb0c5d32a4e94",
-            "X-RapidAPI-Host": "yahoo-finance97.p.rapidapi.com"
-        },
-        "data": {
-            "symbol": query
-        },
+	    "crossDomain": true,
+	    "url": "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary?symbol=" + query + "&region=US",
+	    "method": "GET",
+	    "headers": {
+		    "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
+		    "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
+	    },
+        async: true,
         success: function(result){
                 console.log(element.attr("id"));
                 console.log(result);
-                //console.log(result["symbol"]);
+                console.log(result["symbol"]);
+                element.html("");
+                element.append(createStockData(result));
+                //element.append(createArticle(result["value"][article]));
+                //$("#stock_details_div").append(result);
+                /*
+                for (let article in result["value"]) {
+                //console.log(result);
+                element.append(createArticle(result["value"][article]));
+                */
+        }
+      });
+
+    // ********* LOW LATENCY API
+      $.ajax({
+        "async": true,
+	    "crossDomain": true,
+	    "url": "https://yahoo-finance-low-latency.p.rapidapi.com/v11/finance/quoteSummary/" + query + "?modules=defaultKeyStatistics%2CassetProfile&region=US&lang=en",
+	    "method": "GET",
+	    "headers": {
+		    "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
+		    "x-rapidapi-host": "yahoo-finance-low-latency.p.rapidapi.com"
+	    },
+        async: true,
+        success: function(result){
+                console.log(element.attr("id"));
+                console.log(result);
+                console.log(result["symbol"]);
                 element.html("");
                 element.append(createStockData(result));
                 //element.append(createArticle(result["value"][article]));
@@ -144,27 +115,15 @@ function stockAjax(query, element) {
       });
 
       $.ajax({
-            // "async": true,
-            // "crossDomain": true,
-            // "url": "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/get-news?category=" + query + "&region=US",
-            // "method": "GET",
-            // "headers": {
-            //     "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
-            //     "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com" 
-            // },
-            // async: true,
             "async": true,
             "crossDomain": true,
-            "url": "https://yahoo-finance97.p.rapidapi.com/news",
-            "method": "POST",
+            "url": "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/get-news?category=" + query + "&region=US",
+            "method": "GET",
             "headers": {
-                "content-type": "application/x-www-form-urlencoded",
-                "X-RapidAPI-Key": "4df937d51dmsh727e46affe67ce1p1e86dfjsnb0c5d32a4e94",
-                "X-RapidAPI-Host": "yahoo-finance97.p.rapidapi.com"
+                "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
+                "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com" 
             },
-            "data": {
-                "symbol": query
-            },    
+            async: true,
             success: function(result){
                     console.log("stock news results");
                     console.log(result);
@@ -186,7 +145,9 @@ function stockAjax(query, element) {
 function createArticle(article) {
     console.log("@ createArticle");
     //console.log(article);
-    let url = "";
+    if (article["main_image"] != null) {
+        console.log(article["main_image"]["original_url"]);
+    }
     let article_div = $("<div></div");
     article_div.css({"width": "100%", "margin-top": "0.5%", "margin-bottom": "0.5%", "background": background_todo});
     //console.log(article);
@@ -203,10 +164,9 @@ function createArticle(article) {
     let image_div = $("<div></div>");
     image_div.css({"background": "", "height": "auto", "width": "100%", "font-size": "1.5vh", "margin-top": "1%", "margin-bottom": "0.5%", "float": ""});
     let image = $("<img>");
-    if (article["thumbnail"] != null) {
-        console.log(article["thumbnail"]["resolutions"][0]["url"]);
-        url = article["thumbnail"]["resolutions"][0]["url"];
-        image.attr("src", url);
+    if (article["main_image"] != null) {
+        image.attr("src", article["main_image"]["original_url"]);
+        //console.log(article["main_image"]["original_url"]);
     }
     //image.attr("src", article["main_image"]["original_url"]);
     image.css({"width": "100%", "height": "auto"});
@@ -241,13 +201,8 @@ function createStockNews(data_object) {
     //stock_news_div.append("stock news div");
     console.log("@ createStockNews");
     //console.log(data_object["items"]);
-    // for (article in data_object["data"]["result"]) {
-    //     stock_news_div.append(createArticle(data_object["items"]["result"][article]));
-    // }
-    for (article in data_object["data"]) {
-        console.log(article);
-        console.log(data_object["data"][article]);
-        stock_news_div.append(createArticle(data_object["data"][article]));
+    for (article in data_object["items"]["result"]) {
+        stock_news_div.append(createArticle(data_object["items"]["result"][article]));
     }
     return stock_news_div;
 
@@ -256,16 +211,13 @@ function createStockNews(data_object) {
 function createStockData(data_object) {
 
     console.log(data_object);
-    let stock_symbol = data_object["data"]["symbol"];
-    let stock_price = data_object["data"]["currentPrice"];
-    let stock_high = data_object["data"]["dayHigh"];
-    let stock_low = data_object["data"]["dayLow"];
-    let stock_summary = data_object["data"]["longBusinessSummary"];
-    // *** get raw change with regularMarketOpen & currentPrice
-    //let stock_change = data_object["price"]["regularMarketChange"]["raw"].toFixed(2);
-    let stock_open = data_object["data"]["regularMarketOpen"];
-    let stock_change = (stock_price - stock_open).toFixed(2);
-    let stock_name = data_object["data"]["longName"];
+    let stock_symbol = data_object["symbol"];
+    let stock_price = data_object["price"]["regularMarketPrice"]["raw"];
+    let stock_high = data_object["price"]["regularMarketDayHigh"]["raw"];
+    let stock_low = data_object["price"]["regularMarketDayLow"]["raw"];
+    let stock_summary = data_object["summaryProfile"]["longBusinessSummary"];
+    let stock_change = data_object["price"]["regularMarketChange"]["raw"].toFixed(2);
+    let stock_name = data_object["price"]["longName"];
 
     let stock_data = createDiv("100%", "100%", "");
     //let symbol_price_div = createDiv("33%", "100%", "left", "symbol_price_div");
@@ -281,14 +233,14 @@ function createStockData(data_object) {
 
     let symbol_div = createDiv("100%", "40%", "", "symbol_div");
     symbol_div.css({"font-size": "30%", "font-weight": "bold"});
-    symbol_div.append(stock_symbol); 
+    symbol_div.append(data_object["symbol"]); 
     symbol_price_div.append(symbol_div);
     let price_div = createDiv("50%", "35%", "", "price_div");
     price_div.css({"font-size": "20%", "background": "", "margin-bottom": "1%", "font-weight": "bold"});
     symbol_price_div.append(price_div);
     //console.log(data_object["price"]["regularMarketPrice"]);
     //price_div.append("CURRENT PRICE:");
-    price_div.append(stock_price);
+    price_div.append(data_object["price"]["regularMarketPrice"]["raw"]);
     let buy_source_div = createDiv("100%", "25%", "", "buy_source_div");
     buy_source_div.css({"font-size": "15%", "background": background_teal_clear, "font-weight": "bold", "margin-bottom": ""});
     buy_source_div.append("BUY");
@@ -297,7 +249,7 @@ function createStockData(data_object) {
 
     let summary_div = createDiv("100%", "69.5%", "", "summary_div");
     summary_div.css({"text-align": "left", "background": background_todo, "font-size": "100%"});
-    summary_div.append(stock_summary);
+    summary_div.append(data_object["summaryProfile"]["longBusinessSummary"]);
     summary_data_div.append(summary_div);
     stock_data.append(symbol_price_div);
     stock_data.append(summary_data_div);
@@ -322,8 +274,8 @@ function createStockData(data_object) {
     day_high.append(high_caption);
     day_low.append(low_caption);
     day_change.append(change_caption);
-    day_high.append(stock_high.toFixed(2));
-    day_low.append(stock_low.toFixed(2));
+    day_high.append(data_object["price"]["regularMarketDayHigh"]["raw"].toFixed(2));
+    day_low.append(data_object["price"]["regularMarketDayLow"]["raw"].toFixed(2));
     day_change.append(stock_change + "");
     data_div.append(day_high);
     data_div.append(day_low);
@@ -434,7 +386,7 @@ function createBuyWindow(stock_stats) {
 
         var data = {quantity: input_quantity.val(), userID: user_id, symbol: stock_stats.stock_symbol, longName: stock_stats.stock_name,
             summary: stock_stats.stock_summary, currentPrice: stock_stats.stock_price, 
-            highPrice: stock_stats.stock_high, lowPrice: stock_stats.stock_low, priceChange: stock_stats.stock_change
+            highPrice: stock_stats.stock_low, lowPrice: stock_stats.stock_low, priceChange: stock_stats.stock_change
             };
 
         $.ajax({
@@ -443,8 +395,7 @@ function createBuyWindow(stock_stats) {
             type: 'POST', 
             data: data,
             success: function(result){
-                console.log("CALLBACK of BUY AJAX")
-                console.log(data);
+                console.log("CALLBACK of POST LOGIN AJAX")
                 console.log(result);
                 if (result === "not_enough_balance") {
                     // hide buy_div & show not enough balance div / server problem

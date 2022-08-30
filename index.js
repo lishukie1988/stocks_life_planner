@@ -31,6 +31,8 @@ app.set('mysql', mysql);
 
 // database reset stock updater
 cron.schedule('59,9,19,29,39,49 * * * * *', () => {
+  //var current_time = new Date;
+  //console.log(current_time.getSeconds(), "10 seconds have passed");
 
   //dailyStockUpdate.promisified_fetchSymbols();
   //dailyInsertNetWorths.insertNetWorths();

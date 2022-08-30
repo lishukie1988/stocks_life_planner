@@ -3,7 +3,7 @@ var pool = mysql.createPool({
    connectionLimit : 10,
    host            : 'portfolio.cagb1ij7v9gq.us-east-1.rds.amazonaws.com',
    user            : 'shukie',
-   password        : 'Gummtw0rm5',
+   password        : 'Gummyw0rm5',
    database        : 'stocks_life_planner',
    port            : 3306
 });
