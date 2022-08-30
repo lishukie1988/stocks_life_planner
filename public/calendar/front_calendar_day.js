@@ -48,7 +48,7 @@ function createDay(empty, date, weekday) {
     if (empty >= 0) {
 
         let date_div = $("<div></div");
-        date_div.css({"height": "20%", "width": "100%", "font-size": "55%", "font-weight": "bold"});
+        date_div.css({"height": "20%", "width": "100%", "font-size": "15%", "font-weight": "bold"});
         date_div.text(date);
         day_x.append(date_div);
         day_x.data("date", date);
@@ -59,7 +59,7 @@ function createDay(empty, date, weekday) {
             let weather_div = $("<div></div");
             weather_div.css({"height": "21%", "width": "100%", "background": background_blue, "margin-bottom": "2%"});
             let weather_num_div = $("<div></div");
-            weather_num_div.css({"height": "100%", "width": "auto", "font-size": "55%", "float": "left"});
+            weather_num_div.css({"height": "100%", "width": "auto", "font-size": "1%", "float": "left"});
             weather_div.append(weather_num_div);
             let weather_icon = $("<img>");
             weather_icon.css({"height": "100%", "width": "auto", "float": "right"});
@@ -85,7 +85,7 @@ function createDay(empty, date, weekday) {
                 for (let item in list) {
                     //console.log(list[item]["content"]);
                     let todo = $("<div></div>");
-                    todo.css({"background": background_todo, "height": "19%", "width": "100%", "font-size": "55%", "margin-bottom": "2%"});
+                    todo.css({"background": background_todo, "height": "19%", "width": "100%", "font-size": "10%", "margin-bottom": "2%"});
                     todo.append(list[item]["content"]);
                     day_x.append(todo);
                 }

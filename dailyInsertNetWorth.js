@@ -184,12 +184,8 @@ function checkIfNetWorthExists(userID, total_net_worth) {
     console.log("checkIfNetWorthExists: total_net_worth: ", total_net_worth);
     var date = new Date();
     var live_year = date.getFullYear();
-    var leap_year = (live_year % 4 == 0) ? (live_year % 100 != 0 ? true : (live_year % 400 == 0 ? true : false)) : false;
-    var feb_last_day = leap_year ? 28 : 29;
     var live_month = date.getMonth() + 1;
-    var live_date = date.getDate() - 1; // ***
-    var last_dates = {"12":31, "1":30, "2":31, "3":feb_last_day, "4":31, "5":30, "6":31, "7":31, "8":30, "9":31, "10":30, "11":31};
-    live_date = (live_date == 0) ? last_dates[live_month.toString()] : live_date;
+    var live_date = date.getDate() - 1;
     var date_string = getDateString(live_year, live_month, live_date);
     console.log(date_string);
     var sql_string = "SELECT * FROM Net_worths WHERE userID=? AND date=?";

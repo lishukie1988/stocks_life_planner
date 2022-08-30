@@ -172,7 +172,7 @@ $(document).ready(function(){
             //console.log(net_worth_x);
             let net_worth_y_1 = actual_net_worths.map(function(point) { return point["net_worth"]});
             let net_worth_y_2 = forecast_net_worths.map(function(point) { return point["net_worth"]});
-            let net_worth_l_1 = "Within past 90 days";
+            let net_worth_l_1 = "Within past 60 days";
             let net_worth_l_2 = "7 day forecast based on average historical daily growth rate of " + avg_growth_rate.toString();
             let net_worth_title = "Historical Net Worth";
             createGraph_1("net_worth_div", net_worth_x, net_worth_y_1, net_worth_l_1, net_worth_title);
