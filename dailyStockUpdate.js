@@ -86,17 +86,17 @@ function promise_fetchStocksAPI (symbol) {
   
     return new Promise(function(success, reject) {
   
-      var req = unirest("GET", "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary");
-  
-      req.query({
-        "symbol": symbol,
-        "region": "US"
+      var req = unirest("POST", "https://yahoo-finance97.p.rapidapi.com/stock-info");
+
+      req.headers({
+        "content-type": "application/x-www-form-urlencoded",
+        "X-RapidAPI-Key": "4df937d51dmsh727e46affe67ce1p1e86dfjsnb0c5d32a4e94",
+        "X-RapidAPI-Host": "yahoo-finance97.p.rapidapi.com",
+        "useQueryString": true
       });
   
-      req.headers({
-        "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
-        "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
-        "useQueryString": true
+      req.form({
+        "symbol": symbol
       });
   
   
@@ -109,13 +109,24 @@ function promise_fetchStocksAPI (symbol) {
         }
   
         else {
-          var current_price = res.body["price"]["regularMarketPrice"]["raw"].toFixed(2);
-          var high_price = res.body["price"]["regularMarketDayHigh"]["raw"].toFixed(2);
-          var low_price = res.body["price"]["regularMarketDayLow"]["raw"].toFixed(2);
-          var change = res.body["price"]["regularMarketChange"]["raw"].toFixed(2);
+          // var current_price = res.body["price"]["regularMarketPrice"]["raw"].toFixed(2);
+          // var high_price = res.body["price"]["regularMarketDayHigh"]["raw"].toFixed(2);
+          // var low_price = res.body["price"]["regularMarketDayLow"]["raw"].toFixed(2);
+          // var change = res.body["price"]["regularMarketChange"]["raw"].toFixed(2);
   
-          summary = res.body["summaryProfile"]["longBusinessSummary"];
-          long_name = res.body["price"]["longName"];
+          // summary = res.body["summaryProfile"]["longBusinessSummary"];
+          // long_name = res.body["price"]["longName"];
+
+          var current_price = res.body["data"]["currentPrice"].toFixed(2);
+          var high_price = res.body["data"]["dayHigh"].toFixed(2);
+          var low_price = res.body["data"]["dayLow"].toFixed(2);
+          
+          var stock_open = res.body["data"]["regularMarketOpen"];
+          var change = (current_price - stock_open).toFixed(2);
+    
+          var summary = res.body["data"]["longBusinessSummary"];
+          var long_name = res.body["data"]["longName"];
+
           var promise_result = [long_name, summary, current_price, high_price, low_price, change, symbol];
           
           console.log("@ promise_fetchStockAPI: ", promise_result[6], promise_result[2], promise_result[3], promise_result[4], promise_result[5] );
@@ -133,36 +144,51 @@ function promise_fetchStocksAPI (symbol) {
   
 function fetchStocksAPI (symbol) {
   
-    var req = unirest("GET", "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary");
+    // var req = unirest("GET", "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary");
   
-    req.query({
-      "symbol": symbol,
-      "region": "US"
-    });
+    // req.query({
+    //   "symbol": symbol,
+    //   "region": "US"
+    // });
   
+    // req.headers({
+    //   "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
+    //   "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
+    //   "useQueryString": true
+    // });
+  
+    var req = unirest("POST", "https://yahoo-finance97.p.rapidapi.com/stock-info");
+
     req.headers({
-      "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
-      "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
+      "content-type": "application/x-www-form-urlencoded",
+      "X-RapidAPI-Key": "4df937d51dmsh727e46affe67ce1p1e86dfjsnb0c5d32a4e94",
+      "X-RapidAPI-Host": "yahoo-finance97.p.rapidapi.com",
       "useQueryString": true
     });
-  
+
+    req.form({
+      "symbol": symbol
+    });
   
     req.end(function (res) {
       if (res.error) {
         return (res.error);
       }
-      //throw new Error(res.error);
-  
-      //console.log(res.body);
+
       console.log(symbol, current_price, high_price, low_price, change);
-      var current_price = res.body["price"]["regularMarketPrice"]["raw"].toFixed(2);
-      var high_price = res.body["price"]["regularMarketDayHigh"]["raw"].toFixed(2);
-      var low_price = res.body["price"]["regularMarketDayLow"]["raw"].toFixed(2);
-      var change = res.body["price"]["regularMarketChange"]["raw"].toFixed(2);
-  
-      summary = res.body["summaryProfile"]["longBusinessSummary"];
-      long_name = res.body["price"]["longName"];
+      var current_price = res.body["data"]["currentPrice"].toFixed(2);
+      var high_price = res.body["data"]["dayHigh"].toFixed(2);
+      var low_price = res.body["data"]["dayLow"].toFixed(2);
       
+      var stock_open = res.body["data"]["regularMarketOpen"];
+      var change = (current_price - stock_open).toFixed(2);
+  
+      // summary = res.body["summaryProfile"]["longBusinessSummary"];
+      // long_name = res.body["price"]["longName"];
+
+      var summary = res.body["data"]["longBusinessSummary"];
+      var long_name = res.body["data"]["longName"];
+    
       updateStocks([long_name, summary, current_price, high_price, low_price, change, symbol]);
     });
   
