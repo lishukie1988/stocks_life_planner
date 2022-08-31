@@ -88,7 +88,7 @@ cron.schedule('0,9,19,29,39,49,59 * * * * *', () => {
 
   req.end(function (res) {
 
-    console.log("@ RESPONSE CALLBACK of anti-idle: ", res.body)
+    //console.log("@ RESPONSE CALLBACK of anti-idle: ", res.body)
     console.log("prevent idle");
 
     
