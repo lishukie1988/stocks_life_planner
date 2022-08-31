@@ -93,11 +93,11 @@ function stockAjax(query, element) {
       $.ajax({
             "async": true,
             "crossDomain": true,
-            "url": "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/get-news?category=" + query + "&region=US",
+            "url": "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-newsfeed?category=" + query + "&region=US",
             "method": "GET",
             "headers": {
                 "X-RapidAPI-Key": "4df937d51dmsh727e46affe67ce1p1e86dfjsnb0c5d32a4e94",
-                "X-RapidAPI-Host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
+		        "X-RapidAPI-Host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
             },
             async: true,
             success: function(result){
