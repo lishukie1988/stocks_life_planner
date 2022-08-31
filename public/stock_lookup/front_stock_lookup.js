@@ -24,13 +24,19 @@ function createSearchBar() {
             
             
             $.ajax({
-                //url: "https://api.teleport.org/api/cities/?search=" + request.term,
-                //url: "https://api.teleport.org/api/cities/?search=" + request.term,
+                // "url": "https://apidojo-yahoo-finance-v1.p.rapidapi.com/auto-complete?q=" + content_div.val() + "&region=US",
+	            // "method": "GET",
+                // "headers": {
+                //     "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
+                //     "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
+                // },
+                "async": true,
+                "crossDomain": true,
                 "url": "https://apidojo-yahoo-finance-v1.p.rapidapi.com/auto-complete?q=" + content_div.val() + "&region=US",
-	            "method": "GET",
+                "method": "GET",
                 "headers": {
-                    "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
-                    "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
+                    "X-RapidAPI-Key": "4df937d51dmsh727e46affe67ce1p1e86dfjsnb0c5d32a4e94",
+                    "X-RapidAPI-Host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
                 },
                 success: function( data ) {
                     //console.log(data);
@@ -40,7 +46,7 @@ function createSearchBar() {
                     //console.log(auto_array);
                     response(auto_result);
                 }
-            });            
+            });             
         }
     });
 
@@ -63,8 +69,8 @@ function stockAjax(query, element) {
 	    "url": "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary?symbol=" + query + "&region=US",
 	    "method": "GET",
 	    "headers": {
-		    "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
-		    "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
+		    "X-RapidAPI-Key": "4df937d51dmsh727e46affe67ce1p1e86dfjsnb0c5d32a4e94",
+		    "X-RapidAPI-Host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
 	    },
         async: true,
         success: function(result){
@@ -90,8 +96,8 @@ function stockAjax(query, element) {
             "url": "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/get-news?category=" + query + "&region=US",
             "method": "GET",
             "headers": {
-                "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
-                "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com" 
+                "X-RapidAPI-Key": "4df937d51dmsh727e46affe67ce1p1e86dfjsnb0c5d32a4e94",
+                "X-RapidAPI-Host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
             },
             async: true,
             success: function(result){

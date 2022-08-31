@@ -94,8 +94,8 @@ function promise_fetchStocksAPI (symbol) {
       });
   
       req.headers({
-        "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
-        "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
+        "X-RapidAPI-Key": "4df937d51dmsh727e46affe67ce1p1e86dfjsnb0c5d32a4e94",
+        "X-RapidAPI-Host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
         "useQueryString": true
       });
   
@@ -141,8 +141,8 @@ function fetchStocksAPI (symbol) {
     });
   
     req.headers({
-      "x-rapidapi-key": "cf77bb0e7bmshdbb917176a05be6p1bf893jsncd3d195504c2",
-      "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
+      "X-RapidAPI-Key": "4df937d51dmsh727e46affe67ce1p1e86dfjsnb0c5d32a4e94",
+      "X-RapidAPI-Host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
       "useQueryString": true
     });
   
