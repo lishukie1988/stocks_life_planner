@@ -361,7 +361,7 @@ function createBuyWindow(stock_stats) {
 
         var data = {quantity: input_quantity.val(), userID: user_id, symbol: stock_stats.stock_symbol, longName: stock_stats.stock_name,
             summary: stock_stats.stock_summary, currentPrice: stock_stats.stock_price, 
-            highPrice: stock_stats.stock_low, lowPrice: stock_stats.stock_low, priceChange: stock_stats.stock_change
+            highPrice: stock_stats.stock_high, lowPrice: stock_stats.stock_low, priceChange: stock_stats.stock_change
             };
 
         $.ajax({
