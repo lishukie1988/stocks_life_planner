@@ -73,7 +73,7 @@ cron.schedule('0,9,19,29,39,49,59 * * * * *', () => {
 
   //fetch('/login').then(res => console.log(`response-ok: ${res.ok}, status: ${res.status}`));  
 
-  var req = unirest("GET", "https://lishukie-portfolio-1.herokuapp.com/");
+  var req = unirest("GET", "https://lishukie-planner-portfolio.herokuapp.com/");
   
   
   req.query({
