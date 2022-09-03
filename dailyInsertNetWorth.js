@@ -311,14 +311,14 @@ function updateNetWorth(pointID, total_net_worth) {
 
       else {
         var log_sql =  'INSERT INTO `Logs` (`date`, `message`) VALUES(?, ?)';
-        mysql.pool.query(log_sql, [date, '@ updateNetWorth: ' + userID + " " + parseFloat(total_net_worth)], function(error, results, fields){
+        mysql.pool.query(log_sql, [date, '@ updateNetWorth: ' + pointID + " " + parseFloat(total_net_worth)], function(error, results, fields){
           if(error){
               console.log("@ updateNetWorth: log error");
               console.log(JSON.stringify(error));
               return;
           }
           else {
-            console.log("@ updateNetWorth - successfully: " + userID + " " + parseFloat(total_net_worth));
+            console.log("@ updateNetWorth - successfully: " + pointID + " " + parseFloat(total_net_worth));
           }
         })
       }
