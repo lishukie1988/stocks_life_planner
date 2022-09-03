@@ -178,11 +178,12 @@ function fetchStockWorth(userID_balance) {
                   return;
               }
               else {
+                console.log("@ fetchStockWorth: total_stock_worth = ", total_stock_worth);
+                var total_net_worth = parseFloat(userID_balance.balance) + parseFloat(total_stock_worth);
+                checkIfNetWorthExists(userID_balance.userID, total_net_worth);
               }
-          }
-            console.log("@ fetchStockWorth: total_stock_worth = ", total_stock_worth);
-            var total_net_worth = parseFloat(userID_balance.balance) + parseFloat(total_stock_worth);
-            checkIfNetWorthExists(userID_balance.userID, total_net_worth);
+            })
+
         }
     })
 }
