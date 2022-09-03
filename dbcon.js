@@ -4,7 +4,7 @@ var pool = mysql.createPool({
    host            : 'portfolio.cagb1ij7v9gq.us-east-1.rds.amazonaws.com',
    user            : 'shukie',
    password        : 'Gummyw0rm5',
-   database        : 'stocks_life_planner',
+   database        : 'review',
    port            : 3306
 });
 module.exports.pool = pool;
