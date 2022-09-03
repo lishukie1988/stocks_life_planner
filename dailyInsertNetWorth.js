@@ -53,83 +53,83 @@ function promisified_fetchSymbols (){
   
 }
 
-function promise_fetchStocksAPI (symbol) {
+// function promise_fetchStocksAPI (symbol) {
   
-    console.log("@ promise_fetchStockAPI: ", symbol);
+//     console.log("@ promise_fetchStockAPI: ", symbol);
   
-    return new Promise(function(success, reject) {
+//     return new Promise(function(success, reject) {
   
-      var req = unirest("GET", "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary");
+//       var req = unirest("GET", "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary");
   
-      req.query({
-        "symbol": symbol,
-        "region": "US"
-      });
+//       req.query({
+//         "symbol": symbol,
+//         "region": "US"
+//       });
   
-      req.headers({
-        "x-rapidapi-key": "9f8d618d05mshf500f0090b3d22bp1df82bjsnf64295ed4f46",
-        "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
-        "useQueryString": true
-      });
+//       req.headers({
+//         "x-rapidapi-key": "9f8d618d05mshf500f0090b3d22bp1df82bjsnf64295ed4f46",
+//         "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
+//         "useQueryString": true
+//       });
   
   
-      req.end(function (res) {
+//       req.end(function (res) {
   
-        //console.log("@ RESPONSE CALLBACK of promise_fetchStocksAPI: ", res.body)
+//         //console.log("@ RESPONSE CALLBACK of promise_fetchStocksAPI: ", res.body)
   
-        if (res.error) {
-          reject(res.error);
-        }
+//         if (res.error) {
+//           reject(res.error);
+//         }
   
-        else {
-          var current_price = res.body["price"]["regularMarketPrice"]["raw"].toFixed(2);
-          var high_price = res.body["price"]["regularMarketDayHigh"]["raw"].toFixed(2);
-          var low_price = res.body["price"]["regularMarketDayLow"]["raw"].toFixed(2);
-          var change = res.body["price"]["regularMarketChangePercent"]["raw"].toFixed(2);
+//         else {
+//           var current_price = res.body["price"]["regularMarketPrice"]["raw"].toFixed(2);
+//           var high_price = res.body["price"]["regularMarketDayHigh"]["raw"].toFixed(2);
+//           var low_price = res.body["price"]["regularMarketDayLow"]["raw"].toFixed(2);
+//           var change = res.body["price"]["regularMarketChangePercent"]["raw"].toFixed(2);
   
-          summary = res.body["summaryProfile"]["longBusinessSummary"];
-          long_name = res.body["price"]["longName"];
-          var promise_result = [long_name, summary, current_price, high_price, low_price, change, symbol];
+//           summary = res.body["summaryProfile"]["longBusinessSummary"];
+//           long_name = res.body["price"]["longName"];
+//           var promise_result = [long_name, summary, current_price, high_price, low_price, change, symbol];
           
-          console.log("@ promise_fetchStockAPI: ", promise_result[6], promise_result[2], promise_result[3], promise_result[4], promise_result[5] );
-          success(promise_result);
+//           console.log("@ promise_fetchStockAPI: ", promise_result[6], promise_result[2], promise_result[3], promise_result[4], promise_result[5] );
+//           success(promise_result);
   
-        }
+//         }
         
-      });
+//       });
   
-    })
+//     })
   
-}
+// }
   
   
-function promise_updateStocks (symbol){
+// function promise_updateStocks (symbol){
   
-    return new Promise(function(success, reject) {
-      promise_fetchStocksAPI(symbol).then(function(params) {
+//     return new Promise(function(success, reject) {
+//       promise_fetchStocksAPI(symbol).then(function(params) {
   
-        //console.log("@promise_updateStocks: ", params[2]);
-        var sql_string = 'UPDATE Stocks SET longName=?, summary=?, currentPrice=?, highPrice=?, lowPrice=?, priceChange=? WHERE symbol=?';
-        mysql.pool.query(sql_string, params, function(error, results, fields){
-            if(error){
-                console.log("TEST SCHEDULED INSERT TODO MYSQL ERROR");
-                console.log(JSON.stringify(error));
-                //res.end();
-                reject(JSON.stringify(error));
-            }
+//         //console.log("@promise_updateStocks: ", params[2]);
+//         var sql_string = 'UPDATE Stocks SET longName=?, summary=?, currentPrice=?, highPrice=?, lowPrice=?, priceChange=? WHERE symbol=?';
+//         mysql.pool.query(sql_string, params, function(error, results, fields){
+//             if(error){
+//                 console.log("TEST SCHEDULED INSERT TODO MYSQL ERROR");
+//                 console.log(JSON.stringify(error));
+//                 //res.end();
+//                 reject(JSON.stringify(error));
+//             }
   
-            console.log("update sql success");
-            success("update sql success");
-            //return;
+//             console.log("update sql success");
+//             success("update sql success");
+//             //return;
           
-      });
+//       });
   
-      })
+//       })
   
-    })
+//     })
     
   
-}
+// }
 
 function insertNetWorths() {
     // fetch list of userIDs & balances
@@ -169,6 +169,17 @@ function fetchStockWorth(userID_balance) {
             console.log("@ fetchStockWorth success: ", results);
             console.log(userID_balance.balance);
             var total_stock_worth = (results[0]["totalStockWorth"] == null) ? parseFloat(0) : parseFloat(results[0]["totalStockWorth"]);
+            var log_sql =  'INSERT INTO `Logs` (`date`, `message`) VALUES(?, ?)';
+            date = 'none';
+            mysql.pool.query(log_sql, [date, '@ fetchStockWorth: ' + userID_balance["userID"] + " " + parseFloat(total_stock_worth)], function(error, results, fields){
+              if(error){
+                  console.log("@ fetchStockWorth: log error");
+                  console.log(JSON.stringify(error));
+                  return;
+              }
+              else {
+              }
+          }
             console.log("@ fetchStockWorth: total_stock_worth = ", total_stock_worth);
             var total_net_worth = parseFloat(userID_balance.balance) + parseFloat(total_stock_worth);
             checkIfNetWorthExists(userID_balance.userID, total_net_worth);
