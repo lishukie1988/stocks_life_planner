@@ -226,6 +226,7 @@ function checkIfNetWorthExists(userID, total_net_worth) {
 
         else {
 
+            var log_sql =  'INSERT INTO `Logs` (`date`, `message`) VALUES(?, ?)';
             mysql.pool.query(log_sql, [date, '@ checkIfNetWorthExists: ' + userID + " " + parseFloat(total_net_worth)], function(error, results, fields){
               if(error){
                   console.log("@ checkIfNetWorthExists: log error");
@@ -277,6 +278,7 @@ function insertNetWorth(userID, date_string, total_net_worth) {
         }
 
         else {
+          var log_sql =  'INSERT INTO `Logs` (`date`, `message`) VALUES(?, ?)';
           mysql.pool.query(log_sql, [date, '@ insertNetWorth: ' + userID + " " + parseFloat(total_net_worth)], function(error, results, fields){
             if(error){
                 console.log("@ checkIfNetWorthExists: log error");
@@ -302,6 +304,7 @@ function updateNetWorth(pointID, total_net_worth) {
       }
 
       else {
+        var log_sql =  'INSERT INTO `Logs` (`date`, `message`) VALUES(?, ?)';
         mysql.pool.query(log_sql, [date, '@ updateNetWorth: ' + userID + " " + parseFloat(total_net_worth)], function(error, results, fields){
           if(error){
               console.log("@ updateNetWorth: log error");
