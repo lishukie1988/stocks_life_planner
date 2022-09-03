@@ -18,6 +18,8 @@ var cron = require('node-cron');
 
 var unirest = require('unirest')
 
+var date = "none";
+
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 async function * asynchIterator(count , ms) {
   for (let i = 0; i < count; i++) yield delay(ms).then(() => i);
@@ -161,6 +163,16 @@ function fetchStockWorth(userID_balance) {
         if(error){
             console.log("@ fetchStockWorth: fetch stock worth error");
             console.log(JSON.stringify(error));
+            var log_sql =  'INSERT INTO `Logs` (`date`, `message`) VALUES(?, ?)';
+            mysql.pool.query(log_sql, [date, '@ fetchStockWorth: fetch stock worth error'], function(error, results, fields){
+              if(error){
+                  console.log("@ fetchStockWorth: log error");
+                  console.log(JSON.stringify(error));
+                  return;
+              }
+              else {
+              }
+            })
             return;
         }
 
@@ -170,7 +182,6 @@ function fetchStockWorth(userID_balance) {
             console.log(userID_balance.balance);
             var total_stock_worth = (results[0]["totalStockWorth"] == null) ? parseFloat(0) : parseFloat(results[0]["totalStockWorth"]);
             var log_sql =  'INSERT INTO `Logs` (`date`, `message`) VALUES(?, ?)';
-            date = 'none';
             mysql.pool.query(log_sql, [date, '@ fetchStockWorth: ' + userID_balance["userID"] + " " + parseFloat(total_stock_worth)], function(error, results, fields){
               if(error){
                   console.log("@ fetchStockWorth: log error");
@@ -208,20 +219,47 @@ function checkIfNetWorthExists(userID, total_net_worth) {
     params = [userID, date_string]
     mysql.pool.query(sql_string, params, function(error, results, fields){
         if(error){
-            console.log("@ fetchStockWorth: fetch stock worth error");
+            console.log("@ checkIfNetWorthExists: fetch stock worth error");
             console.log(JSON.stringify(error));
             return;
         }
 
         else {
-            console.log("@ fetchStockWorth: successfully fetched net worth point for input userID & live date");
-            console.log(results);
-            if (results.length == 0) {
-                insertNetWorth(userID, date_string, total_net_worth);
-            }
-            else {
-                updateNetWorth(results[0]["pointID"], total_net_worth);
-            }
+
+            mysql.pool.query(log_sql, [date, '@ checkIfNetWorthExists: ' + userID + " " + parseFloat(total_net_worth)], function(error, results, fields){
+              if(error){
+                  console.log("@ checkIfNetWorthExists: log error");
+                  console.log(JSON.stringify(error));
+                  return;
+              }
+              else {
+                if (results.length == 0) {
+                  mysql.pool.query(log_sql, [date, '@ checkIfNetWorthExists - does not exist: ' + userID + " " + parseFloat(total_net_worth)], function(error, results, fields){
+                    if(error){
+                        console.log("@ checkIfNetWorthExists: log error");
+                        console.log(JSON.stringify(error));
+                        return;
+                    }
+                    else {
+                      insertNetWorth(userID, date_string, total_net_worth);
+                    }
+                  })
+                }
+                else {
+
+                  mysql.pool.query(log_sql, [date, '@ checkIfNetWorthExists - exists: ' + userID + " " + parseFloat(total_net_worth)], function(error, results, fields){
+                    if(error){
+                        console.log("@ checkIfNetWorthExists: log error");
+                        console.log(JSON.stringify(error));
+                        return;
+                    }
+                    else {
+                      updateNetWorth(results[0]["pointID"], total_net_worth);
+                    }
+                  })
+                }
+              }
+            })
 
         }
     })
@@ -239,7 +277,16 @@ function insertNetWorth(userID, date_string, total_net_worth) {
         }
 
         else {
-            console.log("@ inserNetWorth: successfully inserted new net_worth entry");
+          mysql.pool.query(log_sql, [date, '@ insertNetWorth: ' + userID + " " + parseFloat(total_net_worth)], function(error, results, fields){
+            if(error){
+                console.log("@ checkIfNetWorthExists: log error");
+                console.log(JSON.stringify(error));
+                return;
+            }
+            else {
+              console.log("@ inserNetWorth - successfully: " + userID + " " + parseFloat(total_net_worth));
+            }
+          })
         }
     })
 }
@@ -255,7 +302,16 @@ function updateNetWorth(pointID, total_net_worth) {
       }
 
       else {
-          console.log("@ updateNetWorth: successfully updated existing net_worth entry");
+        mysql.pool.query(log_sql, [date, '@ updateNetWorth: ' + userID + " " + parseFloat(total_net_worth)], function(error, results, fields){
+          if(error){
+              console.log("@ updateNetWorth: log error");
+              console.log(JSON.stringify(error));
+              return;
+          }
+          else {
+            console.log("@ updateNetWorth - successfully: " + userID + " " + parseFloat(total_net_worth));
+          }
+        })
       }
   })
 }
