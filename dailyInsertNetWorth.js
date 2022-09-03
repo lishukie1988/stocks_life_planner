@@ -227,6 +227,7 @@ function checkIfNetWorthExists(userID, total_net_worth) {
 
         else {
 
+            var pointID = results[0]["pointID"];
             var log_sql =  'INSERT INTO `Logs` (`date`, `message`) VALUES(?, ?)';
             mysql.pool.query(log_sql, [date, '@ checkIfNetWorthExists: ' + userID + " " + parseFloat(total_net_worth)], function(error, results, fields){
               if(error){
@@ -235,8 +236,6 @@ function checkIfNetWorthExists(userID, total_net_worth) {
                   return;
               }
               else {
-
-                var test
 
                 if (results.length == 0) {
                   mysql.pool.query(log_sql, [date, '@ checkIfNetWorthExists - does not exist: ' + userID + " " + parseFloat(total_net_worth)], function(error, results, fields){
@@ -259,7 +258,8 @@ function checkIfNetWorthExists(userID, total_net_worth) {
                         return;
                     }
                     else {
-                      updateNetWorth(results[0]["pointID"], total_net_worth);
+                      // updateNetWorth(results[0]["pointID"], total_net_worth);
+                      updateNetWorth(pointID, total_net_worth);
                     }
                   })
                 }
