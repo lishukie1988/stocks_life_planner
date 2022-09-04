@@ -74,7 +74,7 @@ function promisified_fetchSymbols (){
           else {
             console.log("@ promisified_fetchSymbols: all symbols fetched successfully");
             (async function loop() {
-              for await (let i of asynchIterator(symbol_results.length, 1000)) {
+              for await (let i of asynchIterator(symbol_results.length, 2000)) {
                 //console.log(symbol_list[i]);
                 promise_updateStocks(symbol_results[i]["symbol"]).then(
                   function(result) {
