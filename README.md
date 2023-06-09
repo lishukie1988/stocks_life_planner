@@ -21,7 +21,7 @@
     - serves as a weather forecast widget:
       - weather details of user's specified city displayed for the next 14 days
     - ![s2](https://github.com/lishukie6588/stocks_life_planner/assets/59763257/04b950d7-1b38-42a1-9845-62db07e3d3df)
-    - servers as a news widget:
+    - serves as a news widget:
       - when user clicks on a date, a news search interface appears
       - if a date within the past 30 days is clicked, news relevant to the user's search criteria published on that day will be displayed
       - if any other date is clicked, the latest published news relevant to the user's search criteria will be displayed
